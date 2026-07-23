@@ -43,7 +43,7 @@ export function Header() {
 
         <details className="md:hidden relative">
           <summary
-            className={`list-none w-9 h-9 flex flex-col items-center justify-center gap-1.5 cursor-pointer ${focusClasses}`}
+            className={`list-none w-11 h-11 flex flex-col items-center justify-center gap-1.5 cursor-pointer ${focusClasses}`}
             aria-label="Відкрити меню"
           >
             <span className="block w-5 h-[2px] rounded bg-ink" aria-hidden="true" />

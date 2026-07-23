@@ -37,7 +37,7 @@ export function AssistantWidget() {
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Закрити помічника"
-              className={`text-ink/50 hover:text-ink text-lg leading-none rounded ${focusClasses}`}
+              className={`text-ink/50 hover:text-ink text-lg leading-none rounded p-2 -m-2 ${focusClasses}`}
             >
               ×
             </button>
