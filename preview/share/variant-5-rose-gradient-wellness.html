@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Care Guide — Варіант 5: Rose Gradient Wellness (прев'ю)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: "#FBF8F7",
+          ink: "#2E2624",
+          cta: "#D85C77",
+        },
+        fontFamily: { sans: ["Manrope", "sans-serif"] },
+      },
+    },
+  };
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; }
+  .gradient-hero {
+    background: radial-gradient(circle at 15% 20%, rgba(241,167,160,0.55), transparent 55%),
+                radial-gradient(circle at 85% 15%, rgba(217,199,236,0.5), transparent 50%),
+                radial-gradient(circle at 60% 80%, rgba(246,201,160,0.45), transparent 55%),
+                #FBF8F7;
+  }
+  .glass {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+</style>
+</head>
+<body class="bg-bg text-ink antialiased">
+
+  <div class="sticky top-0 z-50 bg-cta text-white text-xs sm:text-sm text-center py-2 px-4">
+    Прев'ю дизайн-напряму 5 — <strong>Rose Gradient Wellness</strong>. Демонстраційна сторінка, не фінальна реалізація.
+  </div>
+
+  <header class="glass sticky top-[33px] z-40 border-b border-white/40">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
+      <span class="font-bold text-lg">Care Guide</span>
+      <nav class="hidden md:flex items-center gap-7 text-sm text-ink/70">
+        <a href="#" class="hover:text-ink">Головна</a>
+        <a href="#" class="hover:text-ink">Добірки</a>
+        <a href="#" class="hover:text-ink">Схеми</a>
+        <a href="#" class="hover:text-ink">Корисне</a>
+        <a href="#" class="hover:text-ink">Про проєкт</a>
+      </nav>
+      <a href="#" class="hidden sm:inline-block rounded-full bg-cta text-white text-sm font-semibold px-5 py-2.5 shadow-sm shadow-cta/30">Підібрати догляд</a>
+      <button class="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5" aria-label="Меню">
+        <span class="block w-5 h-[2px] rounded bg-ink"></span>
+        <span class="block w-5 h-[2px] rounded bg-ink"></span>
+        <span class="block w-5 h-[2px] rounded bg-ink"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="gradient-hero">
+    <div class="max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-14 sm:pb-20 text-center">
+      <h1 class="text-[2.1rem] leading-tight sm:text-5xl font-bold mb-5">
+        Зрозумілий догляд без зайвої складності
+      </h1>
+      <p class="text-sm sm:text-base text-ink/65 max-w-md mx-auto mb-9">
+        Добірки косметики, готові схеми та прості пояснення — щоб дбати про себе було легко.
+      </p>
+      <a href="#" class="inline-block rounded-full bg-cta text-white text-sm sm:text-base font-semibold px-8 py-3.5 shadow-md shadow-cta/30 mb-10">Підібрати догляд</a>
+
+      <div class="flex gap-3 overflow-x-auto pb-2 justify-center flex-wrap sm:flex-nowrap">
+        <span class="glass whitespace-nowrap rounded-full border border-white/50 text-sm px-4 py-2">Сухість і стягнутість</span>
+        <span class="glass whitespace-nowrap rounded-full border border-white/50 text-sm px-4 py-2">Жирність і блиск</span>
+        <span class="glass whitespace-nowrap rounded-full border border-white/50 text-sm px-4 py-2">Чутливість</span>
+        <span class="glass whitespace-nowrap rounded-full border border-white/50 text-sm px-4 py-2">Тьмяний тон</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16">
+    <h2 class="text-xl sm:text-2xl font-bold mb-7">Добірки</h2>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+      <article class="glass rounded-[20px] overflow-hidden border border-white/50 shadow-sm">
+        <div class="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/40 text-xs">[ фото ]</div>
+        <div class="p-5">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">Суха шкіра</span>
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">4 кроки</span>
+          </div>
+          <h3 class="font-semibold text-base mb-1.5">Базовий догляд для сухої шкіри</h3>
+          <p class="text-sm text-ink/60 mb-4">Чотири зрозумілі кроки для очищення, зволоження та захисту.</p>
+          <a href="#" class="text-sm font-semibold text-cta">Переглянути добірку →</a>
+        </div>
+      </article>
+      <article class="glass rounded-[20px] overflow-hidden border border-white/50 shadow-sm">
+        <div class="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/40 text-xs">[ фото ]</div>
+        <div class="p-5">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">3 кроки</span>
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">Для початку</span>
+          </div>
+          <h3 class="font-semibold text-base mb-1.5">Мінімальний догляд на щодень</h3>
+          <p class="text-sm text-ink/60 mb-4">Три засоби для тих, хто не хоче складної рутини.</p>
+          <a href="#" class="text-sm font-semibold text-cta">Переглянути добірку →</a>
+        </div>
+      </article>
+      <article class="glass rounded-[20px] overflow-hidden border border-white/50 shadow-sm sm:col-span-2 md:col-span-1">
+        <div class="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/40 text-xs">[ фото ]</div>
+        <div class="p-5">
+          <div class="flex flex-wrap gap-1.5 mb-3">
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">Волосся</span>
+            <span class="text-[11px] rounded-full bg-white/70 px-2.5 py-1">Відновлення</span>
+          </div>
+          <h3 class="font-semibold text-base mb-1.5">Відновлення сухого волосся</h3>
+          <p class="text-sm text-ink/60 mb-4">Послідовність догляду для м'якості та зручного розчісування.</p>
+          <a href="#" class="text-sm font-semibold text-cta">Переглянути добірку →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16">
+    <h2 class="text-xl sm:text-2xl font-bold mb-7">Як це працює</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-[18px] p-5 border border-white/50">
+        <div class="w-8 h-8 rounded-full bg-cta text-white text-xs font-bold flex items-center justify-center mb-3">1</div>
+        <h3 class="text-sm font-semibold mb-1">Очищення</h3>
+        <p class="text-xs text-ink/55">М'яко очистити шкіру.</p>
+      </div>
+      <div class="glass rounded-[18px] p-5 border border-white/50">
+        <div class="w-8 h-8 rounded-full bg-cta text-white text-xs font-bold flex items-center justify-center mb-3">2</div>
+        <h3 class="text-sm font-semibold mb-1">Зволоження</h3>
+        <p class="text-xs text-ink/55">Легкий зволожувальний засіб.</p>
+      </div>
+      <div class="glass rounded-[18px] p-5 border border-white/50">
+        <div class="w-8 h-8 rounded-full bg-cta text-white text-xs font-bold flex items-center justify-center mb-3">3</div>
+        <h3 class="text-sm font-semibold mb-1">Крем</h3>
+        <p class="text-xs text-ink/55">Підтримати комфорт шкіри.</p>
+      </div>
+      <div class="glass rounded-[18px] p-5 border border-white/50">
+        <div class="w-8 h-8 rounded-full bg-cta text-white text-xs font-bold flex items-center justify-center mb-3">4</div>
+        <h3 class="text-sm font-semibold mb-1">Захист</h3>
+        <p class="text-xs text-ink/55">Сонцезахисний засіб.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 sm:px-8 pb-14">
+    <div class="glass rounded-[20px] border border-white/50 p-5 sm:p-6 text-sm text-ink/65 leading-relaxed space-y-1.5">
+      <p>Це незалежний інформаційний ресурс, а не офіційний сайт бренду.</p>
+      <p>Деякі посилання на сайті є партнерськими. Замовлення, оплата та доставка здійснюються на офіційному сайті продавця.</p>
+    </div>
+  </section>
+
+  <footer class="border-t border-black/5">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row justify-between gap-5 text-sm text-ink/55">
+      <span class="font-bold text-ink">Care Guide</span>
+      <nav class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="#" class="hover:text-ink">Про проєкт</a>
+        <a href="#" class="hover:text-ink">Партнерська програма</a>
+        <a href="#" class="hover:text-ink">Політика конфіденційності</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
