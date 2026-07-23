@@ -12,7 +12,7 @@ export function ArticlesSection() {
         <h2 id="articles-heading" className="text-xl sm:text-2xl font-bold">
           Корисне
         </h2>
-        <Link href="/articles" className="text-sm font-semibold text-cta hover:text-cta-strong">
+        <Link href="/articles" className="text-sm font-semibold text-cta-strong hover:text-ink">
           Усі статті →
         </Link>
       </div>

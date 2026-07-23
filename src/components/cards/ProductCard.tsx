@@ -27,7 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
           href={DEMO_AFFILIATE_URL}
           target="_blank"
           rel="nofollow sponsored noopener"
-          className="text-sm font-semibold text-cta hover:text-cta-strong transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
+          className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
         >
           Переглянути на офіційному сайті ↗
         </a>

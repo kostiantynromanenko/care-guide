@@ -12,7 +12,7 @@ export function CollectionsSection() {
         <h2 id="collections-heading" className="text-xl sm:text-2xl font-bold">
           Добірки
         </h2>
-        <Link href="/collections" className="text-sm font-semibold text-cta hover:text-cta-strong">
+        <Link href="/collections" className="text-sm font-semibold text-cta-strong hover:text-ink">
           Переглянути всі →
         </Link>
       </div>

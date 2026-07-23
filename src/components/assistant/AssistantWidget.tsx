@@ -75,7 +75,7 @@ export function AssistantWidget() {
                       <p className="text-xs text-ink/70 mb-2">{collection.description}</p>
                       <Link
                         href="/collections"
-                        className={`text-xs font-semibold text-cta hover:text-cta-strong rounded ${focusClasses}`}
+                        className={`text-xs font-semibold text-cta-strong hover:text-ink rounded ${focusClasses}`}
                       >
                         Переглянути добірку →
                       </Link>
