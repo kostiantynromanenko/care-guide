@@ -36,7 +36,34 @@
         "4 кроки",
         "Ранок і вечір"
       ],
-      "image": "/demo/collection-dry.jpg"
+      "image": "/demo/collection-dry.jpg",
+      "routineSize": "4 кроки · ранок і вечір",
+      "sequences": [
+        {
+          "label": "Вранці",
+          "steps": [
+            { "number": 1, "title": "Очищення", "description": "М’яко очистити шкіру без відчуття стягнутості.", "productSlug": "gentle-cleanser" },
+            { "number": 2, "title": "Зволоження", "description": "Нанести легкий зволожувальний засіб.", "productSlug": "hydrating-serum" },
+            { "number": 3, "title": "Крем", "description": "Допомогти утримати вологу та підтримати комфорт.", "productSlug": "basic-cream" },
+            { "number": 4, "title": "Захист", "description": "Завершити догляд сонцезахисним засобом.", "productSlug": "light-spf-fluid" }
+          ]
+        },
+        {
+          "label": "Ввечері",
+          "steps": [
+            { "number": 1, "title": "Очищення", "description": "М’яко змити макіяж і денні забруднення.", "productSlug": "gentle-cleanser" },
+            { "number": 2, "title": "Зволоження", "description": "Нанести легкий зволожувальний засіб.", "productSlug": "hydrating-serum" },
+            { "number": 3, "title": "Крем", "description": "Завершити догляд і підтримати комфорт шкіри на ніч.", "productSlug": "basic-cream" }
+          ]
+        }
+      ],
+      "recommendedProductSlugs": ["gentle-cleanser", "hydrating-serum", "basic-cream", "light-spf-fluid"],
+      "usageNotes": [
+        "Наносьте засоби від найлегшої текстури до найщільнішої.",
+        "Дайте кожному засобу трохи часу увібратися перед наступним кроком.",
+        "Сонцезахисний засіб використовуйте лише вранці, навіть у похмуру погоду."
+      ],
+      "relatedCollectionSlugs": ["minimal-daily-care"]
     },
     {
       "title": "Мінімальний догляд на щодень",
@@ -47,7 +74,24 @@
         "Для початку",
         "Щодня"
       ],
-      "image": "/demo/collection-minimal.jpg"
+      "image": "/demo/collection-minimal.jpg",
+      "routineSize": "3 кроки · щодня",
+      "sequences": [
+        {
+          "label": "Щодня",
+          "steps": [
+            { "number": 1, "title": "Очищення", "description": "М’яко очистити шкіру без відчуття стягнутості.", "productSlug": "gentle-cleanser" },
+            { "number": 2, "title": "Зволоження", "description": "Нанести легкий зволожувальний засіб.", "productSlug": "hydrating-serum" },
+            { "number": 3, "title": "Крем", "description": "Допомогти утримати вологу та підтримати комфорт.", "productSlug": "basic-cream" }
+          ]
+        }
+      ],
+      "recommendedProductSlugs": ["gentle-cleanser", "hydrating-serum", "basic-cream"],
+      "usageNotes": [
+        "Це базовий каркас — за потреби додайте сонцезахисний засіб вранці.",
+        "Підходить, якщо хочете почати з малого й поступово розширювати догляд."
+      ],
+      "relatedCollectionSlugs": ["basic-dry-skin"]
     },
     {
       "title": "Відновлення сухого волосся",
@@ -58,7 +102,25 @@
         "Відновлення",
         "4 засоби"
       ],
-      "image": "/demo/collection-hair.jpg"
+      "image": "/demo/collection-hair.jpg",
+      "routineSize": "4 засоби · 1–2 рази на тиждень",
+      "sequences": [
+        {
+          "label": "Кроки догляду",
+          "steps": [
+            { "number": 1, "title": "Живлення перед миттям", "description": "Нанести олію на кінчики за 15–30 хвилин до миття.", "productSlug": "nourishing-hair-oil" },
+            { "number": 2, "title": "Миття", "description": "М’яко очистити волосся та шкіру голови підхожим шампунем." },
+            { "number": 3, "title": "Маска", "description": "1–2 рази на тиждень нанести відновлювальну маску.", "productSlug": "recovery-hair-mask" },
+            { "number": 4, "title": "Догляд без змивання", "description": "Завершити легким незмивним засобом для зручного розчісування." }
+          ]
+        }
+      ],
+      "recommendedProductSlugs": ["nourishing-hair-oil", "recovery-hair-mask"],
+      "usageNotes": [
+        "Маску використовуйте 1–2 рази на тиждень, а не щодня.",
+        "Незмивний засіб наносьте на вологе волосся перед сушінням."
+      ],
+      "relatedCollectionSlugs": []
     }
   ],
   "routineSteps": [
@@ -86,6 +148,7 @@
   "products": [
     {
       "title": "М’який очищувальний гель",
+      "slug": "gentle-cleanser",
       "role": "Крок 1: очищення",
       "description": "Для щоденного очищення без складної схеми використання.",
       "tags": [
@@ -96,6 +159,7 @@
     },
     {
       "title": "Зволожувальна сироватка",
+      "slug": "hydrating-serum",
       "role": "Крок 2: зволоження",
       "description": "Легка текстура для додаткового зволоження.",
       "tags": [
@@ -106,6 +170,7 @@
     },
     {
       "title": "Базовий крем",
+      "slug": "basic-cream",
       "role": "Крок 3: завершення",
       "description": "Підтримує комфорт шкіри після попередніх етапів.",
       "tags": [
@@ -113,6 +178,39 @@
         "Комфорт"
       ],
       "image": "/demo/product-cream.jpg"
+    },
+    {
+      "title": "Легкий SPF-флюїд",
+      "slug": "light-spf-fluid",
+      "role": "Крок 4: захист",
+      "description": "Завершує ранкову рутину та захищає шкіру від сонця.",
+      "tags": [
+        "SPF",
+        "Ранок"
+      ],
+      "image": "/demo/product-spf.jpg"
+    },
+    {
+      "title": "Живильна олія для волосся",
+      "slug": "nourishing-hair-oil",
+      "role": "Живлення перед миттям",
+      "description": "Наносити на кінчики перед миттям для м’якості.",
+      "tags": [
+        "Волосся",
+        "Живлення"
+      ],
+      "image": "/demo/product-hair-oil.jpg"
+    },
+    {
+      "title": "Відновлювальна маска для волосся",
+      "slug": "recovery-hair-mask",
+      "role": "Маска 1–2 рази на тиждень",
+      "description": "Глибоке живлення для сухого та пошкодженого волосся.",
+      "tags": [
+        "Волосся",
+        "Відновлення"
+      ],
+      "image": "/demo/product-hair-mask.jpg"
     }
   ],
   "articles": [

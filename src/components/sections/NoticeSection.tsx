@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/Card";
+import { Notice } from "@/components/ui/Notice";
 import { notices } from "@/data/demo-content";
 
 export function NoticeSection() {
@@ -10,10 +10,10 @@ export function NoticeSection() {
       <h2 id="notice-heading" className="sr-only">
         Важлива інформація про сайт
       </h2>
-      <Card className="p-5 sm:p-6 text-sm text-ink/65 leading-relaxed space-y-1.5">
+      <Notice>
         <p>{notices.independent}</p>
         <p>{notices.affiliate}</p>
-      </Card>
+      </Notice>
     </section>
   );
 }

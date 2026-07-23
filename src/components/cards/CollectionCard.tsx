@@ -28,7 +28,7 @@ export function CollectionCard({ collection }: { collection: Collection }) {
         <h3 className="font-semibold text-base mb-1.5">{collection.title}</h3>
         <p className="text-sm text-ink/60 mb-4">{collection.description}</p>
         <Link
-          href="/collections"
+          href={`/collections/${collection.slug}`}
           className="text-sm font-semibold text-cta hover:text-cta-strong transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
         >
           Переглянути добірку →

@@ -17,22 +17,42 @@ export interface Need {
   description: string;
 }
 
-export interface Collection {
-  title: string;
-  slug: string;
-  description: string;
-  tags: string[];
-  image: string;
-}
-
 export interface RoutineStep {
   number: number;
   title: string;
   description: string;
 }
 
+/** A single step within a collection's routine sequence, optionally linked to a demo product. */
+export interface SequenceStep {
+  number: number;
+  title: string;
+  description: string;
+  productSlug?: string;
+}
+
+/** A named group of steps, e.g. "Вранці" / "Ввечері", or a single "Кроки догляду" group. */
+export interface RoutineSequence {
+  label: string;
+  steps: SequenceStep[];
+}
+
+export interface Collection {
+  title: string;
+  slug: string;
+  description: string;
+  tags: string[];
+  image: string;
+  routineSize: string;
+  sequences: RoutineSequence[];
+  recommendedProductSlugs: string[];
+  usageNotes: string[];
+  relatedCollectionSlugs: string[];
+}
+
 export interface Product {
   title: string;
+  slug: string;
   role: string;
   description: string;
   tags: string[];
