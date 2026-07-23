@@ -50,13 +50,13 @@ export default async function ArticleDetailPage({
         <article className="max-w-2xl mx-auto px-5 sm:px-8 pt-10 sm:pt-14 pb-8">
           <Link
             href="/articles"
-            className="text-sm text-ink/55 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
+            className="text-sm text-ink/70 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
           >
             ← Усі статті
           </Link>
 
           <h1 className="text-2xl sm:text-3xl font-bold mt-5 mb-3">{article.title}</h1>
-          <p className="text-ink/60 mb-8">{article.excerpt}</p>
+          <p className="text-ink/70 mb-8">{article.excerpt}</p>
 
           <ArticleBody blocks={article.body} />
         </article>

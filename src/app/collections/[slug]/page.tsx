@@ -53,7 +53,7 @@ export default async function CollectionDetailPage({
         <section className="max-w-4xl mx-auto px-5 sm:px-8 pt-10 sm:pt-14 pb-8">
           <Link
             href="/collections"
-            className="text-sm text-ink/55 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
+            className="text-sm text-ink/70 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
           >
             ← Усі добірки
           </Link>
@@ -67,7 +67,7 @@ export default async function CollectionDetailPage({
           </ul>
 
           <h1 className="text-2xl sm:text-4xl font-bold mb-3">{collection.title}</h1>
-          <p className="text-ink/65 sm:text-lg mb-4 max-w-2xl">{collection.description}</p>
+          <p className="text-ink/75 sm:text-lg mb-4 max-w-2xl">{collection.description}</p>
           <p className="text-sm font-semibold text-cta-strong mb-6">{collection.routineSize}</p>
 
           <Button href="/selection">Підібрати схожий догляд</Button>
@@ -109,7 +109,7 @@ export default async function CollectionDetailPage({
             <h2 id="usage-heading" className="text-xl sm:text-2xl font-bold mb-5">
               Нотатки з використання
             </h2>
-            <ul className="space-y-2.5 text-sm text-ink/65 list-disc pl-5">
+            <ul className="space-y-2.5 text-sm text-ink/75 list-disc pl-5">
               {collection.usageNotes.map((note) => (
                 <li key={note}>{note}</li>
               ))}

@@ -54,7 +54,7 @@ export function CollectionsFilter({ collections }: { collections: Collection[] }
           ))}
         </div>
       ) : (
-        <p className="text-ink/60">Наразі немає добірок за цим фільтром.</p>
+        <p className="text-ink/70">Наразі немає добірок за цим фільтром.</p>
       )}
     </div>
   );

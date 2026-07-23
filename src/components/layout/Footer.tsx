@@ -10,7 +10,7 @@ const footerLinks = [
 export function Footer() {
   return (
     <footer className="border-t border-black/5">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row justify-between gap-5 text-sm text-ink/55">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row justify-between gap-5 text-sm text-ink/70">
         <span className="font-bold text-ink">Care Guide</span>
         <nav aria-label="Навігація у футері" className="flex flex-wrap gap-x-6 gap-y-2">
           {footerLinks.map((link) => (

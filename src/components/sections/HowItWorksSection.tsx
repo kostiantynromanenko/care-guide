@@ -21,7 +21,7 @@ export function HowItWorksSection() {
                 {step.number}
               </span>
               <h3 className="text-sm font-semibold mb-1">{step.title}</h3>
-              <p className="text-xs text-ink/55">{step.description}</p>
+              <p className="text-xs text-ink/70">{step.description}</p>
             </Card>
           </li>
         ))}

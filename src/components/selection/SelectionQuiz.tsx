@@ -102,7 +102,7 @@ export function SelectionQuiz() {
 
     return (
       <div>
-        <p className="text-sm text-ink/55 mb-6">Ваш результат</p>
+        <p className="text-sm text-ink/70 mb-6">Ваш результат</p>
         {collection ? (
           <Card className="p-6 sm:p-7 mb-6">
             <ul className="flex flex-wrap gap-1.5 mb-4" aria-label="Теги добірки">
@@ -113,9 +113,9 @@ export function SelectionQuiz() {
               ))}
             </ul>
             <h2 className="text-xl sm:text-2xl font-bold mb-2">{collection.title}</h2>
-            <p className="text-ink/65 mb-3">{collection.description}</p>
+            <p className="text-ink/75 mb-3">{collection.description}</p>
             <p className="text-sm font-semibold text-cta-strong mb-5">{collection.routineSize}</p>
-            {result.tip && <p className="text-sm text-ink/60 mb-5">{result.tip}</p>}
+            {result.tip && <p className="text-sm text-ink/70 mb-5">{result.tip}</p>}
             <Link
               href={`/collections/${collection.slug}`}
               className={`inline-block rounded-full bg-cta text-white font-semibold shadow-md shadow-cta/30 hover:bg-cta-strong px-7 py-3.5 text-sm sm:text-base transition-colors ${focusClasses}`}
@@ -125,7 +125,7 @@ export function SelectionQuiz() {
           </Card>
         ) : (
           <Card className="p-6 sm:p-7 mb-6">
-            <p className="text-ink/65">
+            <p className="text-ink/75">
               Поки немає підходящої добірки в демо-даних для цієї комбінації відповідей.
             </p>
           </Card>
@@ -134,7 +134,7 @@ export function SelectionQuiz() {
         <button
           type="button"
           onClick={reset}
-          className={`text-sm font-medium text-ink/60 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
+          className={`text-sm font-medium text-ink/70 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
         >
           Пройти ще раз
         </button>
@@ -149,7 +149,7 @@ export function SelectionQuiz() {
 
   return (
     <div>
-      <p className="text-sm text-ink/55 mb-6">
+      <p className="text-sm text-ink/70 mb-6">
         Крок {currentIndex + 1} з {questionSteps.length}
       </p>
 
@@ -179,7 +179,7 @@ export function SelectionQuiz() {
           <button
             type="button"
             onClick={goBack}
-            className={`text-sm font-medium text-ink/60 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
+            className={`text-sm font-medium text-ink/70 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
           >
             ← Назад
           </button>
@@ -201,7 +201,7 @@ export function SelectionQuiz() {
               onClick={() => chooseRoutineSize("full")}
             />
           </div>
-          <label className="flex items-center gap-2 text-sm text-ink/65 mb-8 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm text-ink/75 mb-8 cursor-pointer">
             <input
               type="checkbox"
               checked={Boolean(answers.sensitive)}
@@ -222,7 +222,7 @@ export function SelectionQuiz() {
             <button
               type="button"
               onClick={goBack}
-              className={`text-sm font-medium text-ink/60 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
+              className={`text-sm font-medium text-ink/70 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
             >
               ← Назад
             </button>

@@ -13,7 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       <div
-        className="aspect-[4/3] bg-gradient-to-br from-peach-tint/40 to-rose-tint/40 flex items-center justify-center text-ink/40 text-xs"
+        className="aspect-[4/3] bg-gradient-to-br from-peach-tint/40 to-rose-tint/40 flex items-center justify-center text-ink/60 text-xs"
         role="img"
         aria-label={`Фото засобу «${product.title}»`}
       >
@@ -22,7 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="p-5 flex flex-col flex-1">
         <p className="text-[11px] font-semibold text-cta-strong mb-1.5">{product.role}</p>
         <h4 className="font-semibold text-sm mb-1.5">{product.title}</h4>
-        <p className="text-xs text-ink/60 mb-4 flex-1">{product.description}</p>
+        <p className="text-xs text-ink/70 mb-4 flex-1">{product.description}</p>
         <a
           href={DEMO_AFFILIATE_URL}
           target="_blank"

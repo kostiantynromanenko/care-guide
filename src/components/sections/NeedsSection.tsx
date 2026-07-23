@@ -14,7 +14,7 @@ export function NeedsSection() {
         {needs.map((need) => (
           <Card key={need.slug} className="p-5">
             <h3 className="font-semibold text-sm sm:text-base mb-1.5">{need.title}</h3>
-            <p className="text-xs sm:text-sm text-ink/60">{need.description}</p>
+            <p className="text-xs sm:text-sm text-ink/70">{need.description}</p>
           </Card>
         ))}
       </div>

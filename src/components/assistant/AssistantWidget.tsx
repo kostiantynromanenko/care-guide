@@ -37,7 +37,7 @@ export function AssistantWidget() {
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Закрити помічника"
-              className={`text-ink/50 hover:text-ink text-lg leading-none rounded p-2 -m-2 ${focusClasses}`}
+              className={`text-ink/70 hover:text-ink text-lg leading-none rounded p-2 -m-2 ${focusClasses}`}
             >
               ×
             </button>
@@ -72,7 +72,7 @@ export function AssistantWidget() {
                       className="rounded-2xl bg-white/60 border border-white/50 p-3.5"
                     >
                       <p className="font-semibold text-sm mb-1">{collection.title}</p>
-                      <p className="text-xs text-ink/60 mb-2">{collection.description}</p>
+                      <p className="text-xs text-ink/70 mb-2">{collection.description}</p>
                       <Link
                         href="/collections"
                         className={`text-xs font-semibold text-cta hover:text-cta-strong rounded ${focusClasses}`}
@@ -83,21 +83,21 @@ export function AssistantWidget() {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-ink/60 mb-4">
+                <p className="text-sm text-ink/70 mb-4">
                   Поки немає підходящої добірки в демо-даних для цієї потреби.
                 </p>
               )}
               <button
                 type="button"
                 onClick={() => setSelectedNeedSlug(null)}
-                className={`text-xs font-medium text-ink/60 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
+                className={`text-xs font-medium text-ink/70 hover:text-ink underline underline-offset-4 rounded ${focusClasses}`}
               >
                 Почати знову
               </button>
             </>
           )}
 
-          <p className="text-[11px] text-ink/45 leading-relaxed mt-4 pt-3 border-t border-white/50">
+          <p className="text-[11px] text-ink/75 leading-relaxed mt-4 pt-3 border-t border-white/50">
             {notices.medical}
           </p>
         </div>

@@ -11,7 +11,7 @@ export function CollectionCard({ collection }: { collection: Collection }) {
   return (
     <Card className="overflow-hidden">
       <div
-        className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/40 text-xs"
+        className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/60 text-xs"
         role="img"
         aria-label={`Фото до добірки «${collection.title}»`}
       >
@@ -26,7 +26,7 @@ export function CollectionCard({ collection }: { collection: Collection }) {
           ))}
         </ul>
         <h3 className="font-semibold text-base mb-1.5">{collection.title}</h3>
-        <p className="text-sm text-ink/60 mb-4">{collection.description}</p>
+        <p className="text-sm text-ink/70 mb-4">{collection.description}</p>
         <Link
           href={`/collections/${collection.slug}`}
           className="text-sm font-semibold text-cta hover:text-cta-strong transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"

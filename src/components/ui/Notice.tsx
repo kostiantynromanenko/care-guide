@@ -14,7 +14,7 @@ export function Notice({
   className?: string;
 }) {
   return (
-    <Card className={`p-5 sm:p-6 text-sm text-ink/65 leading-relaxed space-y-1.5 ${className}`}>
+    <Card className={`p-5 sm:p-6 text-sm text-ink/75 leading-relaxed space-y-1.5 ${className}`}>
       {children}
     </Card>
   );

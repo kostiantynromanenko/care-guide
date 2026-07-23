@@ -42,10 +42,10 @@ export function RoutineStepper({ sequence }: { sequence: RoutineSequence }) {
 
               <Card className="p-4 flex-1">
                 <h4 className="text-sm font-semibold mb-1">{step.title}</h4>
-                <p className="text-xs text-ink/60 mb-2">{step.description}</p>
+                <p className="text-xs text-ink/70 mb-2">{step.description}</p>
                 {product && (
-                  <p className="text-[11px] text-ink/45">
-                    Засіб: <span className="text-ink/65">{product.title}</span>
+                  <p className="text-[11px] text-ink/75">
+                    Засіб: <span className="text-ink/75">{product.title}</span>
                   </p>
                 )}
               </Card>

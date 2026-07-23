@@ -16,7 +16,7 @@ export default function ArticlesPage() {
       <main>
         <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-12 sm:pt-16 pb-16 sm:pb-20">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">Корисне</h1>
-          <p className="text-ink/60 mb-8 max-w-xl">
+          <p className="text-ink/70 mb-8 max-w-xl">
             Прості пояснення, які допомагають краще орієнтуватися в догляді.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">

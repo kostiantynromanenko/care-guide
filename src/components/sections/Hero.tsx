@@ -9,7 +9,7 @@ export function Hero() {
         <h1 className="text-[2.1rem] leading-tight sm:text-5xl font-bold mb-5">
           {site.tagline}
         </h1>
-        <p className="text-sm sm:text-base text-ink/65 max-w-md mx-auto mb-9">
+        <p className="text-sm sm:text-base text-ink/75 max-w-md mx-auto mb-9">
           {site.description}
         </p>
         <Button href="/selection" variant="primary" className="mb-10">
