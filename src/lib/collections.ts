@@ -1,5 +1,5 @@
-import { collections, products } from "@/data/demo-content";
-import type { Collection, Product } from "@/types/content";
+import { articles, collections, products } from "@/data/demo-content";
+import type { Article, Collection, Product } from "@/types/content";
 
 export function getCollectionBySlug(slug: string): Collection | undefined {
   return collections.find((collection) => collection.slug === slug);
@@ -19,4 +19,8 @@ export function getCollectionsBySlugs(slugs: string[]): Collection[] {
   return slugs
     .map((slug) => getCollectionBySlug(slug))
     .filter((collection): collection is Collection => Boolean(collection));
+}
+
+export function getArticleBySlug(slug: string): Article | undefined {
+  return articles.find((article) => article.slug === slug);
 }

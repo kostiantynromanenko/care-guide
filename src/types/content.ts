@@ -62,10 +62,17 @@ export interface Product {
   image: string;
 }
 
+export type ArticleBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[] };
+
 export interface Article {
   title: string;
   slug: string;
   excerpt: string;
+  body: ArticleBlock[];
+  relatedCollectionSlugs: string[];
 }
 
 export interface Notices {
