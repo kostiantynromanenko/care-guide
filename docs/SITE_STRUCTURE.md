@@ -46,6 +46,10 @@ The result should lead to one or more existing collections or routines.
 
 For the design prototype, use deterministic demo results. Do not implement AI recommendations.
 
+A recommendation bot has been raised as a possible future idea — see
+"Future considerations" in `docs/PROJECT_CONTEXT.md`. It is not approved and
+does not change this rule until it goes through its own approval process.
+
 ### 3. Collections `/collections`
 
 A catalog of solutions, not a product catalog.
