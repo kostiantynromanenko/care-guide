@@ -31,7 +31,5 @@ body {
 }
 
 .glass {
-  background: rgb(255 255 255 / 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  @apply bg-white/60 backdrop-blur-lg;
 }
