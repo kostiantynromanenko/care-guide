@@ -37,6 +37,7 @@
         "Ранок і вечір"
       ],
       "image": "/demo/collection-dry.jpg",
+      "area": "face",
       "routineSize": "4 кроки · ранок і вечір",
       "sequences": [
         {
@@ -75,6 +76,7 @@
         "Щодня"
       ],
       "image": "/demo/collection-minimal.jpg",
+      "area": "face",
       "routineSize": "3 кроки · щодня",
       "sequences": [
         {
@@ -103,6 +105,7 @@
         "4 засоби"
       ],
       "image": "/demo/collection-hair.jpg",
+      "area": "hair",
       "routineSize": "4 засоби · 1–2 рази на тиждень",
       "sequences": [
         {

@@ -37,12 +37,15 @@ export interface RoutineSequence {
   steps: SequenceStep[];
 }
 
+export type CollectionArea = "face" | "hair";
+
 export interface Collection {
   title: string;
   slug: string;
   description: string;
   tags: string[];
   image: string;
+  area: CollectionArea;
   routineSize: string;
   sequences: RoutineSequence[];
   recommendedProductSlugs: string[];
