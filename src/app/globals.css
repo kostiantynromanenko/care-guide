@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bg: #fbf8f7;
+  --color-ink: #2e2624;
+  --color-cta: #d85c77;
+  --color-cta-strong: #c14764;
+  --color-rose-tint: #f1a7a0;
+  --color-peach-tint: #f6c9a0;
+  --color-lavender-tint: #d9c7ec;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+.gradient-hero {
+  background:
+    radial-gradient(circle at 15% 20%, rgb(241 167 160 / 0.55), transparent 55%),
+    radial-gradient(circle at 85% 15%, rgb(217 199 236 / 0.5), transparent 50%),
+    radial-gradient(circle at 60% 80%, rgb(246 201 160 / 0.45), transparent 55%),
+    var(--color-bg);
+}
+
+.glass {
+  background: rgb(255 255 255 / 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}

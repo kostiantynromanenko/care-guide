@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
 import { site } from "@/data/demo-content";
 import "./globals.css";
+
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+});
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.tagline}`,
@@ -14,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk">
-      <body>{children}</body>
+      <body className={manrope.className}>{children}</body>
     </html>
   );
 }

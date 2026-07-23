@@ -1,28 +1,29 @@
-import { site, needs } from "@/data/demo-content";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { Hero } from "@/components/sections/Hero";
+import { NeedsSection } from "@/components/sections/NeedsSection";
+import { CollectionsSection } from "@/components/sections/CollectionsSection";
+import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
+import { ArticlesSection } from "@/components/sections/ArticlesSection";
+import { NoticeSection } from "@/components/sections/NoticeSection";
 
 /**
- * Temporary placeholder homepage.
- *
- * This intentionally has no final visual design applied yet — the
- * homepage design direction (see /preview) is still pending owner
- * approval per docs/APPROVAL_WORKFLOW.md. This page only proves that
- * the typed demo-content data layer is wired up correctly.
+ * Homepage — approved direction: Variant 5 "Rose Gradient Wellness"
+ * (see preview/variant-5-rose-gradient-wellness.html for the original mockup).
  */
 export default function Home() {
   return (
-    <main>
-      <h1>{site.name}</h1>
-      <p>{site.tagline}</p>
-      <p>{site.description}</p>
-
-      <h2>Потреби (демо-дані)</h2>
-      <ul>
-        {needs.map((need) => (
-          <li key={need.slug}>
-            <strong>{need.title}</strong> — {need.description}
-          </li>
-        ))}
-      </ul>
-    </main>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <NeedsSection />
+        <CollectionsSection />
+        <HowItWorksSection />
+        <ArticlesSection />
+        <NoticeSection />
+      </main>
+      <Footer />
+    </>
   );
 }
