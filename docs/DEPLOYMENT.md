@@ -160,6 +160,24 @@ npx vercel project protection disable <project-name> --sso
 Re-enable later if needed (e.g. between review rounds) with
 `npx vercel project protection enable <project-name> --sso`.
 
+## 10. Import real catalog data (optional, run any time after seeding)
+
+`scripts/import-hillary-catalog.ts` (local dev) and the protected endpoint
+`/api/import-hillary-catalog` (production) both run
+`src/lib/import-hillary-catalog.ts` — see `docs/PROJECT_CONTEXT.md` § Technical
+status ("Wave D") for what this does. Same sensitive-env-var reasoning as
+seeding: run it in production via the deployed endpoint, not locally against
+the production DB.
+
+```bash
+curl -X POST https://<your-project>.vercel.app/api/import-hillary-catalog \
+  -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
+```
+
+Unlike `/api/seed`, this has no "already ran" guard — it's idempotent
+(upserts by product/collection slug), so it's safe to call again later to
+refresh titles/photos from a newer snapshot of the feed.
+
 ## Notes / things intentionally out of scope here
 
 - **Migrations:** local dev still uses `push` mode (auto-sync on every save,
