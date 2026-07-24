@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { LogoMark } from "@/components/ui/LogoMark";
+import { getSiteSettings } from "@/lib/site-content";
 
 const navLinks = [
   { href: "/", label: "Головна" },
@@ -11,12 +13,18 @@ const navLinks = [
 const focusClasses =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded";
 
-export function Header() {
+export async function Header() {
+  const site = await getSiteSettings();
+
   return (
     <header className="glass sticky top-0 z-40 border-b border-white/40">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className={`font-bold text-lg ${focusClasses}`}>
-          Care Guide
+        <Link
+          href="/"
+          className={`flex items-center gap-2 font-bold text-lg text-ink hover:text-cta-strong transition-colors ${focusClasses}`}
+        >
+          <LogoMark className="h-8 w-8 shrink-0" />
+          {site.name}
         </Link>
 
         <nav
@@ -65,7 +73,7 @@ export function Header() {
             ))}
             <Link
               href="/selection"
-              className={`mt-2 rounded-full bg-cta text-white text-center font-semibold px-4 py-2.5 ${focusClasses}`}
+              className={`mt-2 rounded-full bg-cta text-white text-center font-semibold px-4 py-2.5 hover:bg-cta-strong transition-colors ${focusClasses}`}
             >
               Підібрати догляд
             </Link>

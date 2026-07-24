@@ -14,7 +14,10 @@ export async function CollectionsSection() {
         <h2 id="collections-heading" className="text-xl sm:text-2xl font-bold">
           Добірки
         </h2>
-        <Link href="/collections" className="text-sm font-semibold text-cta-strong hover:text-ink">
+        <Link
+          href="/collections"
+          className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+        >
           Переглянути всі →
         </Link>
       </div>

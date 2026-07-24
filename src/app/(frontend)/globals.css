@@ -22,6 +22,16 @@ body {
   color: var(--color-ink);
 }
 
+/*
+ * Tailwind v4's preflight intentionally leaves <button> at the browser
+ * default cursor (not pointer). Every interactive control in this project
+ * is either a link (already pointer) or a <button>, so restoring pointer
+ * here keeps hover affordance consistent without annotating every button.
+ */
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 .gradient-hero {
   background:
     radial-gradient(circle at 15% 20%, rgb(241 167 160 / 0.55), transparent 55%),

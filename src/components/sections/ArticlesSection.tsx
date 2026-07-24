@@ -14,7 +14,10 @@ export async function ArticlesSection() {
         <h2 id="articles-heading" className="text-xl sm:text-2xl font-bold">
           Корисне
         </h2>
-        <Link href="/articles" className="text-sm font-semibold text-cta-strong hover:text-ink">
+        <Link
+          href="/articles"
+          className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+        >
           Усі статті →
         </Link>
       </div>

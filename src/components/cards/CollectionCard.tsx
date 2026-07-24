@@ -11,7 +11,7 @@ export function CollectionCard({ collection }: { collection: Collection }) {
   return (
     <Card className="overflow-hidden">
       <div
-        className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/60 text-xs"
+        className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/70 text-xs font-medium"
         role="img"
         aria-label={`Фото до добірки «${collection.title}»`}
       >

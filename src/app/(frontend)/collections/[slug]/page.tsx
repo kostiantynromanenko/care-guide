@@ -52,7 +52,7 @@ export default async function CollectionDetailPage({
         <section className="max-w-4xl mx-auto px-5 sm:px-8 pt-10 sm:pt-14 pb-8">
           <Link
             href="/collections"
-            className="text-sm text-ink/70 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
+            className="text-sm font-medium text-ink/80 hover:text-cta-strong transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
           >
             ← Усі добірки
           </Link>

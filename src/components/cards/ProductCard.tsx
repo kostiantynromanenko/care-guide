@@ -13,7 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       <div
-        className="aspect-[4/3] bg-gradient-to-br from-peach-tint/40 to-rose-tint/40 flex items-center justify-center text-ink/60 text-xs"
+        className="aspect-[4/3] bg-gradient-to-br from-peach-tint/40 to-rose-tint/40 flex items-center justify-center text-ink/70 text-xs font-medium"
         role="img"
         aria-label={`Фото засобу «${product.title}»`}
       >
