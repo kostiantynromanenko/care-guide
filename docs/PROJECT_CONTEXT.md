@@ -28,6 +28,35 @@ The website should provide independent value through:
 - educational articles;
 - a lightweight care-selection questionnaire.
 
+### Decision: redirect-out affiliate model, not a dropship "own shop" (confirmed)
+
+HiLLARY's real affiliate program (see `drop.hillary.ua/instructions`, `hillary.ua/drop`) also
+offers a dropship-style option: partners can run their own storefront (own site, marketplace
+listing, or social media), take orders directly from customers, and manually re-enter each
+order on Hillary's site using their own affiliate link, collecting the customer's payment
+themselves when it's a prepaid order.
+
+This was evaluated and explicitly **declined** for this project, in favor of staying with the
+simple redirect-out model already built:
+
+- HiLLARY pays the same commission (~30–35% per completed order) either way — partners must
+  sell at Hillary's own listed price, no markup allowed — so the dropship option adds no
+  revenue ceiling that the current model is missing.
+- The dropship option requires permanent per-order manual labor (placing every order by hand
+  on Hillary's site, collecting/holding customer payment, customer service, absorbing
+  cancellation risk to the affiliate account) that doesn't scale with content and was never
+  budgeted or scoped for this project.
+- It would require rebuilding the site's core premise (no cart, no checkout, no payment
+  collection, "not a conventional shop" — see Positioning below and `docs/DESIGN_BRIEF.md`),
+  discarding work already built, deployed, and reviewed by the client.
+
+A smaller middle-ground idea — an optional, opt-in "message us if you'd like help ordering"
+contact button (Telegram/Instagram/WhatsApp) next to the affiliate CTA on select
+products/collections — remains a plausible low-risk follow-up if the client wants to test
+whether a personal touch improves conversion, but is **not implemented**: it still requires a
+real contact channel/handle from the client, and is a separate decision from the core
+business model above.
+
 ## Positioning
 
 The project should feel like a useful beauty guidance service or editorial recommendation platform.

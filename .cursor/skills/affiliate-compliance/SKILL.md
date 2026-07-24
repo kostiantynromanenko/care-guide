@@ -51,6 +51,30 @@ Final wording must be approved before production use.
 - Do not use Hillary as the project's own brand identity.
 - Flag any brand name, logo, domain, ad, metadata, or SEO use that may require company approval.
 
+## Confirmed HiLLARY partner-program rules (from `drop.hillary.ua/instructions`)
+
+Verified directly against the program's own FAQ — treat these as hard constraints, not
+guesses, once real affiliate integration is approved:
+
+- Never use "hillary" (or "gregory mill" / "wishlist") in the site's domain name.
+- Never use brand keywords in SEO `keywords` meta tags, page copy meant for SEO, or in paid
+  search campaigns (including automated/"smart" Google Ads campaigns, which must explicitly
+  exclude brand terms) — orders attributed to branded-keyword ads are not paid out.
+- Custom landing/prelanding pages (which is what this whole site effectively is) are allowed,
+  but require prior sign-off from a HiLLARY partner-program manager — separate from this
+  project's own internal approval workflow. Flag this to the client before real affiliate
+  links go live.
+- If promoting via Instagram/TikTok: the account name must not contain the brand name, and
+  must not copy the official profile photo.
+- HiLLARY provides an automated product data feed (descriptions, photos, pricing, stock
+  status) partners can import — a plausible future alternative to manual content entry in
+  Payload once real integration is approved, instead of a compliance concern.
+- The program also offers a dropship/"own shop" option (own storefront, manual order
+  re-entry, no markup allowed — same commission either way). This was evaluated and declined
+  for this project; see `docs/PROJECT_CONTEXT.md` → "Decision: redirect-out affiliate model,
+  not a dropship 'own shop'" for the full reasoning. Do not build cart/checkout/payment-
+  collection features based on this program detail without a fresh, separate approval.
+
 ## Medical and cosmetic claims
 
 - Avoid diagnostic language.
