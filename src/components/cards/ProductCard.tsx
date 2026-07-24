@@ -5,13 +5,16 @@ import type { Product } from "@/types/content";
 
 /**
  * Renders `product.image` (uploaded via the Payload admin) when present,
- * falling back to a decorative placeholder otherwise — most demo products
- * don't have a real photo yet during the design-prototype phase.
- * The CTA always opens the (demo) official seller URL in a new tab, per
- * `.cursor/skills/affiliate-compliance/SKILL.md`: it must never look like a
- * checkout action on this site.
+ * falling back to a decorative placeholder otherwise — a few demo products
+ * still don't have a real photo.
+ * The CTA opens `product.sourceUrl` (the real hillary.ua product page) when
+ * known, falling back to the generic demo URL otherwise. Always opens in a
+ * new tab per `.cursor/skills/affiliate-compliance/SKILL.md`: it must never
+ * look like a checkout action on this site. Not yet affiliate-tracked — see
+ * docs/PROJECT_CONTEXT.md.
  */
 export function ProductCard({ product }: { product: Product }) {
+  const href = product.sourceUrl || DEMO_AFFILIATE_URL;
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       {product.image ? (
@@ -38,7 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
         <h4 className="font-semibold text-sm mb-1.5">{product.title}</h4>
         <p className="text-xs text-ink/70 mb-4 flex-1">{product.description}</p>
         <a
-          href={DEMO_AFFILIATE_URL}
+          href={href}
           target="_blank"
           rel="nofollow sponsored noopener"
           className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"

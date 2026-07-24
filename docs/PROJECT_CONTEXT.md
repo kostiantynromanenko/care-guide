@@ -150,6 +150,19 @@ CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
 - Real image uploads (Payload's `Media` collection) are wired into the frontend: collection/
   product cards render the uploaded photo via `next/image` when an editor attaches one, and
   fall back to the decorative placeholder otherwise.
+- Real catalog data (from "work with real data" decision): `scripts/import-hillary-catalog.ts`
+  imports real HiLLARY product data (title, real photo, real `hillary.ua` product URL,
+  vendor code, price/stock — the latter two stored but not displayed, since the feed's
+  price/availability isn't reliably fresh) via the public product feed
+  (`src/lib/hillary-feed.ts`). It replaced the 6 fictional demo products with real SKUs
+  (existing collections needed no changes, since they reference the same slugs), and added 3
+  new collections + 10 new products to close the content gap for **oiliness**, **sensitivity**,
+  and **dullness** — previously all three fell back to the generic `minimal-daily-care`
+  collection in both the `/selection` quiz and the recommendation widget. Product CTAs now
+  link to the real product page instead of the placeholder `example.com` URL — still not
+  affiliate-tracked, since that requires the client's actual partner `ShortLink` credentials
+  (a separate, not-yet-approved follow-up). The import is idempotent (safe to re-run) but is a
+  manual/on-demand script, not a scheduled auto-sync.
 
 ## Future considerations (not in current scope)
 

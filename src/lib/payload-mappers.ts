@@ -53,6 +53,7 @@ export function toProduct(doc: PayloadProduct): Product {
     description: doc.description,
     tags: doc.tags ?? [],
     ...toImage(doc.image),
+    sourceUrl: doc.sourceUrl ?? undefined,
   };
 }
 

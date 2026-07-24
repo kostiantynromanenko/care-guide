@@ -7,15 +7,14 @@ import type { Collection } from "@/types/content";
  * docs/PROJECT_CONTEXT.md for why a real AI-powered assistant is tracked
  * as a separate, not-yet-approved decision.
  *
- * Demo content currently only has three collections, mostly dry-skin
- * oriented, so needs without a close thematic match fall back to the
- * most general/minimal collection rather than an invented one.
+ * Each need now maps to a dedicated collection built from real HiLLARY
+ * catalog data (see docs/PROJECT_CONTEXT.md — "work with real data").
  */
 const NEED_TO_COLLECTION_SLUGS: Record<string, string[]> = {
   dryness: ["basic-dry-skin", "dry-hair-recovery"],
-  oiliness: ["minimal-daily-care"],
-  sensitivity: ["minimal-daily-care"],
-  dullness: ["minimal-daily-care"],
+  oiliness: ["oil-control-combination-skin"],
+  sensitivity: ["calm-sensitive-skin"],
+  dullness: ["vitamin-c-glow"],
 };
 
 export function getSuggestedCollections(

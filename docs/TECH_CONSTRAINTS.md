@@ -36,15 +36,21 @@ Design direction (Variant 5) is approved. CMS integration has been introduced in
   `src/data/demo-content.ts` / `demo/demo-content.json` are no longer read by the running app;
   they remain in the repo only as the seed source for `scripts/seed.ts`.
 
-- **Wave C (in progress):** production hosting. Approved decision: Vercel (Next.js app) +
-  a managed Postgres database (via Vercel's Storage marketplace, e.g. Neon) + Vercel Blob
-  for media uploads. `payload.config.ts` now includes `@payloadcms/storage-vercel-blob`,
-  which automatically falls back to local disk storage when `BLOB_READ_WRITE_TOKEN` is
-  unset, so local dev is unaffected. Production uses committed migrations
-  (`src/migrations/`, wired via `prodMigrations`) instead of local dev's `push` mode,
-  since Payload only auto-syncs schema when `NODE_ENV !== "production"`. See
-  `docs/DEPLOYMENT.md` for the full setup procedure (account/repo/env var steps that
-  require owner action).
+- **Wave C (done):** production hosting. Vercel (Next.js app) + a managed Postgres database
+  (via Vercel's Storage marketplace, e.g. Neon) + Vercel Blob for media uploads.
+  `payload.config.ts` includes `@payloadcms/storage-vercel-blob`, which automatically falls
+  back to local disk storage when `BLOB_READ_WRITE_TOKEN` is unset, so local dev is
+  unaffected. Production uses committed migrations (`src/migrations/`, wired via
+  `prodMigrations`) instead of local dev's `push` mode, since Payload only auto-syncs schema
+  when `NODE_ENV !== "production"`. See `docs/DEPLOYMENT.md` for the full setup procedure.
+  Deployment Protection has since been turned off, so production is publicly reachable.
+- **Wave D (done):** real catalog data. `src/lib/hillary-feed.ts` fetches/parses HiLLARY's
+  public YML product feed; `scripts/import-hillary-catalog.ts` maps selected real SKUs onto
+  our `Products`/`Collections` slugs (idempotent, re-runnable) — see
+  `docs/PROJECT_CONTEXT.md` § Technical status for the full reasoning. `Products` gained
+  `sourceUrl`/`vendorCode`/`price`/`inStock` fields; only `sourceUrl` is currently used
+  (as the real outbound CTA link), the rest are stored for future use since the feed's
+  price/availability data isn't reliably fresh.
 
 ## Implementation rules
 
@@ -64,7 +70,8 @@ Design direction (Variant 5) is approved. CMS integration has been introduced in
 payload.config.ts          # Payload config (root, required by Payload)
 docker-compose.yml          # local Postgres for Payload
 scripts/
-└── seed.ts                 # migrates demo/demo-content.json into Postgres (Wave A)
+├── seed.ts                  # migrates demo/demo-content.json into Postgres (Wave A)
+└── import-hillary-catalog.ts # imports real HiLLARY catalog data (Wave D)
 src/
 ├── app/
 │   ├── (frontend)/          # the public site — reads from Payload as of Wave B
@@ -116,6 +123,12 @@ export const DEMO_AFFILIATE_URL = "https://example.com/official-product";
 ```
 
 Do not use real affiliate links in the prototype repository unless the owner explicitly supplies and approves them.
+
+Exception (Wave D): products imported by `scripts/import-hillary-catalog.ts` link to their
+real `hillary.ua` product page (`product.sourceUrl`) instead of the placeholder — this is a
+real, working URL, but still **not** affiliate-tracked (no partner `ShortLink`), since that
+requires the client's own affiliate credentials. `ProductCard` falls back to
+`DEMO_AFFILIATE_URL` for any product without a `sourceUrl`.
 
 ## Language requirements
 

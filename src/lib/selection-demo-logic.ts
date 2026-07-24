@@ -4,11 +4,7 @@ import type { Need } from "@/types/content";
  * Deterministic, non-AI matching logic for the `/selection` questionnaire
  * (docs/SITE_STRUCTURE.md §2). Same spirit as the recommendation-helper
  * widget (`src/lib/assistant-demo-logic.ts`): a small static decision
- * table over demo content, not a real recommendation engine.
- *
- * Demo content only has three collections, so questions are limited to
- * ones that can actually change the outcome — no invented "budget" or
- * "skin type" steps that wouldn't affect the deterministic result.
+ * table over content, not a real recommendation engine.
  */
 
 export type SelectionArea = "face" | "hair";
@@ -63,10 +59,20 @@ export function getSelectionResult(answers: SelectionAnswers, needs: Need[]): Se
     return { collectionSlug: "basic-dry-skin", tip: buildTip(answers, needs) };
   }
 
+  if (answers.concern === "oiliness") {
+    return { collectionSlug: "oil-control-combination-skin", tip: buildTip(answers, needs) };
+  }
+
+  if (answers.concern === "sensitivity") {
+    return { collectionSlug: "calm-sensitive-skin", tip: buildTip(answers, needs) };
+  }
+
+  if (answers.concern === "dullness") {
+    return { collectionSlug: "vitamin-c-glow", tip: buildTip(answers, needs) };
+  }
+
   return {
     collectionSlug: "minimal-daily-care",
-    tip:
-      buildTip(answers, needs) ||
-      "Поки в наших добірках немає окремої схеми саме під цю потребу — почніть з базового набору.",
+    tip: buildTip(answers, needs) || "Це базовий каркас — за потреби додайте засоби пізніше.",
   };
 }

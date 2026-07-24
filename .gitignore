@@ -31,11 +31,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
 !.env.example
-
-# vercel
-.vercel
 
 # typescript
 *.tsbuildinfo
@@ -46,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# local cache (e.g. downloaded feed files for one-off scripts)
+/.cache

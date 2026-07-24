@@ -62,6 +62,8 @@ export interface Product {
   tags: string[];
   image: string;
   imageAlt: string;
+  /** Real hillary.ua product page, when known — see `DEMO_AFFILIATE_URL` fallback in ProductCard. */
+  sourceUrl?: string;
 }
 
 export type ArticleBlock =

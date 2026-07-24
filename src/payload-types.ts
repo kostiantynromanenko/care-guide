@@ -201,6 +201,19 @@ export interface Product {
   description: string;
   tags?: string[] | null;
   image?: (number | null) | Media;
+  /**
+   * Real hillary.ua product page. Used as the outbound CTA link — not yet affiliate-tracked, see docs/PROJECT_CONTEXT.md.
+   */
+  sourceUrl?: string | null;
+  /**
+   * Used to re-match this product against future catalog re-imports.
+   */
+  vendorCode?: string | null;
+  /**
+   * Not currently displayed on the public site — the catalog feed's price/availability data isn't reliably fresh (see docs/PROJECT_CONTEXT.md).
+   */
+  price?: number | null;
+  inStock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -423,6 +436,10 @@ export interface ProductsSelect<T extends boolean = true> {
   description?: T;
   tags?: T;
   image?: T;
+  sourceUrl?: T;
+  vendorCode?: T;
+  price?: T;
+  inStock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
