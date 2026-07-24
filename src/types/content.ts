@@ -45,6 +45,7 @@ export interface Collection {
   description: string;
   tags: string[];
   image: string;
+  imageAlt: string;
   area: CollectionArea;
   routineSize: string;
   sequences: RoutineSequence[];
@@ -60,6 +61,7 @@ export interface Product {
   description: string;
   tags: string[];
   image: string;
+  imageAlt: string;
 }
 
 export type ArticleBlock =

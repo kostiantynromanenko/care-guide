@@ -1,6 +1,7 @@
 import type {
   Article as PayloadArticle,
   Collection as PayloadCollection,
+  Media,
   Need as PayloadNeed,
   Product as PayloadProduct,
 } from "@/payload-types";
@@ -17,12 +18,24 @@ import type {
  * Converts Payload's generated document shapes into the existing
  * `src/types/content.ts` view-model shapes, so presentational components
  * (already design-approved) don't need to change at all for Wave B.
- *
- * `CollectionCard`/`ProductCard` never resolve `.image` as a URL (they
- * render decorative placeholders regardless), so the `image` field below is
- * intentionally left as an empty string rather than resolving the Payload
- * Media relation.
  */
+
+/**
+ * Resolves an `upload` relationship field into a plain `{ image, imageAlt }`
+ * pair. Requires the relation to already be populated (Payload's Local API
+ * defaults to depth 2, which covers this) — falls back to empty strings for
+ * unset fields or an unpopulated ID reference, which `CollectionCard`/
+ * `ProductCard` treat as "no image" and render a decorative placeholder.
+ */
+function toImage(image: number | Media | null | undefined): {
+  image: string;
+  imageAlt: string;
+} {
+  if (image && typeof image === "object" && image.url) {
+    return { image: image.url, imageAlt: image.alt };
+  }
+  return { image: "", imageAlt: "" };
+}
 
 export function toNeed(doc: PayloadNeed): Need {
   return {
@@ -39,7 +52,7 @@ export function toProduct(doc: PayloadProduct): Product {
     role: doc.role,
     description: doc.description,
     tags: doc.tags ?? [],
-    image: "",
+    ...toImage(doc.image),
   };
 }
 
@@ -72,7 +85,7 @@ export function toCollection(doc: PayloadCollection): Collection {
     slug: doc.slug,
     description: doc.description,
     tags: doc.tags ?? [],
-    image: "",
+    ...toImage(doc.image),
     area: doc.area,
     routineSize: doc.routineSize,
     sequences: toSequences(doc.sequences),
