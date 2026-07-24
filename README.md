@@ -1,47 +1,94 @@
-# Cursor Design Pack
+# Care Guide
 
-This package gives a Cursor AI agent enough context to create design variants for a cosmetics recommendation website.
+Care Guide is an independent cosmetics guidance website. It helps a visitor go
+from "I have this skin/hair concern" to a clear, curated collection or care
+routine — without acting like an online store. The site doesn't take
+payments, manage orders, or handle delivery; product links point out to the
+official seller's website.
 
-## Project status
+The public site is Ukrainian-first: all visitor-facing copy, navigation, and
+metadata are in Ukrainian by default.
 
-The technology choice is fixed:
+## Tech stack
 
-- Next.js
-- Payload CMS
-- PostgreSQL
-- TypeScript
-- Tailwind CSS
+- [Next.js](https://nextjs.org/) (App Router) + TypeScript
+- [Payload CMS](https://payloadcms.com/) 3, embedded directly in the Next.js app
+- PostgreSQL (via Payload's Postgres adapter)
+- [Tailwind CSS](https://tailwindcss.com/) v4
 
-The public website's primary and default language is Ukrainian.
+## Getting started
 
-The current task is **design prototyping only**. Use demo content and local mock data. Do not implement Payload CMS or PostgreSQL until the design direction is approved.
+### Prerequisites
 
-## Start here
+- Node.js 20+
+- Docker (for a local PostgreSQL instance)
 
-1. Read `.cursor/rules/design-agent.mdc`.
-2. Read `docs/PROJECT_CONTEXT.md`.
-3. Read `docs/DESIGN_BRIEF.md`.
-4. Read `docs/SITE_STRUCTURE.md`.
-5. Read `docs/APPROVAL_WORKFLOW.md`.
-6. Use the content from `demo/demo-content.json`.
-7. Follow the task in `docs/FIRST_DESIGN_TASK.md`.
+### Setup
 
-## Main principle
+```bash
+npm install
+cp .env.example .env.local   # then fill in PAYLOAD_SECRET with any long random string
+docker compose up -d         # starts local Postgres on port 5433
+npm run seed                 # loads demo content from demo/demo-content.json
+npm run dev
+```
 
-The agent must not make major product, structure, visual, or technical decisions silently.
+The site runs at [http://localhost:3000](http://localhost:3000), and the
+Payload admin panel at [http://localhost:3000/admin](http://localhost:3000/admin).
+See `docs/CLIENT_ADMIN_GUIDE.md` for admin login details and a walkthrough of
+what's editable there.
 
-It must:
+### Available scripts
 
-1. propose options;
-2. explain key differences;
-3. wait for explicit approval;
-4. implement only the approved option;
-5. stop again before the next major decision.
+| Script                  | Description                                              |
+| ------------------------ | --------------------------------------------------------- |
+| `npm run dev`            | Start the Next.js dev server                              |
+| `npm run build`          | Production build                                          |
+| `npm run start`          | Run a production build locally                            |
+| `npm run lint`           | Run ESLint                                                 |
+| `npm run seed`           | Load `demo/demo-content.json` into Postgres via Payload    |
+| `npm run generate:types` | Regenerate `src/payload-types.ts` from the Payload config  |
 
-Small implementation details may be resolved independently when they do not change the approved design.
+## Project structure
 
-## Agent skills
+```text
+payload.config.ts        # Payload CMS configuration (collections, globals, plugins)
+docker-compose.yml        # Local PostgreSQL for development
+scripts/seed.ts            # Seeds the database from demo/demo-content.json
+demo/demo-content.json     # Source demo content (site copy, needs, collections, products, articles)
+src/
+├── app/
+│   ├── (frontend)/         # The public site (pages, layout)
+│   └── (payload)/          # Payload admin UI + REST/GraphQL API routes
+├── collections/            # Payload collection configs (Needs, Products, Collections, Articles, Media, Users)
+├── globals/                # Payload global configs (SiteSettings, Notices, HowItWorks)
+├── components/             # UI components (layout, sections, cards, quiz, assistant, ui)
+├── lib/                    # Data-fetching helpers, Payload client, mapping logic
+└── types/                  # Shared content types
+```
 
-Project-specific Cursor skills are stored in `.cursor/skills/`.
+Public pages read content from Payload's Local API (through `src/lib/`)
+rather than from `demo/demo-content.json` directly — the JSON file is only
+used as the one-time seed source for local development.
 
-Read `.cursor/skills/README.md` before starting design or implementation work.
+## Deployment
+
+The app deploys to Vercel with a managed Postgres database and Vercel Blob
+for media uploads. See `docs/DEPLOYMENT.md` for the full setup procedure.
+
+## Documentation
+
+- `docs/PROJECT_CONTEXT.md` — product idea, business model, audience, tone, and current technical status
+- `docs/DESIGN_BRIEF.md` — approved visual direction and design constraints
+- `docs/SITE_STRUCTURE.md` — page inventory and navigation
+- `docs/APPROVAL_WORKFLOW.md` — how design/scope decisions are proposed and approved on this project
+- `docs/TECH_CONSTRAINTS.md` — stack, implementation rules, and CMS integration history
+- `docs/DEPLOYMENT.md` — production hosting setup (Vercel + Postgres + Blob storage)
+- `docs/CLIENT_ADMIN_GUIDE.md` — how to use the Payload admin panel to edit site content
+- `docs/FIRST_DESIGN_TASK.md` — the original design-exploration brief (historical record)
+
+## Language
+
+Ukrainian is the default and only language of the public interface. English
+is used solely for code, file names, and developer-facing comments — see
+`docs/TECH_CONSTRAINTS.md` for the full language policy.
