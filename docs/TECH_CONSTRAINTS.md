@@ -19,7 +19,21 @@ Use:
 - local images or placeholders;
 - simple reusable components.
 
-Payload CMS and PostgreSQL are deferred until design approval.
+## CMS integration status
+
+Design direction (Variant 5) is approved. CMS integration is being introduced in waves:
+
+- **Wave A (done):** Payload CMS + PostgreSQL run locally (via Docker Compose) alongside the
+  Next.js app. Collections/globals mirror `src/types/content.ts`, and `demo/demo-content.json`
+  has been migrated into Postgres via `scripts/seed.ts` as a one-time seed. This is local-dev
+  only — no production hosting has been set up.
+- **Wave B (pending its own approval):** rewire the public pages/components in
+  `src/app/(frontend)/` to fetch from Payload's Local API/REST instead of
+  `src/data/demo-content.ts`. Until Wave B happens, the public site continues to read the local
+  JSON exactly as before — Payload's admin panel and the frontend pages are not yet connected.
+
+Production Postgres hosting and deployment remain a separate Level 1 decision
+(see `docs/APPROVAL_WORKFLOW.md`) and are not addressed by Wave A.
 
 ## Implementation rules
 
@@ -36,13 +50,23 @@ Payload CMS and PostgreSQL are deferred until design approval.
 ## Suggested folders
 
 ```text
+payload.config.ts          # Payload config (root, required by Payload)
+docker-compose.yml          # local Postgres for Payload
+scripts/
+└── seed.ts                 # migrates demo/demo-content.json into Postgres (Wave A)
 src/
 ├── app/
-│   ├── page.tsx
-│   ├── collections/
-│   ├── selection/
-│   ├── articles/
-│   └── about/
+│   ├── (frontend)/          # the public site — untouched by Wave A
+│   │   ├── page.tsx
+│   │   ├── collections/
+│   │   ├── selection/
+│   │   ├── articles/
+│   │   └── about/
+│   └── (payload)/           # Payload admin UI + REST/GraphQL API routes
+│       ├── admin/
+│       └── api/
+├── collections/             # Payload collection configs (Needs, Products, Collections, Articles, Media, Users)
+├── globals/                 # Payload global configs (SiteSettings, Notices, HowItWorks)
 ├── components/
 │   ├── layout/
 │   ├── sections/
@@ -50,7 +74,7 @@ src/
 │   ├── quiz/
 │   └── ui/
 ├── data/
-│   └── demo-content.ts
+│   └── demo-content.ts      # still the source for the public site until Wave B
 ├── lib/
 ├── styles/
 └── types/

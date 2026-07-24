@@ -97,6 +97,20 @@ English may be used only for internal technical identifiers, code, file names, a
 
 Do not introduce an English-language public interface unless multilingual support is explicitly requested and approved.
 
+## Technical status
+
+Design direction (Variant 5 — Rose Gradient Wellness) is approved and implemented on the
+public pages using local demo data (`src/data/demo-content.ts`).
+
+CMS integration (see `docs/TECH_CONSTRAINTS.md`) is underway in waves:
+
+- Wave A is done: Payload CMS + PostgreSQL run locally via Docker Compose, with collections
+  and globals mirroring the demo content shape, seeded from `demo/demo-content.json`.
+- Wave B (rewiring the public pages to read from Payload instead of local JSON) has not
+  started and needs its own approval before implementation.
+- Production hosting for Payload/Postgres has not been decided and is out of scope until
+  explicitly requested.
+
 ## Future considerations (not in current scope)
 
 These are recorded owner ideas for later phases. They are **not approved for
