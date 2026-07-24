@@ -100,16 +100,22 @@ Do not introduce an English-language public interface unless multilingual suppor
 ## Technical status
 
 Design direction (Variant 5 — Rose Gradient Wellness) is approved and implemented on the
-public pages using local demo data (`src/data/demo-content.ts`).
+public pages, which are now backed by Payload CMS content (see below) rather than static
+local data.
 
-CMS integration (see `docs/TECH_CONSTRAINTS.md`) is underway in waves:
+CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
 
 - Wave A is done: Payload CMS + PostgreSQL run locally via Docker Compose, with collections
   and globals mirroring the demo content shape, seeded from `demo/demo-content.json`.
-- Wave B (rewiring the public pages to read from Payload instead of local JSON) has not
-  started and needs its own approval before implementation.
+- Wave B is done: the public pages in `src/app/(frontend)/` now read from Payload's Local
+  API instead of `src/data/demo-content.ts`, so edits made in `/admin` appear on the site on
+  the next page load, with no rebuild or restart needed. Pages render dynamically
+  (`force-dynamic`) to support this.
 - Production hosting for Payload/Postgres has not been decided and is out of scope until
   explicitly requested.
+- Real image uploads (Payload's `Media` collection) are not yet wired into the frontend —
+  collection/product cards still render decorative placeholders regardless of any uploaded
+  image.
 
 ## Future considerations (not in current scope)
 

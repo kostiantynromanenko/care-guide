@@ -21,19 +21,23 @@ Use:
 
 ## CMS integration status
 
-Design direction (Variant 5) is approved. CMS integration is being introduced in waves:
+Design direction (Variant 5) is approved. CMS integration has been introduced in waves:
 
 - **Wave A (done):** Payload CMS + PostgreSQL run locally (via Docker Compose) alongside the
   Next.js app. Collections/globals mirror `src/types/content.ts`, and `demo/demo-content.json`
   has been migrated into Postgres via `scripts/seed.ts` as a one-time seed. This is local-dev
   only — no production hosting has been set up.
-- **Wave B (pending its own approval):** rewire the public pages/components in
-  `src/app/(frontend)/` to fetch from Payload's Local API/REST instead of
-  `src/data/demo-content.ts`. Until Wave B happens, the public site continues to read the local
-  JSON exactly as before — Payload's admin panel and the frontend pages are not yet connected.
+- **Wave B (done):** the public pages/components in `src/app/(frontend)/` now fetch content via
+  Payload's Local API (through `src/lib/collections.ts` and `src/lib/site-content.ts`, with
+  `src/lib/payload-mappers.ts` translating Payload's generated types into the existing
+  `src/types/content.ts` shapes) instead of importing `src/data/demo-content.ts` directly.
+  The `(frontend)` route group renders dynamically (`export const dynamic = "force-dynamic"`)
+  so admin edits are visible on the next request, with no rebuild or dev-server restart.
+  `src/data/demo-content.ts` / `demo/demo-content.json` are no longer read by the running app;
+  they remain in the repo only as the seed source for `scripts/seed.ts`.
 
 Production Postgres hosting and deployment remain a separate Level 1 decision
-(see `docs/APPROVAL_WORKFLOW.md`) and are not addressed by Wave A.
+(see `docs/APPROVAL_WORKFLOW.md`) and are not addressed by Waves A or B.
 
 ## Implementation rules
 
@@ -56,7 +60,7 @@ scripts/
 └── seed.ts                 # migrates demo/demo-content.json into Postgres (Wave A)
 src/
 ├── app/
-│   ├── (frontend)/          # the public site — untouched by Wave A
+│   ├── (frontend)/          # the public site — reads from Payload as of Wave B
 │   │   ├── page.tsx
 │   │   ├── collections/
 │   │   ├── selection/
@@ -74,7 +78,7 @@ src/
 │   ├── quiz/
 │   └── ui/
 ├── data/
-│   └── demo-content.ts      # still the source for the public site until Wave B
+│   └── demo-content.ts      # legacy — no longer read by the app since Wave B
 ├── lib/
 ├── styles/
 └── types/
