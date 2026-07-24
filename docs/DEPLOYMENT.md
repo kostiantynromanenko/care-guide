@@ -136,6 +136,30 @@ real production URL) so the client can log into `/admin` from her own
 device — the local-only limitation described in that guide no longer
 applies once this deployment is live.
 
+## 9. Turn off Deployment Protection once ready for real visitors
+
+By default Vercel puts every deployment (including production, unless it's
+on a custom domain) behind **Vercel Authentication** — visitors get a login
+wall instead of the site. This is useful while you're still testing, but
+must be turned off before sharing the link with anyone outside the team
+(including the client, for a proper review on her own device rather than
+over a screen-share).
+
+Check the current status:
+
+```bash
+npx vercel project protection <project-name>
+```
+
+Disable it:
+
+```bash
+npx vercel project protection disable <project-name> --sso
+```
+
+Re-enable later if needed (e.g. between review rounds) with
+`npx vercel project protection enable <project-name> --sso`.
+
 ## Notes / things intentionally out of scope here
 
 - **Migrations:** local dev still uses `push` mode (auto-sync on every save,
