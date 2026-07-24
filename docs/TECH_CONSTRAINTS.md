@@ -40,8 +40,11 @@ Design direction (Variant 5) is approved. CMS integration has been introduced in
   a managed Postgres database (via Vercel's Storage marketplace, e.g. Neon) + Vercel Blob
   for media uploads. `payload.config.ts` now includes `@payloadcms/storage-vercel-blob`,
   which automatically falls back to local disk storage when `BLOB_READ_WRITE_TOKEN` is
-  unset, so local dev is unaffected. See `docs/DEPLOYMENT.md` for the full setup procedure
-  (account/repo/env var steps that require owner action).
+  unset, so local dev is unaffected. Production uses committed migrations
+  (`src/migrations/`, wired via `prodMigrations`) instead of local dev's `push` mode,
+  since Payload only auto-syncs schema when `NODE_ENV !== "production"`. See
+  `docs/DEPLOYMENT.md` for the full setup procedure (account/repo/env var steps that
+  require owner action).
 
 ## Implementation rules
 
@@ -75,6 +78,7 @@ src/
 │       └── api/
 ├── collections/             # Payload collection configs (Needs, Products, Collections, Articles, Media, Users)
 ├── globals/                 # Payload global configs (SiteSettings, Notices, HowItWorks)
+├── migrations/              # Production schema migrations (Wave C) — regenerate with `npx payload migrate:create`
 ├── components/
 │   ├── layout/
 │   ├── sections/

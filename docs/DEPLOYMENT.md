@@ -75,9 +75,24 @@ steps 3–4.
 
 ## 6. Deploy
 
-Click **Deploy**. Vercel builds and deploys the app. The database starts
-empty — Payload will create its schema automatically on first boot
-(`push: true` behavior in dev; production migrations are covered below).
+Click **Deploy**. Vercel builds and deploys the app.
+
+Payload's schema auto-sync (`push`) only runs when `NODE_ENV !== "production"`
+— Vercel always sets `NODE_ENV=production`, so it never applies there. Instead,
+`payload.config.ts` passes `prodMigrations: migrations` (from `src/migrations/`,
+committed to the repo), which Payload runs automatically on its first
+connection in production, creating all tables. **Whenever the schema changes**
+(a collection/global/field is added, renamed, or removed), regenerate this
+before deploying:
+
+```bash
+npx payload migrate:create <short-description>
+```
+
+This connects to your local dev database, diffs it against the current
+Payload config, and writes a new file into `src/migrations/` (plus updates
+`src/migrations/index.ts`) — commit both. Forgetting this step means
+production's schema silently falls behind local dev.
 
 ## 7. Seed initial content
 
@@ -123,11 +138,11 @@ applies once this deployment is live.
 
 ## Notes / things intentionally out of scope here
 
-- **Migrations:** Payload's Postgres adapter can run in `push` mode (auto-sync
-  schema, used locally) or with explicit migration files. This guide assumes
-  `push` mode for now, matching local dev. Moving to explicit migrations is a
-  separate future improvement once the schema stabilizes — not required for
-  first launch.
+- **Migrations:** local dev still uses `push` mode (auto-sync on every save,
+  no migration files needed there) since `NODE_ENV` is `development`.
+  Production uses the committed `src/migrations/` + `prodMigrations` instead
+  (see step 6) — these two modes are intentionally different per Payload's
+  own recommended setup, not an inconsistency.
 - **Custom domain:** not covered here; can be added later in Vercel's
   **Settings → Domains** whenever the client has one ready.
 - **Staging environment:** not set up — Vercel's preview deployments (one per

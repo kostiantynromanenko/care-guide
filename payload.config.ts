@@ -17,6 +17,7 @@ import { Articles } from "./src/collections/Articles";
 import { SiteSettings } from "./src/globals/SiteSettings";
 import { Notices } from "./src/globals/Notices";
 import { HowItWorks } from "./src/globals/HowItWorks";
+import { migrations } from "./src/migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +40,12 @@ export default buildConfig({
       // to it automatically in production — see docs/DEPLOYMENT.md.
       connectionString: process.env.DATABASE_URI || process.env.DATABASE_URL || "",
     },
+    // The adapter only auto-syncs the schema (`push`) when NODE_ENV !== "production"
+    // (see @payloadcms/db-postgres's connect.js) — Vercel always sets NODE_ENV=production,
+    // so without this, production tables are never created. `prodMigrations` runs
+    // automatically on connect when NODE_ENV === "production" instead. Regenerate with
+    // `npx payload migrate:create` after schema changes (collections/globals/fields).
+    prodMigrations: migrations,
   }),
   collections: [Users, Media, Needs, Products, Collections, Articles],
   globals: [SiteSettings, Notices, HowItWorks],
