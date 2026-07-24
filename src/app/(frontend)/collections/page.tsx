@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CollectionsFilter } from "@/components/collections/CollectionsFilter";
-import { collections } from "@/data/demo-content";
+import { getAllCollections } from "@/lib/collections";
 
 export const metadata: Metadata = {
   title: "Добірки — Care Guide",
   description: "Готові добірки догляду для обличчя та волосся — без зайвої складності.",
 };
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const collections = await getAllCollections();
+
   return (
     <>
       <Header />

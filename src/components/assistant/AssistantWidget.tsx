@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { needs, notices } from "@/data/demo-content";
 import { getSuggestedCollections } from "@/lib/assistant-demo-logic";
+import type { Collection, Need } from "@/types/content";
 
 const focusClasses =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta";
@@ -17,11 +17,19 @@ const focusClasses =
  * homepage design (Variant 5 tokens), distinct from the `/selection`
  * questionnaire flow.
  */
-export function AssistantWidget() {
+type AssistantWidgetProps = {
+  needs: Need[];
+  collections: Collection[];
+  medicalNotice: string;
+};
+
+export function AssistantWidget({ needs, collections, medicalNotice }: AssistantWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNeedSlug, setSelectedNeedSlug] = useState<string | null>(null);
 
-  const suggestions = selectedNeedSlug ? getSuggestedCollections(selectedNeedSlug) : [];
+  const suggestions = selectedNeedSlug
+    ? getSuggestedCollections(selectedNeedSlug, collections)
+    : [];
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
@@ -98,7 +106,7 @@ export function AssistantWidget() {
           )}
 
           <p className="text-[11px] text-ink/75 leading-relaxed mt-4 pt-3 border-t border-white/50">
-            {notices.medical}
+            {medicalNotice}
           </p>
         </div>
       )}

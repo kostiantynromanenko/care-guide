@@ -1,7 +1,9 @@
 import { Notice } from "@/components/ui/Notice";
-import { notices } from "@/data/demo-content";
+import { getNotices } from "@/lib/site-content";
 
-export function NoticeSection() {
+export async function NoticeSection() {
+  const notices = await getNotices();
+
   return (
     <section
       className="max-w-6xl mx-auto px-5 sm:px-8 pb-14 sm:pb-16"

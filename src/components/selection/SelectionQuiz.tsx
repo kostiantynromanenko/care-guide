@@ -4,14 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Notice } from "@/components/ui/Notice";
-import { needs, notices } from "@/data/demo-content";
-import { getCollectionBySlug } from "@/lib/collections";
 import {
   getSelectionResult,
   type SelectionAnswers,
   type SelectionArea,
   type SelectionRoutineSize,
 } from "@/lib/selection-demo-logic";
+import type { Collection, Need, Notices } from "@/types/content";
 
 type Step = "area" | "concern" | "routine" | "result";
 
@@ -54,7 +53,13 @@ function getQuestionSteps(area: SelectionArea | undefined): Step[] {
   return ["area", "concern", "routine"];
 }
 
-export function SelectionQuiz() {
+type SelectionQuizProps = {
+  needs: Need[];
+  notices: Notices;
+  collections: Collection[];
+};
+
+export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProps) {
   const [step, setStep] = useState<Step>("area");
   const [answers, setAnswers] = useState<SelectionAnswers>({ area: "face" });
   const [areaChosen, setAreaChosen] = useState(false);
@@ -97,8 +102,8 @@ export function SelectionQuiz() {
   }
 
   if (step === "result") {
-    const result = getSelectionResult(answers);
-    const collection = getCollectionBySlug(result.collectionSlug);
+    const result = getSelectionResult(answers, needs);
+    const collection = collections.find((item) => item.slug === result.collectionSlug);
 
     return (
       <div>

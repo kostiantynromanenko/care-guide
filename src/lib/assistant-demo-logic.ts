@@ -1,4 +1,3 @@
-import { collections } from "@/data/demo-content";
 import type { Collection } from "@/types/content";
 
 /**
@@ -19,7 +18,10 @@ const NEED_TO_COLLECTION_SLUGS: Record<string, string[]> = {
   dullness: ["minimal-daily-care"],
 };
 
-export function getSuggestedCollections(needSlug: string): Collection[] {
+export function getSuggestedCollections(
+  needSlug: string,
+  collections: Collection[]
+): Collection[] {
   const slugs = NEED_TO_COLLECTION_SLUGS[needSlug] ?? [];
   return slugs
     .map((slug) => collections.find((collection) => collection.slug === slug))

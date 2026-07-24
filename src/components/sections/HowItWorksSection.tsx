@@ -1,7 +1,9 @@
 import { Card } from "@/components/ui/Card";
-import { routineSteps } from "@/data/demo-content";
+import { getHowItWorksSteps } from "@/lib/site-content";
 
-export function HowItWorksSection() {
+export async function HowItWorksSection() {
+  const routineSteps = await getHowItWorksSteps();
+
   return (
     <section
       className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"

@@ -8,12 +8,8 @@ import { Notice } from "@/components/ui/Notice";
 import { RoutineStepper } from "@/components/routine/RoutineStepper";
 import { ProductCard } from "@/components/cards/ProductCard";
 import { CollectionCard } from "@/components/cards/CollectionCard";
-import { collections, notices } from "@/data/demo-content";
 import { getCollectionBySlug, getCollectionsBySlugs, getProductsBySlugs } from "@/lib/collections";
-
-export function generateStaticParams() {
-  return collections.map((collection) => ({ slug: collection.slug }));
-}
+import { getNotices } from "@/lib/site-content";
 
 export async function generateMetadata({
   params,
@@ -21,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const collection = await getCollectionBySlug(slug);
   if (!collection) {
     return { title: "Добірку не знайдено — Care Guide" };
   }
@@ -37,14 +33,17 @@ export default async function CollectionDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const collection = await getCollectionBySlug(slug);
 
   if (!collection) {
     notFound();
   }
 
-  const recommendedProducts = getProductsBySlugs(collection.recommendedProductSlugs);
-  const relatedCollections = getCollectionsBySlugs(collection.relatedCollectionSlugs);
+  const [recommendedProducts, relatedCollections, notices] = await Promise.all([
+    getProductsBySlugs(collection.recommendedProductSlugs),
+    getCollectionsBySlugs(collection.relatedCollectionSlugs),
+    getNotices(),
+  ]);
 
   return (
     <>

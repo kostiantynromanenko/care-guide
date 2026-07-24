@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ArticleCard } from "@/components/cards/ArticleCard";
-import { articles } from "@/data/demo-content";
+import { getAllArticles } from "@/lib/collections";
 
 export const metadata: Metadata = {
   title: "Корисне — Care Guide",
   description: "Прості пояснення про догляд: типи шкіри, порядок нанесення засобів та мінімальні рутини.",
 };
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const articles = await getAllArticles();
+
   return (
     <>
       <Header />

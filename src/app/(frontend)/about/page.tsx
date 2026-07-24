@@ -3,14 +3,16 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
 import { Notice } from "@/components/ui/Notice";
-import { site, notices } from "@/data/demo-content";
+import { getNotices, getSiteSettings } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Про проєкт — Care Guide",
   description: "Чому існує Care Guide, як побудовані рекомендації та чому це не інтернет-магазин.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [site, notices] = await Promise.all([getSiteSettings(), getNotices()]);
+
   return (
     <>
       <Header />

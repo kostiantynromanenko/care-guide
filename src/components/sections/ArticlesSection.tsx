@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/cards/ArticleCard";
-import { articles } from "@/data/demo-content";
+import { getAllArticles } from "@/lib/collections";
 
-export function ArticlesSection() {
+export async function ArticlesSection() {
+  const articles = await getAllArticles();
+
   return (
     <section
       className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"

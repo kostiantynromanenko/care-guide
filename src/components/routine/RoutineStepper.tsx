@@ -9,13 +9,19 @@ import type { RoutineSequence } from "@/types/content";
  * on mobile — reuses the same number-circle language as the homepage
  * "Як це працює" section for visual consistency.
  */
-export function RoutineStepper({ sequence }: { sequence: RoutineSequence }) {
+export async function RoutineStepper({ sequence }: { sequence: RoutineSequence }) {
+  const products = await Promise.all(
+    sequence.steps.map((step) =>
+      step.productSlug ? getProductBySlug(step.productSlug) : Promise.resolve(undefined)
+    )
+  );
+
   return (
     <div>
       <h3 className="text-sm font-semibold text-cta-strong mb-4">{sequence.label}</h3>
       <ol className="flex flex-col sm:flex-row gap-4 sm:gap-3">
         {sequence.steps.map((step, index) => {
-          const product = step.productSlug ? getProductBySlug(step.productSlug) : undefined;
+          const product = products[index];
           const isLast = index === sequence.steps.length - 1;
 
           return (

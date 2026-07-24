@@ -1,4 +1,4 @@
-import { needs } from "@/data/demo-content";
+import type { Need } from "@/types/content";
 
 /**
  * Deterministic, non-AI matching logic for the `/selection` questionnaire
@@ -29,7 +29,7 @@ export interface SelectionResult {
 const SENSITIVITY_TIP =
   "Оскільки ви позначили чутливість — вводьте нові засоби по одному й перевіряйте реакцію шкіри.";
 
-function buildTip(answers: SelectionAnswers): string {
+function buildTip(answers: SelectionAnswers, needs: Need[]): string {
   const parts: string[] = [];
 
   if (answers.concern) {
@@ -44,29 +44,29 @@ function buildTip(answers: SelectionAnswers): string {
   return parts.join(" ");
 }
 
-export function getSelectionResult(answers: SelectionAnswers): SelectionResult {
+export function getSelectionResult(answers: SelectionAnswers, needs: Need[]): SelectionResult {
   if (answers.area === "hair") {
     return {
       collectionSlug: "dry-hair-recovery",
-      tip: buildTip(answers) || "Маску використовуйте 1–2 рази на тиждень, а не щодня.",
+      tip: buildTip(answers, needs) || "Маску використовуйте 1–2 рази на тиждень, а не щодня.",
     };
   }
 
   if (answers.routineSize === "minimal") {
     return {
       collectionSlug: "minimal-daily-care",
-      tip: buildTip(answers) || "Це базовий каркас — за потреби додайте засоби пізніше.",
+      tip: buildTip(answers, needs) || "Це базовий каркас — за потреби додайте засоби пізніше.",
     };
   }
 
   if (answers.concern === "dryness") {
-    return { collectionSlug: "basic-dry-skin", tip: buildTip(answers) };
+    return { collectionSlug: "basic-dry-skin", tip: buildTip(answers, needs) };
   }
 
   return {
     collectionSlug: "minimal-daily-care",
     tip:
-      buildTip(answers) ||
+      buildTip(answers, needs) ||
       "Поки в наших добірках немає окремої схеми саме під цю потребу — почніть з базового набору.",
   };
 }

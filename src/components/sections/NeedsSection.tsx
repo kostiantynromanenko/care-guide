@@ -1,7 +1,9 @@
 import { Card } from "@/components/ui/Card";
-import { needs } from "@/data/demo-content";
+import { getAllNeeds } from "@/lib/collections";
 
-export function NeedsSection() {
+export async function NeedsSection() {
+  const needs = await getAllNeeds();
+
   return (
     <section
       className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"

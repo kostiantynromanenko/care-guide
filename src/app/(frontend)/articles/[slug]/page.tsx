@@ -6,12 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Notice } from "@/components/ui/Notice";
 import { ArticleBody } from "@/components/articles/ArticleBody";
 import { CollectionCard } from "@/components/cards/CollectionCard";
-import { articles, notices } from "@/data/demo-content";
 import { getArticleBySlug, getCollectionsBySlugs } from "@/lib/collections";
-
-export function generateStaticParams() {
-  return articles.map((article) => ({ slug: article.slug }));
-}
+import { getNotices } from "@/lib/site-content";
 
 export async function generateMetadata({
   params,
@@ -19,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) {
     return { title: "Статтю не знайдено — Care Guide" };
   }
@@ -35,13 +31,16 @@ export default async function ArticleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
-  const relatedCollections = getCollectionsBySlugs(article.relatedCollectionSlugs);
+  const [relatedCollections, notices] = await Promise.all([
+    getCollectionsBySlugs(article.relatedCollectionSlugs),
+    getNotices(),
+  ]);
 
   return (
     <>

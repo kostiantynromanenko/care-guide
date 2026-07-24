@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SelectionQuiz } from "@/components/selection/SelectionQuiz";
+import { getAllCollections, getAllNeeds } from "@/lib/collections";
+import { getNotices } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Підібрати догляд — Care Guide",
   description: "Кілька запитань — і ми покажемо добірку, яка підходить найкраще.",
 };
 
-export default function SelectionPage() {
+export default async function SelectionPage() {
+  const [needs, notices, collections] = await Promise.all([
+    getAllNeeds(),
+    getNotices(),
+    getAllCollections(),
+  ]);
+
   return (
     <>
       <Header />
@@ -18,7 +26,7 @@ export default function SelectionPage() {
           <p className="text-ink/70 mb-10">
             Кілька коротких запитань — і ми покажемо добірку, яка підходить найкраще.
           </p>
-          <SelectionQuiz />
+          <SelectionQuiz needs={needs} notices={notices} collections={collections} />
         </section>
       </main>
       <Footer />

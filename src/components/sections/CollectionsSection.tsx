@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { CollectionCard } from "@/components/cards/CollectionCard";
-import { collections } from "@/data/demo-content";
+import { getAllCollections } from "@/lib/collections";
 
-export function CollectionsSection() {
+export async function CollectionsSection() {
+  const collections = await getAllCollections();
+
   return (
     <section
       className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"

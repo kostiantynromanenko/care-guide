@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { needs, site } from "@/data/demo-content";
+import { getAllNeeds } from "@/lib/collections";
+import { getSiteSettings } from "@/lib/site-content";
 
-export function Hero() {
+export async function Hero() {
+  const [site, needs] = await Promise.all([getSiteSettings(), getAllNeeds()]);
+
   return (
     <section className="gradient-hero">
       <div className="max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-14 sm:pb-20 text-center">
