@@ -2,6 +2,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { en } from "@payloadcms/translations/languages/en";
+import { uk } from "@payloadcms/translations/languages/uk";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
@@ -21,6 +23,10 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     user: Users.slug,
+  },
+  i18n: {
+    supportedLanguages: { en, uk },
+    fallbackLanguage: "uk",
   },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
