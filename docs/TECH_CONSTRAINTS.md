@@ -36,8 +36,12 @@ Design direction (Variant 5) is approved. CMS integration has been introduced in
   `src/data/demo-content.ts` / `demo/demo-content.json` are no longer read by the running app;
   they remain in the repo only as the seed source for `scripts/seed.ts`.
 
-Production Postgres hosting and deployment remain a separate Level 1 decision
-(see `docs/APPROVAL_WORKFLOW.md`) and are not addressed by Waves A or B.
+- **Wave C (in progress):** production hosting. Approved decision: Vercel (Next.js app) +
+  a managed Postgres database (via Vercel's Storage marketplace, e.g. Neon) + Vercel Blob
+  for media uploads. `payload.config.ts` now includes `@payloadcms/storage-vercel-blob`,
+  which automatically falls back to local disk storage when `BLOB_READ_WRITE_TOKEN` is
+  unset, so local dev is unaffected. See `docs/DEPLOYMENT.md` for the full setup procedure
+  (account/repo/env var steps that require owner action).
 
 ## Implementation rules
 

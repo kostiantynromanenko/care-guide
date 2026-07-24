@@ -111,8 +111,11 @@ CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
   API instead of `src/data/demo-content.ts`, so edits made in `/admin` appear on the site on
   the next page load, with no rebuild or restart needed. Pages render dynamically
   (`force-dynamic`) to support this.
-- Production hosting for Payload/Postgres has not been decided and is out of scope until
-  explicitly requested.
+- Production hosting is decided and being set up: Vercel (Next.js app) + a managed Postgres
+  database + Vercel Blob for media uploads. See `docs/DEPLOYMENT.md` for the full setup
+  procedure. `payload.config.ts` now includes the Vercel Blob storage plugin, which falls
+  back to local disk storage automatically when `BLOB_READ_WRITE_TOKEN` is unset (i.e. in
+  local dev, nothing changes).
 - Real image uploads (Payload's `Media` collection) are not yet wired into the frontend —
   collection/product cards still render decorative placeholders regardless of any uploaded
   image.

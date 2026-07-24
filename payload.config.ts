@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { en } from "@payloadcms/translations/languages/en";
 import { uk } from "@payloadcms/translations/languages/uk";
 import { buildConfig } from "payload";
@@ -41,4 +42,14 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "src/payload-types.ts"),
   },
   sharp,
+  plugins: [
+    // Serverless hosts (e.g. Vercel) have an ephemeral/read-only filesystem, so
+    // uploads can't live on local disk in production. When BLOB_READ_WRITE_TOKEN
+    // is unset (local dev), this plugin disables itself and Media falls back to
+    // local disk storage (see src/collections/Media.ts) automatically.
+    vercelBlobStorage({
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
 });
