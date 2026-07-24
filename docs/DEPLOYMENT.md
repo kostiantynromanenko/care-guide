@@ -44,12 +44,15 @@ git push -u origin master
 1. In the project, go to the **Storage** tab → **Create Database** → choose
    **Postgres** (Vercel's marketplace offers Neon and others; either works —
    Neon is the most common pairing and has a solid free tier).
-2. Once created, Vercel automatically injects a `DATABASE_URL`-style
-   connection string as a project environment variable.
-3. Rename/duplicate it so Payload can read it: in **Settings → Environment
-   Variables**, add `DATABASE_URI` with the same value as the generated
-   Postgres connection string (Payload's config reads `DATABASE_URI`, not
-   `DATABASE_URL` — see `payload.config.ts`).
+2. Once created, Vercel automatically injects `DATABASE_URL` (plus a few
+   related `POSTGRES_*`/`PG*` variables) as project environment variables.
+   No manual step needed: `payload.config.ts` reads `DATABASE_URI` for local
+   dev and automatically falls back to `DATABASE_URL` in production, so it
+   picks this up as-is.
+   (Note: these connection-string variables are created as **sensitive** —
+   their values can't be viewed or copied from the dashboard afterwards,
+   which is why the config falls back automatically instead of asking you to
+   duplicate the value into `DATABASE_URI` by hand.)
 
 ## 4. Add Vercel Blob storage (for Media uploads)
 
@@ -67,7 +70,7 @@ In **Settings → Environment Variables**, add:
   `openssl rand -base64 32`). This must stay the same across deploys, or
   existing sessions/tokens break.
 
-`DATABASE_URI` and `BLOB_READ_WRITE_TOKEN` should already be present from
+`DATABASE_URL` and `BLOB_READ_WRITE_TOKEN` should already be present from
 steps 3–4.
 
 ## 6. Deploy
@@ -78,20 +81,37 @@ empty — Payload will create its schema automatically on first boot
 
 ## 7. Seed initial content
 
-The production database starts empty. To load the same demo content used
-locally:
+The production database starts empty. `DATABASE_URL`, `BLOB_READ_WRITE_TOKEN`,
+and `PAYLOAD_SECRET` are all created as **sensitive** environment variables
+(Vercel's default for Production), which means their real values can never be
+read back afterwards — not from the dashboard, `vercel env pull`, `vercel env
+run`, or the API. So `npm run seed` cannot be pointed at the production
+database from a local machine; there is no valid connection string to give it.
 
-1. Pull the production env vars locally: `vercel env pull .env.production.local`
-   (requires the Vercel CLI: `npx vercel login` then `npx vercel link` once).
-2. Run the seed script against production:
-   `npx dotenv -e .env.production.local -- npm run seed`
-   (or temporarily copy `DATABASE_URI`/`PAYLOAD_SECRET` from
-   `.env.production.local` into your shell environment and run `npm run seed`
-   directly).
-3. Verify at `https://<your-project>.vercel.app/admin` that content and the
-   admin user exist, then log in and change the seeded admin password
-   immediately (see `docs/CLIENT_ADMIN_GUIDE.md` for the seeded credentials —
-   those are dev-only and must not stay in place in production).
+Instead, use the protected seeding endpoint at `/api/seed`
+(`src/app/(payload)/api/seed/route.ts`), which runs the same seed logic
+(`src/lib/seed-demo-content.ts`) inside a deployed serverless function, where
+the real sensitive values are injected at runtime:
+
+1. After the first successful deploy, trigger it once (replace the URL and
+   secret):
+
+   ```bash
+   curl -X POST https://<your-project>.vercel.app/api/seed \
+     -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
+   ```
+
+   It responds `{"ok": true, ...}` with counts on success. It refuses to run
+   a second time (`409`) once the `needs` collection is non-empty, so it's
+   safe to leave in place — but for extra hygiene you can remove the route
+   file and redeploy once you've confirmed seeding worked.
+2. Create the real production admin account by visiting
+   `https://<your-project>.vercel.app/admin` — Payload shows a "create first
+   user" form when the `users` collection is empty. Use a real email/password
+   here; don't reuse the local dev credentials from
+   `docs/CLIENT_ADMIN_GUIDE.md` (those are for `localhost` only).
+3. Verify collections/articles/globals appear correctly in `/admin` and on
+   the public site.
 
 ## 8. Give the client access
 

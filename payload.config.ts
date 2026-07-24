@@ -33,7 +33,11 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "",
+      // Local dev (docker-compose) sets DATABASE_URI. Vercel's Postgres/Neon
+      // integration instead injects DATABASE_URL (a sensitive var whose value
+      // can't be read back to manually copy into DATABASE_URI), so fall back
+      // to it automatically in production — see docs/DEPLOYMENT.md.
+      connectionString: process.env.DATABASE_URI || process.env.DATABASE_URL || "",
     },
   }),
   collections: [Users, Media, Needs, Products, Collections, Articles],
