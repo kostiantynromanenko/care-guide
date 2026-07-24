@@ -17,6 +17,11 @@ import { importHillaryCatalog } from "@/lib/import-hillary-catalog";
  * is idempotent (upserts by slug), so it's safe to call again later to pull
  * a fresh snapshot of the feed (title/photo/price/stock changes).
  */
+// Downloading + re-uploading 16 product photos sequentially can exceed
+// Vercel's default serverless timeout; this raises the ceiling (Hobby caps
+// at 60s regardless, Pro allows up to 300s).
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   const providedSecret = request.headers.get("x-seed-secret");
   const expectedSecret = process.env.PAYLOAD_SECRET;

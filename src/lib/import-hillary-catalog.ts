@@ -257,8 +257,17 @@ const NEW_COLLECTIONS: CollectionMapping[] = [
 async function downloadImage(
   url: string
 ): Promise<{ data: Buffer; mimetype: string; name: string; size: number }> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to download image ${url}: ${res.status}`);
+  // Some hosts hotlink-protect against requests without a browser-like
+  // User-Agent (fetch's default Node/undici UA can get 403'd from
+  // datacenter IPs like Vercel's, even when it works fine from a home
+  // connection during local testing).
+  const res = await fetch(url, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    },
+  });
+  if (!res.ok) throw new Error(`Failed to download image ${url}: ${res.status} ${res.statusText}`);
   const arrayBuffer = await res.arrayBuffer();
   const ext = path.extname(new URL(url).pathname) || ".jpg";
   const mimetype = ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
@@ -270,6 +279,7 @@ async function downloadImage(
 export interface ImportSummary {
   productsUpserted: number;
   collectionsUpserted: number;
+  imageFailures: { slug: string; error: string }[];
 }
 
 export async function importHillaryCatalog(
@@ -281,6 +291,7 @@ export async function importHillaryCatalog(
   const allMappings = [...EXISTING_PRODUCT_UPDATES, ...NEW_PRODUCTS];
   const productSlugToId = new Map<string, number>();
   let productsUpserted = 0;
+  const imageFailures: { slug: string; error: string }[] = [];
 
   for (const mapping of allMappings) {
     const offer = offers.get(mapping.offerId);
@@ -310,7 +321,9 @@ export async function importHillaryCatalog(
           mediaId = created.id;
         }
       } catch (error) {
-        payload.logger.warn(`Failed to fetch/upload image for ${mapping.slug}: ${error}`);
+        const message = error instanceof Error ? error.message : String(error);
+        payload.logger.warn(`Failed to fetch/upload image for ${mapping.slug}: ${message}`);
+        imageFailures.push({ slug: mapping.slug, error: message });
       }
     }
 
@@ -319,7 +332,10 @@ export async function importHillaryCatalog(
       role: mapping.role,
       description: mapping.description,
       tags: mapping.tags,
-      image: mediaId,
+      // Omit `image` entirely when the download/upload failed, instead of
+      // writing `undefined`/null — that would blank out a perfectly good
+      // pre-existing image on a re-run (see docs/PROJECT_CONTEXT.md, Wave D).
+      ...(mediaId ? { image: mediaId } : {}),
       sourceUrl: offer.url,
       vendorCode: offer.vendorCode,
       price: offer.price,
@@ -417,6 +433,8 @@ export async function importHillaryCatalog(
     });
   }
 
-  payload.logger.info("HiLLARY catalog import complete.");
-  return { productsUpserted, collectionsUpserted };
+  payload.logger.info(
+    `HiLLARY catalog import complete. ${imageFailures.length} image failure(s).`
+  );
+  return { productsUpserted, collectionsUpserted, imageFailures };
 }
