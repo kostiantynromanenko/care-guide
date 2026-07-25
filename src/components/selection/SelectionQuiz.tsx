@@ -1,28 +1,55 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Notice } from "@/components/ui/Notice";
+import { ProductCard } from "@/components/cards/ProductCard";
 import {
   getSelectionResult,
   type SelectionAnswers,
   type SelectionArea,
   type SelectionRoutineSize,
 } from "@/lib/selection-demo-logic";
-import type { Collection, Need, Notices } from "@/types/content";
+import type { Collection, Need, Notices, Product } from "@/types/content";
 
 type Step = "area" | "concern" | "routine" | "result";
 
 const focusClasses =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta";
 
-function OptionChip({
+/**
+ * Reuses the approved pink watercolor-illustration set (2026-07-25) already
+ * painted for RoutineCard/NeedCard, instead of commissioning a parallel set
+ * just for the quiz — same subjects mean the visual language stays
+ * consistent between "answer this" and "here's your plan".
+ */
+const AREA_IMAGES: Record<SelectionArea, string> = {
+  face: "/routine-face-v1.png",
+  hair: "/routine-hair-v1.png",
+};
+
+const CONCERN_IMAGES: Record<string, string> = {
+  dryness: "/need-dryness-v4.png",
+  oiliness: "/need-oiliness-v4.png",
+  sensitivity: "/need-sensitivity-v4.png",
+  dullness: "/need-dullness-v4.png",
+};
+
+const ROUTINE_SIZE_IMAGES: Record<SelectionRoutineSize, string> = {
+  minimal: "/quiz-routine-minimal-v1.png",
+  full: "/quiz-routine-full-v1.png",
+};
+
+function OptionCard({
   label,
+  image,
   selected,
   onClick,
 }: {
   label: string;
+  image?: string;
   selected: boolean;
   onClick: () => void;
 }) {
@@ -31,14 +58,41 @@ function OptionChip({
       type="button"
       aria-pressed={selected}
       onClick={onClick}
-      className={`rounded-full border text-sm px-4 py-2.5 transition-colors ${focusClasses} ${
+      className={`flex flex-col overflow-hidden rounded-[20px] border text-left transition-all ${focusClasses} ${
         selected
-          ? "bg-cta text-white border-cta"
-          : "bg-white/60 border-white/60 hover:bg-white/85"
+          ? "border-cta ring-2 ring-cta/30 bg-white/70"
+          : "border-white/60 bg-white/50 hover:border-cta/40 hover:bg-white/70"
       }`}
     >
-      {label}
+      {image && (
+        <div className="relative w-full aspect-[4/3]">
+          <Image src={image} alt="" fill sizes="(min-width: 640px) 220px, 45vw" className="object-cover" />
+        </div>
+      )}
+      <span className={`px-3.5 py-3 text-sm font-semibold ${selected ? "text-cta-strong" : "text-ink"}`}>
+        {label}
+      </span>
     </button>
+  );
+}
+
+function ProgressBar({ current, total }: { current: number; total: number }) {
+  return (
+    <div className="mb-6">
+      <div className="flex gap-1.5 mb-2.5" aria-hidden="true">
+        {Array.from({ length: total }).map((_, index) => (
+          <span
+            key={index}
+            className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
+              index <= current ? "bg-cta" : "bg-black/10"
+            }`}
+          />
+        ))}
+      </div>
+      <p className="text-sm text-ink/60">
+        Крок {current + 1} з {total}
+      </p>
+    </div>
   );
 }
 
@@ -57,9 +111,10 @@ type SelectionQuizProps = {
   needs: Need[];
   notices: Notices;
   collections: Collection[];
+  products: Product[];
 };
 
-export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProps) {
+export function SelectionQuiz({ needs, notices, collections, products }: SelectionQuizProps) {
   const [step, setStep] = useState<Step>("area");
   const [answers, setAnswers] = useState<SelectionAnswers>({ area: "face" });
   const [areaChosen, setAreaChosen] = useState(false);
@@ -104,6 +159,9 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
   if (step === "result") {
     const result = getSelectionResult(answers, needs);
     const collection = collections.find((item) => item.slug === result.collectionSlug);
+    const topProducts = collection
+      ? products.filter((product) => collection.recommendedProductSlugs.includes(product.slug)).slice(0, 3)
+      : [];
 
     return (
       <div>
@@ -136,6 +194,17 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
           </Card>
         )}
 
+        {topProducts.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-sm font-semibold text-ink/70 mb-3">З чого почати</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              {topProducts.map((product) => (
+                <ProductCard key={product.slug} product={product} />
+              ))}
+            </div>
+          </div>
+        )}
+
         <button
           type="button"
           onClick={reset}
@@ -154,16 +223,24 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
 
   return (
     <div>
-      <p className="text-sm text-ink/70 mb-6">
-        Крок {currentIndex + 1} з {questionSteps.length}
-      </p>
+      <ProgressBar current={currentIndex} total={questionSteps.length} />
 
       {step === "area" && (
         <>
           <h2 className="text-lg sm:text-xl font-semibold mb-5">З чим допомогти?</h2>
-          <div className="flex flex-wrap gap-2.5">
-            <OptionChip label="Догляд за обличчям" selected={false} onClick={() => chooseArea("face")} />
-            <OptionChip label="Догляд за волоссям" selected={false} onClick={() => chooseArea("hair")} />
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <OptionCard
+              label="Догляд за обличчям"
+              image={AREA_IMAGES.face}
+              selected={false}
+              onClick={() => chooseArea("face")}
+            />
+            <OptionCard
+              label="Догляд за волоссям"
+              image={AREA_IMAGES.hair}
+              selected={false}
+              onClick={() => chooseArea("hair")}
+            />
           </div>
         </>
       )}
@@ -171,11 +248,12 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
       {step === "concern" && (
         <>
           <h2 className="text-lg sm:text-xl font-semibold mb-5">Що турбує найбільше?</h2>
-          <div className="flex flex-wrap gap-2.5 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
             {needs.map((need) => (
-              <OptionChip
+              <OptionCard
                 key={need.slug}
                 label={need.title}
+                image={CONCERN_IMAGES[need.slug]}
                 selected={answers.concern === need.slug}
                 onClick={() => chooseConcern(need.slug)}
               />
@@ -194,14 +272,16 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
       {step === "routine" && (
         <>
           <h2 className="text-lg sm:text-xl font-semibold mb-5">Скільки кроків готові приділяти?</h2>
-          <div className="flex flex-wrap gap-2.5 mb-5">
-            <OptionChip
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-5">
+            <OptionCard
               label="Мінімум (3 кроки)"
+              image={ROUTINE_SIZE_IMAGES.minimal}
               selected={answers.routineSize === "minimal"}
               onClick={() => chooseRoutineSize("minimal")}
             />
-            <OptionChip
+            <OptionCard
               label="Повна рутина (4 кроки, ранок і вечір)"
+              image={ROUTINE_SIZE_IMAGES.full}
               selected={answers.routineSize === "full"}
               onClick={() => chooseRoutineSize("full")}
             />
