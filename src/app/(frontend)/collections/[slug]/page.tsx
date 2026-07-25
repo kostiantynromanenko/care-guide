@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -9,6 +10,7 @@ import { ProductCard } from "@/components/cards/ProductCard";
 import { CollectionCard } from "@/components/cards/CollectionCard";
 import { getCollectionBySlug, getCollectionsBySlugs, getProductsBySlugs } from "@/lib/collections";
 import { getNotices } from "@/lib/site-content";
+import { detectOsId } from "@/lib/user-agent";
 
 export async function generateMetadata({
   params,
@@ -43,6 +45,8 @@ export default async function CollectionDetailPage({
     getCollectionsBySlugs(collection.relatedCollectionSlugs),
     getNotices(),
   ]);
+
+  const osId = detectOsId((await headers()).get("user-agent"));
 
   return (
     <>
@@ -79,7 +83,11 @@ export default async function CollectionDetailPage({
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
               {recommendedProducts.map((product) => (
-                <ProductCard key={product.slug} product={product} />
+                <ProductCard
+                  key={product.slug}
+                  product={product}
+                  source={{ page: "collection", collectionSlug: collection.slug, osId }}
+                />
               ))}
             </div>
           </section>

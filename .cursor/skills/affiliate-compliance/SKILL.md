@@ -104,6 +104,19 @@ guesses, once real affiliate integration is approved:
   `Product.sourceUrl` (or wrapping it) with a Deeplink per product, not the homepage
   ShortLink — and that URL/ID material is a secret (treat like `PAYLOAD_SECRET`: env var, not
   committed to git), since it's tied to the client's real payout account.
+- Confirmed real link format (2026-07-25), implemented in `src/lib/affiliate.ts`:
+  `https://aff.hillary.ua/click?pid=<partner id>&offer_id=<offer>&path=<hillary.ua path>`. The
+  exact same parameter set (`pid`, `offer_id`, `sub1`-`sub8`, `os_id`) is the tracking-link spec
+  of **Affise**, a white-label CPA platform — so this program's tracker almost certainly runs on
+  it. Two extra dimensions from that spec are wired in:
+  - `sub1`/`sub2`/`sub3`: page type (`collection` / `quiz-result` / `product-detail`),
+    collection slug, and product slug — lets performance be compared per-surface in the
+    dashboard instead of only in aggregate.
+  - `os_id`: coarse visitor OS (`ios`/`android`/`windows`/`macos`/`linux`/`other`, from
+    `src/lib/user-agent.ts`), even though Affise's own docs say `os_id` doesn't appear in the
+    dashboard's Statistics UI (only via their API) — included anyway for future/API use. Note
+    Affise likely already auto-detects OS from the click's real `User-Agent` header regardless,
+    since our CTA is a direct `<a href>` the browser follows itself (not a server-side proxy).
 
 ## Medical and cosmetic claims
 

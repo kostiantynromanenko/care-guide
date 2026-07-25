@@ -12,6 +12,7 @@ import {
   type SelectionArea,
   type SelectionRoutineSize,
 } from "@/lib/selection-demo-logic";
+import { detectOsId } from "@/lib/user-agent";
 import type { Collection, Need, Notices, Product } from "@/types/content";
 
 type Step = "area" | "concern" | "routine" | "result";
@@ -231,7 +232,15 @@ export function SelectionQuiz({ needs, notices, collections, products }: Selecti
             <h3 className="text-sm font-semibold text-ink/70 mb-3">З чого почати</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {topProducts.map((product) => (
-                <ProductCard key={product.slug} product={product} />
+                <ProductCard
+                  key={product.slug}
+                  product={product}
+                  source={{
+                    page: "quiz-result",
+                    collectionSlug: collection?.slug,
+                    osId: typeof navigator !== "undefined" ? detectOsId(navigator.userAgent) : undefined,
+                  }}
+                />
               ))}
             </div>
           </div>

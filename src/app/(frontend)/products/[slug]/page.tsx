@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -9,6 +10,7 @@ import { RoutineCard } from "@/components/cards/RoutineCard";
 import { CollectionCard } from "@/components/cards/CollectionCard";
 import { DEMO_AFFILIATE_URL } from "@/lib/constants";
 import { getAffiliateUrl } from "@/lib/affiliate";
+import { detectOsId } from "@/lib/user-agent";
 import {
   getProductBySlug,
   getCollectionsByProductSlug,
@@ -50,7 +52,10 @@ export default async function ProductDetailPage({
     getNotices(),
   ]);
 
-  const href = getAffiliateUrl(product.sourceUrl) || DEMO_AFFILIATE_URL;
+  const osId = detectOsId((await headers()).get("user-agent"));
+  const href =
+    getAffiliateUrl(product.sourceUrl, { page: "product-detail", productSlug: product.slug, osId }) ||
+    DEMO_AFFILIATE_URL;
 
   return (
     <>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { DEMO_AFFILIATE_URL } from "@/lib/constants";
-import { getAffiliateUrl } from "@/lib/affiliate";
+import { getAffiliateUrl, type AffiliateSourcePage } from "@/lib/affiliate";
 import type { Product } from "@/types/content";
 
 /**
@@ -17,9 +17,24 @@ import type { Product } from "@/types/content";
  * generic demo URL otherwise. Always opens in a new tab per
  * `.cursor/skills/affiliate-compliance/SKILL.md`: it must never look like a
  * checkout action on this site.
+ * `source` records which page/collection the card is rendered on (sub1/sub2
+ * tracking params) and the visitor's OS (os_id — see `src/lib/user-agent.ts`)
+ * so conversion performance can be compared per-surface.
  */
-export function ProductCard({ product }: { product: Product }) {
-  const href = getAffiliateUrl(product.sourceUrl) || DEMO_AFFILIATE_URL;
+export function ProductCard({
+  product,
+  source,
+}: {
+  product: Product;
+  source: { page: AffiliateSourcePage; collectionSlug?: string; osId?: string };
+}) {
+  const href =
+    getAffiliateUrl(product.sourceUrl, {
+      page: source.page,
+      collectionSlug: source.collectionSlug,
+      productSlug: product.slug,
+      osId: source.osId,
+    }) || DEMO_AFFILIATE_URL;
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       {product.image ? (
