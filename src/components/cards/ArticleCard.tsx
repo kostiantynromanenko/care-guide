@@ -1,38 +1,54 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { IconBadge } from "@/components/ui/IconBadge";
-import { CompassIcon, FlaskIcon, LayersIcon, LeafIcon, SunIcon } from "@/components/icons/Icons";
 import type { Article } from "@/types/content";
 
 /**
- * Articles have no cover photo (a generic stock image would look off-brand —
- * see the visual-richness report, 2026-07-25), so each gets a small topic
- * icon instead. Keyed by slug; falls back to a generic compass for any
- * future article that isn't mapped yet.
+ * Header images (approved 2026-07-25), matching the NeedCard/Hero
+ * watercolor-illustration style — replaces the earlier per-topic icon
+ * badge, which looked out of place once every other card type moved to
+ * full imagery. Keyed by slug; falls back to a plain gradient placeholder
+ * for any future article that isn't mapped yet.
  */
-const ARTICLE_ICONS: Record<string, typeof CompassIcon> = {
-  "how-to-identify-skin-type": CompassIcon,
-  "product-application-order": LayersIcon,
-  "minimal-care-start": LeafIcon,
-  "why-spf-matters": SunIcon,
-  "introducing-active-ingredients": FlaskIcon,
+const ARTICLE_IMAGES: Record<string, string> = {
+  "how-to-identify-skin-type": "/article-skin-type-v1.png",
+  "product-application-order": "/article-application-order-v1.png",
+  "minimal-care-start": "/article-minimal-care-v1.png",
+  "why-spf-matters": "/article-spf-v1.png",
+  "introducing-active-ingredients": "/article-active-ingredients-v1.png",
 };
 
 export function ArticleCard({ article }: { article: Article }) {
-  const Icon = ARTICLE_ICONS[article.slug] ?? CompassIcon;
+  const image = ARTICLE_IMAGES[article.slug];
   return (
-    <Card className="p-5">
-      <IconBadge tone="lavender" className="mb-3">
-        <Icon />
-      </IconBadge>
-      <h3 className="font-semibold text-base mb-1.5">{article.title}</h3>
-      <p className="text-sm text-ink/70 mb-4">{article.excerpt}</p>
-      <Link
-        href={`/articles/${article.slug}`}
-        className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
-      >
-        Читати →
-      </Link>
+    <Card className="overflow-hidden">
+      {image ? (
+        <div className="relative aspect-[4/3]">
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 33vw, 80vw"
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div
+          className="aspect-[4/3] bg-gradient-to-br from-lavender-tint/40 to-rose-tint/40"
+          role="img"
+          aria-label={`Ілюстрація до статті «${article.title}»`}
+        />
+      )}
+      <div className="p-4 sm:p-5">
+        <h3 className="font-semibold text-base mb-1.5">{article.title}</h3>
+        <p className="text-sm text-ink/70 mb-4">{article.excerpt}</p>
+        <Link
+          href={`/articles/${article.slug}`}
+          className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
+        >
+          Читати →
+        </Link>
+      </div>
     </Card>
   );
 }
