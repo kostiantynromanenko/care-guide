@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/Button";
 import { Notice } from "@/components/ui/Notice";
 import { RoutineStepper } from "@/components/routine/RoutineStepper";
 import { ProductCard } from "@/components/cards/ProductCard";
@@ -67,21 +66,7 @@ export default async function CollectionDetailPage({
 
           <h1 className="text-2xl sm:text-4xl font-bold mb-3">{collection.title}</h1>
           <p className="text-ink/75 sm:text-lg mb-4 max-w-2xl">{collection.description}</p>
-          <p className="text-sm font-semibold text-cta-strong mb-6">{collection.routineSize}</p>
-
-          <Button href="/selection">Підібрати схожий догляд</Button>
-        </section>
-
-        <section
-          className="max-w-4xl mx-auto px-5 sm:px-8 py-8 sm:py-10 space-y-10"
-          aria-labelledby="routine-heading"
-        >
-          <h2 id="routine-heading" className="text-xl sm:text-2xl font-bold">
-            Схема догляду
-          </h2>
-          {collection.sequences.map((sequence) => (
-            <RoutineStepper key={sequence.label} sequence={sequence} />
-          ))}
+          <p className="text-sm font-semibold text-cta-strong">{collection.routineSize}</p>
         </section>
 
         {recommendedProducts.length > 0 && (
@@ -99,6 +84,18 @@ export default async function CollectionDetailPage({
             </div>
           </section>
         )}
+
+        <section
+          className="max-w-4xl mx-auto px-5 sm:px-8 py-8 sm:py-10 space-y-10"
+          aria-labelledby="routine-heading"
+        >
+          <h2 id="routine-heading" className="text-xl sm:text-2xl font-bold">
+            Схема догляду
+          </h2>
+          {collection.sequences.map((sequence) => (
+            <RoutineStepper key={sequence.label} sequence={sequence} />
+          ))}
+        </section>
 
         {collection.usageNotes.length > 0 && (
           <section
