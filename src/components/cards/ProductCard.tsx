@@ -22,13 +22,13 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       {product.image ? (
-        <div className="relative aspect-[4/3]">
+        <div className="relative aspect-[4/3] bg-white">
           <Image
             src={product.image}
             alt={product.imageAlt || `Фото засобу «${product.title}»`}
             fill
             sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover"
+            className="object-contain p-5"
           />
         </div>
       ) : (

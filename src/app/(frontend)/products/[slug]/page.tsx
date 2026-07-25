@@ -65,13 +65,13 @@ export default async function ProductDetailPage({
 
           <div className="grid sm:grid-cols-[220px_1fr] gap-6 sm:gap-8 mt-6">
             {product.image ? (
-              <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden">
+              <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden bg-white">
                 <Image
                   src={product.image}
                   alt={product.imageAlt || `Фото засобу «${product.title}»`}
                   fill
                   sizes="220px"
-                  className="object-cover"
+                  className="object-contain p-5"
                 />
               </div>
             ) : (

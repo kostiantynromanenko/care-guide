@@ -57,13 +57,13 @@ function CollectionCover({ collection }: { collection: Collection }) {
     return (
       <div className="relative aspect-[4/3] grid grid-cols-2 grid-rows-2 gap-0.5 bg-white" role="img" aria-label={label}>
         <div className="relative row-span-2">
-          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-cover" />
+          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-contain p-2" />
         </div>
         <div className="relative">
-          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-cover" />
+          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-contain p-2" />
         </div>
         <div className="relative">
-          <Image src={photos[2].image} alt="" fill sizes="17vw" className="object-cover" />
+          <Image src={photos[2].image} alt="" fill sizes="17vw" className="object-contain p-2" />
         </div>
       </div>
     );
@@ -73,10 +73,10 @@ function CollectionCover({ collection }: { collection: Collection }) {
     return (
       <div className="relative aspect-[4/3] grid grid-cols-2 gap-0.5 bg-white" role="img" aria-label={label}>
         <div className="relative">
-          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-cover" />
+          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-contain p-2" />
         </div>
         <div className="relative">
-          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-cover" />
+          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-contain p-2" />
         </div>
       </div>
     );
@@ -84,8 +84,8 @@ function CollectionCover({ collection }: { collection: Collection }) {
 
   if (photos.length === 1) {
     return (
-      <div className="relative aspect-[4/3]">
-        <Image src={photos[0].image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+      <div className="relative aspect-[4/3] bg-white">
+        <Image src={photos[0].image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-contain p-5" />
       </div>
     );
   }
