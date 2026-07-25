@@ -45,6 +45,38 @@ The agent may propose alternatives, but should begin around:
 
 Do not finalize the palette without approval.
 
+## Generated imagery style (approved 2026-07-25)
+
+For hero art and thematic section imagery (e.g. need/concern illustrations),
+use this style consistently rather than re-deriving it each time:
+
+- soft watercolor/gouache illustration — painterly brushwork with visible
+  paper-grain texture, not photographic realism, not flat vector icons;
+- one clear, simple iconic subject per image (e.g. a droplet, a leaf, a
+  petal, a citrus slice) rather than an abstract-only composition, except
+  for full-bleed backgrounds like the hero where soft abstract color-field
+  blobs are appropriate;
+- strictly pink tones — pale near-white blush through to a deeper dusty
+  rose, with no competing hues (no peach, lavender, purple, gold, blue);
+  a subject's own natural color (e.g. a leaf's green, a citrus's
+  orange-pink) is fine as a small accent against the pink backdrop;
+- generous soft/light space left where text or a headline will sit, so
+  contrast stays reliable without adding an overlay panel;
+- no text, no people/faces, no product bottles, no glitter, no harsh
+  photographic shadows.
+
+This intentionally supersedes "avoid excessive pink" above for this
+specific generated-imagery use case (approved directly by the client after
+trying multi-color and single-photo-realistic alternatives) — the rest of
+the UI (surfaces, text, borders) should still avoid leaning on pink as
+its dominant color.
+
+When adding new generated images (new need/concern, new hero variant,
+etc.), always save them under a new versioned filename (e.g. `-v5`,
+`-v6`) rather than overwriting an existing file at the same path — the
+Next.js image optimizer and browsers cache by URL, so reusing a filename
+after changing the image content will often keep serving the old bytes.
+
 ## Typography
 
 Use a clear sans-serif for body text.

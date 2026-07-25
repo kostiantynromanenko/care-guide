@@ -3,17 +3,20 @@ import { Card } from "@/components/ui/Card";
 import type { Need } from "@/types/content";
 
 /**
- * Generated abstract header images (approved 2026-07-25 — same soft
- * color-field style as the hero image, one thematic color mood per concern)
- * replaced the icon badges: the user liked the hero's look and asked for it
- * to carry through here. Falls back to a plain gradient placeholder for any
- * future need slug that isn't mapped yet.
+ * Generated header images (approved 2026-07-25) replaced the icon badges;
+ * iterated from macro photography to a soft watercolor-illustration style
+ * (matching the hero's painterly look) in a pink-only palette. Filenames
+ * are versioned (`-v4`) rather than reused: overwriting a file at the same
+ * path was not enough to bust the Next.js image optimizer / browser cache
+ * during earlier iterations, so a fresh path is required whenever the
+ * underlying image changes. Falls back to a plain gradient placeholder
+ * for any future need slug that isn't mapped yet.
  */
 const NEED_IMAGES: Record<string, string> = {
-  dryness: "/need-dryness.png",
-  oiliness: "/need-oiliness.png",
-  sensitivity: "/need-sensitivity.png",
-  dullness: "/need-dullness.png",
+  dryness: "/need-dryness-v4.png",
+  oiliness: "/need-oiliness-v4.png",
+  sensitivity: "/need-sensitivity-v4.png",
+  dullness: "/need-dullness-v4.png",
 };
 
 export function NeedCard({ need }: { need: Need }) {
