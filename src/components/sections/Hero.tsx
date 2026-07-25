@@ -41,7 +41,7 @@ export async function Hero() {
         </Button>
 
         <ul
-          className="flex gap-3 overflow-x-auto pb-2 justify-center flex-wrap sm:flex-nowrap"
+          className="flex flex-wrap gap-3 justify-center"
           aria-label="Швидкий вибір потреби"
         >
           {needs.map((need) => (

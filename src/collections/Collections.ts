@@ -54,6 +54,7 @@ export const Collections: CollectionConfig = {
       options: [
         { label: "Обличчя", value: "face" },
         { label: "Волосся", value: "hair" },
+        { label: "Тіло", value: "body" },
       ],
     },
     {

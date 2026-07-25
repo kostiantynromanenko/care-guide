@@ -2,21 +2,18 @@ import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import type { Need } from "@/types/content";
 
-/**
- * Generated header images (approved 2026-07-25) replaced the icon badges;
- * iterated from macro photography to a soft watercolor-illustration style
- * (matching the hero's painterly look) in a pink-only palette. Filenames
- * are versioned (`-v4`) rather than reused: overwriting a file at the same
- * path was not enough to bust the Next.js image optimizer / browser cache
- * during earlier iterations, so a fresh path is required whenever the
- * underlying image changes. Falls back to a plain gradient placeholder
- * for any future need slug that isn't mapped yet.
- */
 const NEED_IMAGES: Record<string, string> = {
   dryness: "/need-dryness-v4.png",
+  // Natural object colors (green leaf, orange citrus) on the shared soft
+  // pink watercolor-wash background — that combination (not forcing every
+  // object to pink) is the approved look.
   oiliness: "/need-oiliness-v4.png",
   sensitivity: "/need-sensitivity-v4.png",
   dullness: "/need-dullness-v4.png",
+  // v3: v1/v2 read as a literal blemish close-up ("shocking") — replaced
+  // with a calmer shield/protection motif.
+  acne: "/need-acne-v3.png",
+  "anti-aging": "/need-anti-aging-v3.png",
 };
 
 export function NeedCard({ need }: { need: Need }) {
@@ -29,7 +26,7 @@ export function NeedCard({ need }: { need: Need }) {
             src={image}
             alt=""
             fill
-            sizes="(min-width: 768px) 25vw, 50vw"
+            sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
             className="object-cover"
           />
         </div>
@@ -40,9 +37,9 @@ export function NeedCard({ need }: { need: Need }) {
           aria-label={`Ілюстрація до потреби «${need.title}»`}
         />
       )}
-      <div className="p-4 sm:p-5">
-        <h3 className="font-semibold text-sm sm:text-base mb-1.5">{need.title}</h3>
-        <p className="text-xs sm:text-sm text-ink/70">{need.description}</p>
+      <div className="p-3 sm:p-4">
+        <h3 className="font-semibold text-sm mb-1">{need.title}</h3>
+        <p className="text-xs text-ink/70">{need.description}</p>
       </div>
     </Card>
   );

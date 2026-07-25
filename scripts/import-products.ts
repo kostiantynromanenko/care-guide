@@ -4,12 +4,12 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 
 import { fetchHillaryFeed, parseHillaryFeed, type FeedOffer } from "@/lib/hillary-feed";
-import { importHillaryCatalog } from "@/lib/import-hillary-catalog";
+import { importProducts } from "@/lib/import-products";
 
 /**
- * Local dev entry point for the real HiLLARY catalog import — see
- * `src/lib/import-hillary-catalog.ts` for the actual mapping/logic (shared
- * with the production endpoint at `src/app/(payload)/api/import-hillary-catalog/route.ts`).
+ * Local dev entry point for importing all real HiLLARY products — see
+ * `src/lib/import-products.ts` for the actual data (shared with the
+ * production endpoint at `src/app/(payload)/api/import-products/route.ts`).
  * Uses a local `.cache/hillary-feed.xml` copy when present, to avoid
  * re-downloading the ~10MB feed on every run during curation.
  */
@@ -31,7 +31,7 @@ async function loadOffers(): Promise<Map<string, FeedOffer>> {
 const run = async () => {
   const payload = await getPayload({ config });
   const offers = await loadOffers();
-  const summary = await importHillaryCatalog(payload, offers);
+  const summary = await importProducts(payload, offers);
   console.log("Import complete:", summary);
   process.exit(0);
 };

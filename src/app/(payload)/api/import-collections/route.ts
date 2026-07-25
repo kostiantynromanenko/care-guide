@@ -2,15 +2,16 @@ import { NextResponse } from "next/server";
 import { getPayload } from "payload";
 import config from "@payload-config";
 
-import { importRoutines } from "@/lib/import-routines";
+import { importCollections } from "@/lib/import-collections";
 
 /**
- * Production endpoint for seeding editorial Routines content (see
- * `src/lib/import-routines.ts`) — mirrors `/api/import-products`'s
- * reasoning: needs a deployed serverless function to reach the production
- * database, reuses `PAYLOAD_SECRET` as a shared secret. Idempotent
- * (upserts by slug), safe to call again after editing the mapping.
+ * Production endpoint for importing all real HiLLARY-backed collections
+ * (see `src/lib/import-collections.ts`). Idempotent (upserts by slug), so
+ * it's safe to call again later. Run `/api/import-products` first —
+ * collections reference products by slug.
  */
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   const providedSecret = request.headers.get("x-seed-secret");
   const expectedSecret = process.env.PAYLOAD_SECRET;
@@ -22,12 +23,12 @@ export async function POST(request: Request) {
   const payload = await getPayload({ config });
 
   try {
-    const summary = await importRoutines(payload);
+    const summary = await importCollections(payload);
     return NextResponse.json({ ok: true, ...summary });
   } catch (error) {
     payload.logger.error(error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Seed failed" },
+      { error: error instanceof Error ? error.message : "Import failed" },
       { status: 500 }
     );
   }

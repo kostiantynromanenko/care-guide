@@ -150,7 +150,7 @@ CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
 - Real image uploads (Payload's `Media` collection) are wired into the frontend: collection/
   product cards render the uploaded photo via `next/image` when an editor attaches one, and
   fall back to the decorative placeholder otherwise.
-- Real catalog data (from "work with real data" decision): `scripts/import-hillary-catalog.ts`
+- Real catalog data (from "work with real data" decision): `scripts/import-products.ts`
   imports real HiLLARY product data (title, real photo, real `hillary.ua` product URL,
   vendor code, price/stock — the latter two stored but not displayed, since the feed's
   price/availability isn't reliably fresh) via the public product feed
@@ -163,6 +163,45 @@ CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
   affiliate-tracked, since that requires the client's actual partner `ShortLink` credentials
   (a separate, not-yet-approved follow-up). The import is idempotent (safe to re-run) but is a
   manual/on-demand script, not a scheduled auto-sync.
+- Content expansion, "expert complexes" ("Wave E"): per the client's direction to base new
+  collections on HiLLARY's own ready-made "Експертні комплекси" bundles rather than inventing
+  custom
+  categories, this wave imports 12 more real bundle SKUs and adds 6 new collections — 2 face
+  (**acne-breakouts-care**, **anti-aging-care**, backed by 2 new Needs: "Акне та висипання",
+  "Ознаки старіння"), 2 hair (**hair-loss-control**, **hair-growth-boost**), and 2 in a new
+  **body** `CollectionArea` (**anti-cellulite-care**, **foot-care-recovery** — Payload schema +
+  migration updated to allow `body` on `Collections.area`). It also enriches 3 existing
+  collections (oil-control-combination-skin, calm-sensitive-skin, vitamin-c-glow) with one
+  extra bundle step each. The `/selection` quiz was reworked to support a third "Догляд за
+  тілом" area and dedicated hair/body concern questions (hardcoded options, since those aren't
+  backed by CMS `Need` docs) that route straight to a bundle collection, skipping the
+  "how many steps" question that only applies to face routines assembled from individual
+  products. Idempotent and re-runnable like the other import scripts.
+- Content expansion, more collections ("Wave F"): mines HiLLARY expert-complex categories
+  Wave E hadn't used yet — post-acne pigmentation, a second lifting/firming angle on
+  anti-aging, puffiness/microcirculation, enlarged pores, SPF, and lip care — adding 14 more
+  real products and 6 more collections (**acne-marks-pigmentation-care**,
+  **firming-lifting-care**, **anti-puffiness-care**, **pore-care**, **sun-protection-care**,
+  **lip-care**, all `area: "face"`), plus 2 enrichment steps on pre-existing collections
+  (dry-hair-recovery, anti-cellulite-care). Brings the catalog to 18 collections / 45
+  products. Deliberately adds no new Needs, since the homepage `NeedsSection` grid is tuned
+  for exactly 6 cards — these 6 are catalog-only (reachable from `/collections` and the
+  homepage's featured-collections rotation) rather than `/selection`-quiz options. Because the
+  full catalog no longer fits comfortably on the homepage, `CollectionsSection` now shows a
+  random 6 of all collections per page load instead of listing every one, with the complete
+  set still one click away at `/collections`.
+- Content import scripts consolidated, one script per content type (2026-07-25): Waves D/E/F
+  above each bundled a growing set of products together with that wave's own collections into
+  its own script, which meant re-running an old wave's whole script just to refresh a product's
+  photo. All product mappings across every wave now live in one file
+  (`src/lib/import-products.ts`, `scripts/import-products.ts`,
+  `/api/import-products`), all collection mappings + enrichments in another
+  (`src/lib/import-collections.ts`, `scripts/import-collections.ts`, `/api/import-collections`),
+  and the 2 extra Needs in a third (`src/lib/import-needs.ts`, `scripts/import-needs.ts`,
+  `/api/import-needs`). This pass also fixed a bug it surfaced: the Wave E/F product lists never
+  had the image-download step Wave D had, so 29 of 45 products had no real photo — the unified
+  `import-products.ts` downloads a photo for every product now. Run products before collections
+  (collections look up products by slug and expect them to already exist).
 
 ## Future considerations (not in current scope)
 

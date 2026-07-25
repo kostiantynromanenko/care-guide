@@ -15,6 +15,8 @@ const NEED_TO_COLLECTION_SLUGS: Record<string, string[]> = {
   oiliness: ["oil-control-combination-skin"],
   sensitivity: ["calm-sensitive-skin"],
   dullness: ["vitamin-c-glow"],
+  acne: ["acne-breakouts-care"],
+  "anti-aging": ["anti-aging-care"],
 };
 
 export function getSuggestedCollections(

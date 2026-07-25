@@ -28,6 +28,7 @@ const focusClasses =
 const AREA_IMAGES: Record<SelectionArea, string> = {
   face: "/routine-face-v1.png",
   hair: "/routine-hair-v1.png",
+  body: "/quiz-area-body-v3.png",
 };
 
 const CONCERN_IMAGES: Record<string, string> = {
@@ -35,12 +36,40 @@ const CONCERN_IMAGES: Record<string, string> = {
   oiliness: "/need-oiliness-v4.png",
   sensitivity: "/need-sensitivity-v4.png",
   dullness: "/need-dullness-v4.png",
+  acne: "/need-acne-v3.png",
+  "anti-aging": "/need-anti-aging-v3.png",
 };
 
 const ROUTINE_SIZE_IMAGES: Record<SelectionRoutineSize, string> = {
   minimal: "/quiz-routine-minimal-v1.png",
   full: "/quiz-routine-full-v1.png",
 };
+
+/**
+ * Hair and body concerns aren't backed by CMS `Need` docs (those are
+ * face-only, shown on the homepage) — there are few enough options that
+ * hardcoding them here, the same way routine-size already is, is simpler
+ * than adding a CMS collection just for two areas' worth of quiz options.
+ */
+const HAIR_CONCERNS: { slug: string; label: string; image: string }[] = [
+  { slug: "dry-hair", label: "Сухість та ламкість", image: "/quiz-hair-dry-v2.png" },
+  { slug: "hair-loss", label: "Випадіння волосся", image: "/quiz-hair-loss-v1.png" },
+  { slug: "hair-growth", label: "Повільний ріст", image: "/quiz-hair-growth-v2.png" },
+];
+
+const BODY_CONCERNS: { slug: string; label: string; image: string }[] = [
+  { slug: "cellulite", label: "Пружність шкіри тіла", image: "/quiz-cellulite-v2.png" },
+  { slug: "foot-care", label: "Сухі, потріскані п'яти", image: "/quiz-foot-care-v1.png" },
+];
+
+const CONCERN_HEADINGS: Record<SelectionArea, string> = {
+  face: "Що турбує найбільше?",
+  hair: "Що турбує волосся найбільше?",
+  body: "Що турбує найбільше?",
+};
+
+/** Face concerns backed by ready HiLLARY bundles rather than an assembled routine — no "how many steps" question needed. */
+const NO_ROUTINE_STEP_CONCERNS = new Set(["acne", "anti-aging"]);
 
 function OptionCard({
   label,
@@ -98,12 +127,14 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
 
 /**
  * Steps this run of the quiz will pass through, given current answers.
- * The hair path is intentionally shorter — there is only one demo hair
- * collection, so asking extra questions that wouldn't change the result
- * would be misleading (see src/lib/selection-demo-logic.ts).
+ * Hair and body concerns map directly onto a ready HiLLARY bundle, so
+ * there's no "how many steps" question for them — only face concerns that
+ * are still assembled from individual products (dryness/oiliness/
+ * sensitivity/dullness) ask it (see src/lib/selection-demo-logic.ts).
  */
-function getQuestionSteps(area: SelectionArea | undefined): Step[] {
-  if (area === "hair") return ["area"];
+function getQuestionSteps(area: SelectionArea | undefined, concern: string | undefined): Step[] {
+  if (area === "hair" || area === "body") return ["area", "concern"];
+  if (concern && NO_ROUTINE_STEP_CONCERNS.has(concern)) return ["area", "concern"];
   return ["area", "concern", "routine"];
 }
 
@@ -119,18 +150,19 @@ export function SelectionQuiz({ needs, notices, collections, products }: Selecti
   const [answers, setAnswers] = useState<SelectionAnswers>({ area: "face" });
   const [areaChosen, setAreaChosen] = useState(false);
 
-  const questionSteps = getQuestionSteps(areaChosen ? answers.area : undefined);
+  const questionSteps = getQuestionSteps(areaChosen ? answers.area : undefined, answers.concern);
   const currentIndex = questionSteps.indexOf(step);
 
   function chooseArea(area: SelectionArea) {
     setAnswers({ area });
     setAreaChosen(true);
-    setStep(area === "hair" ? "result" : "concern");
+    setStep("concern");
   }
 
   function chooseConcern(concern: string) {
     setAnswers((prev) => ({ ...prev, concern }));
-    setStep("routine");
+    const skipsRoutineStep = answers.area !== "face" || NO_ROUTINE_STEP_CONCERNS.has(concern);
+    setStep(skipsRoutineStep ? "result" : "routine");
   }
 
   function chooseRoutineSize(routineSize: SelectionRoutineSize) {
@@ -228,7 +260,7 @@ export function SelectionQuiz({ needs, notices, collections, products }: Selecti
       {step === "area" && (
         <>
           <h2 className="text-lg sm:text-xl font-semibold mb-5">З чим допомогти?</h2>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <OptionCard
               label="Догляд за обличчям"
               image={AREA_IMAGES.face}
@@ -241,23 +273,50 @@ export function SelectionQuiz({ needs, notices, collections, products }: Selecti
               selected={false}
               onClick={() => chooseArea("hair")}
             />
+            <OptionCard
+              label="Догляд за тілом"
+              image={AREA_IMAGES.body}
+              selected={false}
+              onClick={() => chooseArea("body")}
+            />
           </div>
         </>
       )}
 
       {step === "concern" && (
         <>
-          <h2 className="text-lg sm:text-xl font-semibold mb-5">Що турбує найбільше?</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
-            {needs.map((need) => (
-              <OptionCard
-                key={need.slug}
-                label={need.title}
-                image={CONCERN_IMAGES[need.slug]}
-                selected={answers.concern === need.slug}
-                onClick={() => chooseConcern(need.slug)}
-              />
-            ))}
+          <h2 className="text-lg sm:text-xl font-semibold mb-5">{CONCERN_HEADINGS[answers.area]}</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-8">
+            {answers.area === "face" &&
+              needs.map((need) => (
+                <OptionCard
+                  key={need.slug}
+                  label={need.title}
+                  image={CONCERN_IMAGES[need.slug]}
+                  selected={answers.concern === need.slug}
+                  onClick={() => chooseConcern(need.slug)}
+                />
+              ))}
+            {answers.area === "hair" &&
+              HAIR_CONCERNS.map((concern) => (
+                <OptionCard
+                  key={concern.slug}
+                  label={concern.label}
+                  image={concern.image}
+                  selected={answers.concern === concern.slug}
+                  onClick={() => chooseConcern(concern.slug)}
+                />
+              ))}
+            {answers.area === "body" &&
+              BODY_CONCERNS.map((concern) => (
+                <OptionCard
+                  key={concern.slug}
+                  label={concern.label}
+                  image={concern.image}
+                  selected={answers.concern === concern.slug}
+                  onClick={() => chooseConcern(concern.slug)}
+                />
+              ))}
           </div>
           <button
             type="button"

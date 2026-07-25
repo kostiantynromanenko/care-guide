@@ -12,6 +12,9 @@
     "seed": "payload run scripts/seed.ts",
     "seed:routines": "payload run scripts/seed-routines.ts",
     "seed:articles": "payload run scripts/seed-articles.ts",
+    "import:products": "payload run scripts/import-products.ts",
+    "import:collections": "payload run scripts/import-collections.ts",
+    "import:needs": "payload run scripts/import-needs.ts",
     "update:copy": "payload run scripts/update-conversion-copy.ts"
   },
   "dependencies": {

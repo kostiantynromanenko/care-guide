@@ -10,17 +10,17 @@ const filters: { id: AreaFilter; label: string }[] = [
   { id: "all", label: "Усі" },
   { id: "face", label: "Обличчя" },
   { id: "hair", label: "Волосся" },
+  { id: "body", label: "Тіло" },
 ];
 
 const focusClasses =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta";
 
 /**
- * Client-side filter over the (small) demo collection set. Only filters by
- * area, since that's the one dimension with enough real demo data to make
- * filtering meaningful (see docs/SITE_STRUCTURE.md §3 for the full list of
- * possible filters — skin type/concern/budget aren't wired up yet because
- * the current 3 demo collections don't carry that data).
+ * Client-side filter over the collection set. Only filters by area, since
+ * that's the one dimension with enough real content to make filtering
+ * meaningful (see docs/SITE_STRUCTURE.md §3 for the full list of possible
+ * filters — skin type/concern/budget aren't wired up yet).
  */
 export function CollectionsFilter({ collections }: { collections: Collection[] }) {
   const [area, setArea] = useState<AreaFilter>("all");

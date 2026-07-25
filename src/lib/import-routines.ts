@@ -4,7 +4,7 @@ import type { Payload } from "payload";
  * Seeds the 5 editorial "Routines" (docs/SITE_STRUCTURE.md §5) — schedule
  * -based guides (morning/evening/minimal/weekly/hair recovery) that
  * deliberately reference the same real products already imported by
- * `src/lib/import-hillary-catalog.ts`, rather than a separate catalog.
+ * `src/lib/import-products.ts`, rather than a separate catalog.
  * Idempotent (upserts by slug), shared by the local script
  * (`scripts/seed-routines.ts`) and the protected production endpoint
  * (`src/app/(payload)/api/seed-routines/route.ts`).

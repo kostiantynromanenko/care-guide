@@ -7,9 +7,10 @@ import type { Routine } from "@/types/content";
  * Header images (approved 2026-07-25), matching the NeedCard/Hero
  * watercolor-illustration style — replaces the earlier icon-in-circle
  * badge, which looked out of place once every other card type moved to
- * full imagery. Keyed by area since routines only vary between face/hair.
+ * full imagery. Partial because there are no body routines yet (body only
+ * has collections so far — see docs/PROJECT_CONTEXT.md, Wave E).
  */
-const ROUTINE_IMAGES: Record<Routine["area"], string> = {
+const ROUTINE_IMAGES: Partial<Record<Routine["area"], string>> = {
   face: "/routine-face-v1.png",
   hair: "/routine-hair-v1.png",
 };

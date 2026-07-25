@@ -37,7 +37,7 @@ export interface RoutineSequence {
   steps: SequenceStep[];
 }
 
-export type CollectionArea = "face" | "hair";
+export type CollectionArea = "face" | "hair" | "body";
 
 export interface Collection {
   title: string;

@@ -7,7 +7,7 @@ import type { Need } from "@/types/content";
  * table over content, not a real recommendation engine.
  */
 
-export type SelectionArea = "face" | "hair";
+export type SelectionArea = "face" | "hair" | "body";
 export type SelectionRoutineSize = "minimal" | "full";
 
 export interface SelectionAnswers {
@@ -42,10 +42,47 @@ function buildTip(answers: SelectionAnswers, needs: Need[]): string {
 
 export function getSelectionResult(answers: SelectionAnswers, needs: Need[]): SelectionResult {
   if (answers.area === "hair") {
+    if (answers.concern === "hair-loss") {
+      return {
+        collectionSlug: "hair-loss-control",
+        tip:
+          buildTip(answers, needs) ||
+          "Курсові засоби працюють поступово — оцінюйте результат не раніше ніж за 2–3 місяці.",
+      };
+    }
+    if (answers.concern === "hair-growth") {
+      return {
+        collectionSlug: "hair-growth-boost",
+        tip:
+          buildTip(answers, needs) ||
+          "Ріст волосся залежить не тільки від косметики — важливі також харчування і сон.",
+      };
+    }
     return {
       collectionSlug: "dry-hair-recovery",
       tip: buildTip(answers, needs) || "Маску використовуйте 1–2 рази на тиждень, а не щодня.",
     };
+  }
+
+  if (answers.area === "body") {
+    if (answers.concern === "foot-care") {
+      return {
+        collectionSlug: "foot-care-recovery",
+        tip: buildTip(answers, needs) || "Наносьте крем увечері, за потреби — під бавовняні шкарпетки.",
+      };
+    }
+    return {
+      collectionSlug: "anti-cellulite-care",
+      tip: buildTip(answers, needs) || "Найкращий ефект — у поєднанні з регулярною фізичною активністю.",
+    };
+  }
+
+  if (answers.concern === "acne") {
+    return { collectionSlug: "acne-breakouts-care", tip: buildTip(answers, needs) };
+  }
+
+  if (answers.concern === "anti-aging") {
+    return { collectionSlug: "anti-aging-care", tip: buildTip(answers, needs) };
   }
 
   if (answers.routineSize === "minimal") {

@@ -230,7 +230,7 @@ export interface Collection {
   description: string;
   tags?: string[] | null;
   image?: (number | null) | Media;
-  area: 'face' | 'hair';
+  area: 'face' | 'hair' | 'body';
   routineSize: string;
   sequences?:
     | {

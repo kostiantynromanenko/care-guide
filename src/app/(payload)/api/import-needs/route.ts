@@ -2,15 +2,15 @@ import { NextResponse } from "next/server";
 import { getPayload } from "payload";
 import config from "@payload-config";
 
-import { importRoutines } from "@/lib/import-routines";
+import { importNeeds } from "@/lib/import-needs";
 
 /**
- * Production endpoint for seeding editorial Routines content (see
- * `src/lib/import-routines.ts`) — mirrors `/api/import-products`'s
- * reasoning: needs a deployed serverless function to reach the production
- * database, reuses `PAYLOAD_SECRET` as a shared secret. Idempotent
- * (upserts by slug), safe to call again after editing the mapping.
+ * Production endpoint for importing Needs added after the initial demo seed
+ * (see `src/lib/import-needs.ts`). Idempotent (upserts by slug), so it's
+ * safe to call again later.
  */
+export const maxDuration = 30;
+
 export async function POST(request: Request) {
   const providedSecret = request.headers.get("x-seed-secret");
   const expectedSecret = process.env.PAYLOAD_SECRET;
@@ -22,12 +22,12 @@ export async function POST(request: Request) {
   const payload = await getPayload({ config });
 
   try {
-    const summary = await importRoutines(payload);
+    const summary = await importNeeds(payload);
     return NextResponse.json({ ok: true, ...summary });
   } catch (error) {
     payload.logger.error(error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Seed failed" },
+      { error: error instanceof Error ? error.message : "Import failed" },
       { status: 500 }
     );
   }

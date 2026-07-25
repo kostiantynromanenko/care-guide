@@ -162,21 +162,29 @@ Re-enable later if needed (e.g. between review rounds) with
 
 ## 10. Import real catalog data (optional, run any time after seeding)
 
-`scripts/import-hillary-catalog.ts` (local dev) and the protected endpoint
-`/api/import-hillary-catalog` (production) both run
-`src/lib/import-hillary-catalog.ts` — see `docs/PROJECT_CONTEXT.md` § Technical
-status ("Wave D") for what this does. Same sensitive-env-var reasoning as
-seeding: run it in production via the deployed endpoint, not locally against
-the production DB.
+Real HiLLARY catalog content is split into one script/endpoint **per content
+type**, not per curation "wave" — see `docs/PROJECT_CONTEXT.md` § Technical
+status. Each is idempotent (upserts by slug, no "already ran" guard), so
+they're all safe to call again later — e.g. after adding a new mapping to
+one of the `src/lib/import-*.ts` files, or to refresh titles/prices/photos
+from a newer snapshot of the feed. Same sensitive-env-var reasoning as
+seeding: run them in production via the deployed endpoints, not locally
+against the production DB. **Run products before collections** — collections
+reference products by slug and expect them to already exist.
 
 ```bash
-curl -X POST https://<your-project>.vercel.app/api/import-hillary-catalog \
+curl -X POST https://<your-project>.vercel.app/api/import-products \
+  -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
+
+curl -X POST https://<your-project>.vercel.app/api/import-collections \
+  -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
+
+curl -X POST https://<your-project>.vercel.app/api/import-needs \
   -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
 ```
 
-Unlike `/api/seed`, this has no "already ran" guard — it's idempotent
-(upserts by product/collection slug), so it's safe to call again later to
-refresh titles/photos from a newer snapshot of the feed.
+Locally, the equivalent commands are `npm run import:products`,
+`npm run import:collections`, and `npm run import:needs`.
 
 ## 11. Recover a locked-out /admin account
 

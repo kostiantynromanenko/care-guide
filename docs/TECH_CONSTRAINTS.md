@@ -45,12 +45,19 @@ Design direction (Variant 5) is approved. CMS integration has been introduced in
   when `NODE_ENV !== "production"`. See `docs/DEPLOYMENT.md` for the full setup procedure.
   Deployment Protection has since been turned off, so production is publicly reachable.
 - **Wave D (done):** real catalog data. `src/lib/hillary-feed.ts` fetches/parses HiLLARY's
-  public YML product feed; `scripts/import-hillary-catalog.ts` maps selected real SKUs onto
-  our `Products`/`Collections` slugs (idempotent, re-runnable) — see
-  `docs/PROJECT_CONTEXT.md` § Technical status for the full reasoning. `Products` gained
-  `sourceUrl`/`vendorCode`/`price`/`inStock` fields; only `sourceUrl` is currently used
-  (as the real outbound CTA link), the rest are stored for future use since the feed's
-  price/availability data isn't reliably fresh.
+  public YML product feed; `src/lib/import-products.ts` maps selected real SKUs onto our
+  `Products` slugs, `src/lib/import-collections.ts` assembles them into `Collections`
+  (idempotent, re-runnable) — see `docs/PROJECT_CONTEXT.md` § Technical status for the full
+  reasoning. `Products` gained `sourceUrl`/`vendorCode`/`price`/`inStock` fields; only
+  `sourceUrl` is currently used (as the real outbound CTA link), the rest are stored for
+  future use since the feed's price/availability data isn't reliably fresh.
+- **Content imports, one script per content type (2026-07-25):** what started as Wave D grew
+  into further waves (E: body area + expert-complex bundles, F: more collections) that each
+  bundled their own products+collections together, so the product/collection mappings are now
+  consolidated into a single growing list per type — `src/lib/import-products.ts`,
+  `src/lib/import-collections.ts`, `src/lib/import-needs.ts` — each with its own local script
+  and protected production endpoint. Add a new mapping to the relevant file and re-run that
+  one script; no more spinning up a new wave-numbered script per curation pass.
 
 ## Implementation rules
 
@@ -71,7 +78,9 @@ payload.config.ts          # Payload config (root, required by Payload)
 docker-compose.yml          # local Postgres for Payload
 scripts/
 ├── seed.ts                  # migrates demo/demo-content.json into Postgres (Wave A)
-└── import-hillary-catalog.ts # imports real HiLLARY catalog data (Wave D)
+├── import-products.ts       # imports all real HiLLARY products (one script per content type)
+├── import-collections.ts    # imports all real HiLLARY-backed collections
+└── import-needs.ts          # imports Needs added after the initial demo seed
 src/
 ├── app/
 │   ├── (frontend)/          # the public site — reads from Payload as of Wave B
@@ -124,7 +133,7 @@ export const DEMO_AFFILIATE_URL = "https://example.com/official-product";
 
 Do not use real affiliate links in the prototype repository unless the owner explicitly supplies and approves them.
 
-Exception (Wave D): products imported by `scripts/import-hillary-catalog.ts` link to their
+Exception (Wave D): products imported by `scripts/import-products.ts` link to their
 real `hillary.ua` product page (`product.sourceUrl`) instead of the placeholder — this is a
 real, working URL, but still **not** affiliate-tracked (no partner `ShortLink`), since that
 requires the client's own affiliate credentials. `ProductCard` falls back to
