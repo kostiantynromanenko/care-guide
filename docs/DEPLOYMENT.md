@@ -178,6 +178,33 @@ Unlike `/api/seed`, this has no "already ran" guard — it's idempotent
 (upserts by product/collection slug), so it's safe to call again later to
 refresh titles/photos from a newer snapshot of the feed.
 
+## 11. Recover a locked-out /admin account
+
+No email adapter is configured (this is a design prototype, not set up for
+transactional email), so Payload's built-in "forgot password" link on the
+`/admin` login page can't actually deliver a reset email in production. Use
+the protected `/api/reset-admin-password` endpoint instead — same shared
+`PAYLOAD_SECRET` pattern as the other routes above.
+
+If you also forgot which email the account uses:
+
+```bash
+curl https://<your-project>.vercel.app/api/reset-admin-password \
+  -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>"
+```
+
+Then reset the password (minimum 8 characters):
+
+```bash
+curl -X POST https://<your-project>.vercel.app/api/reset-admin-password \
+  -H "x-seed-secret: <the same value you set for PAYLOAD_SECRET>" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","newPassword":"a-new-strong-password"}'
+```
+
+Log in at `/admin` with the new password, then change it again from
+"Account" once inside if you'd like a different one.
+
 ## Notes / things intentionally out of scope here
 
 - **Migrations:** local dev still uses `push` mode (auto-sync on every save,
