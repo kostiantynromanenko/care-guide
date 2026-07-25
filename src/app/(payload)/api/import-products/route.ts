@@ -11,7 +11,12 @@ import { importProducts } from "@/lib/import-products";
  * to call again later to refresh titles/prices/photos from a newer feed
  * snapshot, or after adding a new product mapping.
  */
-export const maxDuration = 60;
+// The first production run of this route hit FUNCTION_INVOCATION_TIMEOUT at
+// 60s while processing 45 products sequentially (each needing a hillary.ua
+// photo download + Vercel Blob upload). `importProducts` now runs those
+// concurrently, but this is bumped too as a safety margin — Vercel's Hobby
+// plan allows up to 300s per function with Fluid compute.
+export const maxDuration = 180;
 
 export async function POST(request: Request) {
   const providedSecret = request.headers.get("x-seed-secret");

@@ -386,6 +386,33 @@ export interface ImportProductsSummary {
   imageFailures: { slug: string; error: string }[];
 }
 
+/**
+ * Runs `worker` over `items` with at most `concurrency` in flight at once.
+ *
+ * The per-product work here is dominated by network I/O (downloading a
+ * product photo from hillary.ua, then uploading it to Vercel Blob) rather
+ * than CPU, so processing the ~45 products fully sequentially could take
+ * over a minute and blow past the serverless function's `maxDuration` —
+ * that's exactly what happened on the first production run of this route.
+ * Running a handful concurrently cuts wall-clock time roughly by the
+ * concurrency factor while staying gentle on Payload's DB connection pool.
+ */
+async function mapWithConcurrency<T>(
+  items: T[],
+  concurrency: number,
+  worker: (item: T, index: number) => Promise<void>
+): Promise<void> {
+  let cursor = 0;
+  const runners = Array.from({ length: Math.min(concurrency, items.length) }, async () => {
+    while (cursor < items.length) {
+      const index = cursor;
+      cursor += 1;
+      await worker(items[index], index);
+    }
+  });
+  await Promise.all(runners);
+}
+
 export async function importProducts(
   payload: Payload,
   offers: Map<string, FeedOffer>
@@ -396,12 +423,12 @@ export async function importProducts(
   const skippedOffers: string[] = [];
   const imageFailures: { slug: string; error: string }[] = [];
 
-  for (const mapping of PRODUCTS) {
+  await mapWithConcurrency(PRODUCTS, 8, async (mapping) => {
     const offer = offers.get(mapping.offerId);
     if (!offer) {
       payload.logger.warn(`Offer ${mapping.offerId} not found in feed, skipping ${mapping.slug}`);
       skippedOffers.push(mapping.offerId);
-      continue;
+      return;
     }
 
     let mediaId: number | undefined;
@@ -459,7 +486,7 @@ export async function importProducts(
     }
     productsUpserted += 1;
     payload.logger.info(`Upserted product ${mapping.slug} <- offer ${mapping.offerId}`);
-  }
+  });
 
   payload.logger.info(
     `Products import complete. ${skippedOffers.length} offer(s) missing from feed, ${imageFailures.length} image failure(s).`
