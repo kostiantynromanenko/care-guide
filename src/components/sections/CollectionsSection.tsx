@@ -7,12 +7,12 @@ import type { Collection } from "@/types/content";
 const HOMEPAGE_FEATURED_COUNT = 6;
 
 /**
- * With the catalog now at 18 real collections (2026-07-25 "Wave F" content
- * expansion), showing all of them on the homepage made the page too long —
- * per request, a random 6 are featured instead (the full set is always one
- * click away via "Переглянути всі"). Re-rolled on every request since pages
- * already render dynamically (`force-dynamic`), so each visit surfaces a
- * different slice of the catalog rather than always the same static 6.
+ * With a large catalog of real collections, showing all of them on the
+ * homepage makes the page too long — a random subset is featured instead
+ * (the full set is always one click away via "Переглянути всі"). Re-rolled
+ * on every request since pages already render dynamically
+ * (`force-dynamic`), so each visit surfaces a different slice of the
+ * catalog rather than always the same static set.
  */
 function pickRandom<T>(items: T[], count: number): T[] {
   const shuffled = [...items];

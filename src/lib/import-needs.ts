@@ -7,10 +7,10 @@ import type { Payload } from "payload";
  * and the protected `/api/import-needs` endpoint (production).
  *
  * Kept intentionally small and separate from `import-collections.ts`: the
- * homepage `NeedsSection` grid is tuned for exactly 6 cards (2026-07-25
- * layout pass), so new collections don't automatically get a matching Need
- * — only add one here when it's meant to appear as its own homepage card
- * and `/selection` quiz option.
+ * homepage `NeedsSection` grid is tuned for exactly 6 cards, so new
+ * collections don't automatically get a matching Need — only add one here
+ * when it's meant to appear as its own homepage card and `/selection` quiz
+ * option.
  *
  * Idempotent: re-running updates existing docs by slug instead of
  * duplicating them, so it's safe to re-trigger manually.

@@ -1,12 +1,10 @@
 import type { ReactNode } from "react";
 
 /**
- * Shared homepage section wrapper. Introduced to fix the "every section
- * looks identical" flatness noted in the visual-richness/composition review
- * (2026-07-25): sections alternate between the plain background and a soft
- * full-bleed tint band (`tinted`), giving the page rhythm as you scroll
- * instead of one undifferentiated column, while keeping every section's
- * actual content/order exactly as approved in docs/SITE_STRUCTURE.md.
+ * Shared homepage section wrapper: sections alternate between the plain
+ * background and a soft full-bleed tint band (`tinted`), giving the page
+ * rhythm as you scroll instead of one undifferentiated column, while
+ * keeping every section's content/order matching docs/SITE_STRUCTURE.md.
  */
 export function Section({
   tinted = false,

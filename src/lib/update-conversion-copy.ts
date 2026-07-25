@@ -1,11 +1,10 @@
 import type { Payload } from "payload";
 
 /**
- * One-time copy sharpening pass (approved 2026-07-25): the hero and
- * collection descriptions were purely descriptive ("what it is") with no
- * outcome/benefit hook, which made the whole site feel flat rather than
- * something that motivates a click-through to the real purchase on
- * hillary.ua. Rewrites lead with the outcome while staying within
+ * One-time copy sharpening pass: rewrites the hero and collection
+ * descriptions to lead with the outcome/benefit rather than a purely
+ * descriptive "what it is" (which read as flat and didn't motivate a
+ * click-through to the real purchase on hillary.ua), while staying within
  * `.cursor/skills/ukrainian-ux-writing/SKILL.md` and
  * `.cursor/skills/affiliate-compliance/SKILL.md` (no exaggerated/medical
  * claims, no fake urgency). Idempotent — safe to re-run.

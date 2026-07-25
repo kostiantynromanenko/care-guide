@@ -53,7 +53,7 @@ export interface Collection {
   /**
    * Real product photos from `recommendedProducts`, used to build a
    * photo-mosaic cover when the collection has no dedicated `image` of its
-   * own (see `CollectionCard` — approved 2026-07-25 visual-richness pass).
+   * own (see `CollectionCard`).
    */
   recommendedProductImages: { image: string; imageAlt: string }[];
   usageNotes: string[];

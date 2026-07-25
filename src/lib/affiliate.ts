@@ -9,14 +9,13 @@
  *   https://aff.hillary.ua/click?pid=<partner id>&offer_id=<offer>&path=<path on hillary.ua>
  *
  * The program also supports up to 8 free-form "sub" tracking params
- * (sub1..sub8, "same logic as Google Ads" per the client) surfaced later in
- * the partner dashboard's conversion stats — used here to record which page
- * type and which collection/product sent the click, so performance can be
- * compared per-surface instead of only in aggregate. `os_id` is a separate
- * free-form field for the visitor's OS (see `src/lib/user-agent.ts`) — note
- * this one doesn't show up in the dashboard's Statistics UI (per this
- * tracking platform's own docs), only via their API, but is included for
- * completeness/future use.
+ * (sub1..sub8), surfaced in the partner dashboard's conversion stats — used
+ * here to record which page type and which collection/product sent the
+ * click, so performance can be compared per-surface instead of only in
+ * aggregate. `os_id` is a separate free-form field for the visitor's OS
+ * (see `src/lib/user-agent.ts`) — note this one doesn't show up in the
+ * dashboard's Statistics UI (per this tracking platform's own docs), only
+ * via their API, but is included for completeness/future use.
  *
  * See `.cursor/skills/affiliate-compliance/SKILL.md` for the program rules
  * this depends on (approved landing page, no brand keywords in SEO, etc).

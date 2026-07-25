@@ -13,9 +13,8 @@ const HOMEPAGE_PREVIEW_COUNT = 3;
  *
  * Capped to 3 of the 5 real routines on the homepage (full list still lives
  * at /routines): with 5 items a 3-column grid leaves a dangling half-empty
- * row, which read as literal empty space in the composition review
- * (2026-07-25). A horizontal scroll-snap row on mobile keeps the section
- * compact instead of a tall single-column stack.
+ * row. A horizontal scroll-snap row on mobile keeps the section compact
+ * instead of a tall single-column stack.
  */
 export async function RoutinesSection() {
   const routines = (await getAllRoutines()).slice(0, HOMEPAGE_PREVIEW_COUNT);

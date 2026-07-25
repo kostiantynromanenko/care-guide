@@ -6,9 +6,9 @@ import type { Collection } from "@/types/content";
 /**
  * Cover art priority: a dedicated `collection.image` (uploaded via the
  * Payload admin) first; otherwise a photo-mosaic built from the real product
- * photos already in `recommendedProductImages` (approved 2026-07-25 — no
- * collection has its own cover photo yet, but every product does); a plain
- * gradient placeholder only as the last resort.
+ * photos already in `recommendedProductImages` (no collection has its own
+ * cover photo yet, but every product does); a plain gradient placeholder
+ * only as the last resort.
  */
 export function CollectionCard({ collection }: { collection: Collection }) {
   return (

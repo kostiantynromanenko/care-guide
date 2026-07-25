@@ -3,13 +3,10 @@ import { getHowItWorksSteps } from "@/lib/site-content";
 
 /**
  * Deliberately NOT another "icon in a soft circle + title + description"
- * card grid — that read as near-identical to NeedsSection even after a
- * first differentiation attempt (tone/number-badge/thin line were too
- * subtle — feedback 2026-07-25). This is a solid numbered stepper instead:
- * bold filled circles on a visible connecting line, which reads as "ordered
- * process" at a glance rather than "another grid of options". Heading size
- * matches the other section headings (was intentionally smaller before,
- * but that just read as a sizing bug rather than a deliberate choice).
+ * card grid — that reads as near-identical to NeedsSection. This is a solid
+ * numbered stepper instead: bold filled circles on a visible connecting
+ * line, which reads as "ordered process" at a glance rather than "another
+ * grid of options". Heading size matches the other section headings.
  */
 export async function HowItWorksSection() {
   const steps = await getHowItWorksSteps();

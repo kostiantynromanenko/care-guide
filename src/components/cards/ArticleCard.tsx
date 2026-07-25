@@ -4,11 +4,9 @@ import { Card } from "@/components/ui/Card";
 import type { Article } from "@/types/content";
 
 /**
- * Header images (approved 2026-07-25), matching the NeedCard/Hero
- * watercolor-illustration style — replaces the earlier per-topic icon
- * badge, which looked out of place once every other card type moved to
- * full imagery. Keyed by slug; falls back to a plain gradient placeholder
- * for any future article that isn't mapped yet.
+ * Header images matching the NeedCard/Hero watercolor-illustration style.
+ * Keyed by slug; falls back to a plain gradient placeholder for any future
+ * article that isn't mapped yet.
  */
 const ARTICLE_IMAGES: Record<string, string> = {
   "how-to-identify-skin-type": "/article-skin-type-v1.png",

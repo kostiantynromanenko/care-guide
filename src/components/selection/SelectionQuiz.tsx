@@ -21,10 +21,10 @@ const focusClasses =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta";
 
 /**
- * Reuses the approved pink watercolor-illustration set (2026-07-25) already
- * painted for RoutineCard/NeedCard, instead of commissioning a parallel set
- * just for the quiz — same subjects mean the visual language stays
- * consistent between "answer this" and "here's your plan".
+ * Reuses the same pink watercolor-illustration set already painted for
+ * RoutineCard/NeedCard, instead of a parallel set just for the quiz — same
+ * subjects mean the visual language stays consistent between "answer this"
+ * and "here's your plan".
  */
 const AREA_IMAGES: Record<SelectionArea, string> = {
   face: "/routine-face-v1.png",

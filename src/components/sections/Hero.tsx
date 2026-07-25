@@ -5,12 +5,10 @@ import { getAllNeeds } from "@/lib/collections";
 import { getSiteSettings } from "@/lib/site-content";
 
 /**
- * `hero-abstract-banner-v6.png` — generated abstract artwork (approved
- * 2026-07-25). Earlier versions mixed the three brand accent tints (rose,
- * peach, lavender), inherited from the original `.gradient-hero` CSS —
- * simplified here to pink shades only (pale blush to deeper dusty rose),
- * per explicit feedback to drop the multi-color mix. No people/faces
- * /products, per the design brief.
+ * `hero-abstract-banner-v6.png` — generated abstract artwork, pink shades
+ * only (pale blush to deeper dusty rose) rather than mixing multiple brand
+ * accent tints, to keep the banner visually calm. No people/faces/products,
+ * per the design brief.
  */
 export async function Hero() {
   const [site, needs] = await Promise.all([getSiteSettings(), getAllNeeds()]);

@@ -3,11 +3,10 @@ import { Notice } from "@/components/ui/Notice";
 import { getNotices } from "@/lib/site-content";
 
 /**
- * Own top padding (was 0, relying solely on ArticlesSection's bottom
- * padding) — once ArticlesSection got a visible tinted background, that
- * same pixel gap read as an abrupt cutoff at the tint boundary rather than
- * breathing room (feedback 2026-07-25). Adding dedicated white space here
- * makes the tint-to-white transition feel intentional.
+ * Own top padding, rather than relying solely on ArticlesSection's bottom
+ * padding — ArticlesSection has a visible tinted background, so this
+ * dedicated white space makes the tint-to-white transition feel
+ * intentional instead of an abrupt cutoff at the tint boundary.
  */
 export async function NoticeSection() {
   const notices = await getNotices();
