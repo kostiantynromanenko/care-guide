@@ -18,10 +18,10 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <HowItWorksSection />
         <NeedsSection />
         <RoutinesSection />
         <CollectionsSection />
-        <HowItWorksSection />
         <ArticlesSection />
         <NoticeSection />
       </main>

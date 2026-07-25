@@ -57,7 +57,7 @@ export function ProductCard({ product }: { product: Product }) {
           rel="nofollow sponsored noopener"
           className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
         >
-          Переглянути на офіційному сайті ↗
+          Купити на офіційному сайті ↗
         </a>
       </div>
     </Card>

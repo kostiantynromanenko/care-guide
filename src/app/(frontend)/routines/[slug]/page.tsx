@@ -17,7 +17,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const routine = await getRoutineBySlug(slug);
   if (!routine) {
-    return { title: "Схему не знайдено — Care Guide" };
+    return { title: "План не знайдено — Care Guide" };
   }
   return {
     title: `${routine.title} — Care Guide`,
@@ -51,12 +51,12 @@ export default async function RoutineDetailPage({
             href="/routines"
             className="text-sm font-medium text-ink/80 hover:text-cta-strong transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
           >
-            ← Усі схеми
+            ← Усі плани
           </Link>
 
-          <ul className="flex flex-wrap gap-1.5 mt-5 mb-4" aria-label="Теги схеми">
+          <ul className="flex flex-wrap gap-1.5 mt-5 mb-4" aria-label="Теги плану">
             {routine.tags.map((tag) => (
-              <li key={tag} className="text-[11px] rounded-full bg-white/70 px-2.5 py-1">
+              <li key={tag} className="text-[11px] rounded-full bg-white border border-black/5 px-2.5 py-1">
                 {tag}
               </li>
             ))}
@@ -101,7 +101,7 @@ export default async function RoutineDetailPage({
               Хочете точніший підбір?
             </h2>
             <p className="text-sm text-ink/70 mb-6">
-              Ця схема — загальний орієнтир. Ці добірки враховують конкретний тип шкіри чи
+              Цей план — загальний орієнтир. Ці добірки враховують конкретний тип шкіри чи
               волосся:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">

@@ -50,6 +50,12 @@ export interface Collection {
   routineSize: string;
   sequences: RoutineSequence[];
   recommendedProductSlugs: string[];
+  /**
+   * Real product photos from `recommendedProducts`, used to build a
+   * photo-mosaic cover when the collection has no dedicated `image` of its
+   * own (see `CollectionCard` — approved 2026-07-25 visual-richness pass).
+   */
+  recommendedProductImages: { image: string; imageAlt: string }[];
   usageNotes: string[];
   relatedCollectionSlugs: string[];
 }

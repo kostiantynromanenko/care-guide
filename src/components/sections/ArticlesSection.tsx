@@ -1,15 +1,20 @@
 import Link from "next/link";
+import { Section } from "@/components/layout/Section";
 import { ArticleCard } from "@/components/cards/ArticleCard";
 import { getAllArticles } from "@/lib/collections";
 
+const HOMEPAGE_PREVIEW_COUNT = 3;
+
+/**
+ * Capped to 3 of the 5 articles on the homepage (full list at /articles) —
+ * same reasoning as RoutinesSection: avoids a dangling half-empty grid row
+ * and keeps the section compact on mobile via horizontal scroll-snap.
+ */
 export async function ArticlesSection() {
-  const articles = await getAllArticles();
+  const articles = (await getAllArticles()).slice(0, HOMEPAGE_PREVIEW_COUNT);
 
   return (
-    <section
-      className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"
-      aria-labelledby="articles-heading"
-    >
+    <Section tinted aria-labelledby="articles-heading">
       <div className="flex items-center justify-between mb-7">
         <h2 id="articles-heading" className="text-xl sm:text-2xl font-bold">
           Корисне
@@ -21,11 +26,13 @@ export async function ArticlesSection() {
           Усі статті →
         </Link>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
+      <ul className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:pb-0">
         {articles.map((article) => (
-          <ArticleCard key={article.slug} article={article} />
+          <li key={article.slug} className="snap-start shrink-0 w-[80%] sm:w-auto">
+            <ArticleCard article={article} />
+          </li>
         ))}
-      </div>
-    </section>
+      </ul>
+    </Section>
   );
 }

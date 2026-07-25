@@ -1,33 +1,45 @@
-import { Card } from "@/components/ui/Card";
+import { Section } from "@/components/layout/Section";
 import { getHowItWorksSteps } from "@/lib/site-content";
 
+/**
+ * Deliberately NOT another "icon in a soft circle + title + description"
+ * card grid — that read as near-identical to NeedsSection even after a
+ * first differentiation attempt (tone/number-badge/thin line were too
+ * subtle — feedback 2026-07-25). This is a solid numbered stepper instead:
+ * bold filled circles on a visible connecting line, which reads as "ordered
+ * process" at a glance rather than "another grid of options". Heading size
+ * matches the other section headings (was intentionally smaller before,
+ * but that just read as a sizing bug rather than a deliberate choice).
+ */
 export async function HowItWorksSection() {
-  const routineSteps = await getHowItWorksSteps();
+  const steps = await getHowItWorksSteps();
 
   return (
-    <section
-      className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"
-      aria-labelledby="how-it-works-heading"
-    >
-      <h2 id="how-it-works-heading" className="text-xl sm:text-2xl font-bold mb-7">
+    <Section tinted aria-labelledby="how-it-works-heading" className="!py-10 sm:!py-12">
+      <h2 id="how-it-works-heading" className="text-xl sm:text-2xl font-bold mb-8 text-center sm:text-left">
         Як це працює
       </h2>
-      <ol className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {routineSteps.map((step) => (
-          <li key={step.number}>
-            <Card className="p-5 h-full">
-              <span
-                className="w-8 h-8 rounded-full bg-cta text-white text-xs font-bold flex items-center justify-center mb-3"
-                aria-hidden="true"
-              >
-                {step.number}
-              </span>
-              <h3 className="text-sm font-semibold mb-1">{step.title}</h3>
-              <p className="text-xs text-ink/70">{step.description}</p>
-            </Card>
+      <ol className="relative flex gap-6 overflow-x-auto snap-x snap-mandatory pb-1 sm:grid sm:grid-cols-4 sm:gap-6 sm:overflow-visible">
+        <div
+          className="hidden sm:block absolute top-5 left-[12.5%] right-[12.5%] h-0.5 bg-cta/30"
+          aria-hidden="true"
+        />
+        {steps.map((step) => (
+          <li
+            key={step.number}
+            className="snap-start shrink-0 w-[62%] sm:w-auto flex flex-col items-center text-center"
+          >
+            <span
+              className="relative z-10 w-10 h-10 rounded-full bg-cta text-white font-bold flex items-center justify-center shadow-sm shadow-cta/30 mb-3"
+              aria-hidden="true"
+            >
+              {step.number}
+            </span>
+            <h3 className="text-sm font-semibold mb-1">{step.title}</h3>
+            <p className="text-xs text-ink/70">{step.description}</p>
           </li>
         ))}
       </ol>
-    </section>
+    </Section>
   );
 }

@@ -4,37 +4,20 @@ import { Card } from "@/components/ui/Card";
 import type { Collection } from "@/types/content";
 
 /**
- * Renders `collection.image` (uploaded via the Payload admin) when present,
- * falling back to a decorative placeholder otherwise — most demo collections
- * don't have a real photo yet during the design-prototype phase (see
- * docs/APPROVAL_WORKFLOW.md — placeholder images are expected until then).
+ * Cover art priority: a dedicated `collection.image` (uploaded via the
+ * Payload admin) first; otherwise a photo-mosaic built from the real product
+ * photos already in `recommendedProductImages` (approved 2026-07-25 — no
+ * collection has its own cover photo yet, but every product does); a plain
+ * gradient placeholder only as the last resort.
  */
 export function CollectionCard({ collection }: { collection: Collection }) {
   return (
     <Card className="overflow-hidden">
-      {collection.image ? (
-        <div className="relative aspect-[4/3]">
-          <Image
-            src={collection.image}
-            alt={collection.imageAlt || `Фото до добірки «${collection.title}»`}
-            fill
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover"
-          />
-        </div>
-      ) : (
-        <div
-          className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/70 text-xs font-medium"
-          role="img"
-          aria-label={`Фото до добірки «${collection.title}»`}
-        >
-          Фото добірки
-        </div>
-      )}
+      <CollectionCover collection={collection} />
       <div className="p-5">
         <ul className="flex flex-wrap gap-1.5 mb-3" aria-label="Теги добірки">
           {collection.tags.map((tag) => (
-            <li key={tag} className="text-[11px] rounded-full bg-white/70 px-2.5 py-1">
+            <li key={tag} className="text-[11px] rounded-full bg-white border border-black/5 px-2.5 py-1">
               {tag}
             </li>
           ))}
@@ -49,5 +32,71 @@ export function CollectionCard({ collection }: { collection: Collection }) {
         </Link>
       </div>
     </Card>
+  );
+}
+
+function CollectionCover({ collection }: { collection: Collection }) {
+  if (collection.image) {
+    return (
+      <div className="relative aspect-[4/3]">
+        <Image
+          src={collection.image}
+          alt={collection.imageAlt || `Фото до добірки «${collection.title}»`}
+          fill
+          sizes="(min-width: 768px) 33vw, 100vw"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
+  const photos = collection.recommendedProductImages;
+  const label = `Засоби з добірки «${collection.title}»`;
+
+  if (photos.length >= 3) {
+    return (
+      <div className="relative aspect-[4/3] grid grid-cols-2 grid-rows-2 gap-0.5 bg-white" role="img" aria-label={label}>
+        <div className="relative row-span-2">
+          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-cover" />
+        </div>
+        <div className="relative">
+          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-cover" />
+        </div>
+        <div className="relative">
+          <Image src={photos[2].image} alt="" fill sizes="17vw" className="object-cover" />
+        </div>
+      </div>
+    );
+  }
+
+  if (photos.length === 2) {
+    return (
+      <div className="relative aspect-[4/3] grid grid-cols-2 gap-0.5 bg-white" role="img" aria-label={label}>
+        <div className="relative">
+          <Image src={photos[0].image} alt="" fill sizes="17vw" className="object-cover" />
+        </div>
+        <div className="relative">
+          <Image src={photos[1].image} alt="" fill sizes="17vw" className="object-cover" />
+        </div>
+      </div>
+    );
+  }
+
+  if (photos.length === 1) {
+    return (
+      <div className="relative aspect-[4/3]">
+        <Image src={photos[0].image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="aspect-[4/3] bg-gradient-to-br from-rose-100 to-purple-100 flex items-center justify-center text-ink/70 text-xs font-medium"
+      role="img"
+      aria-label={`Фото до добірки «${collection.title}»`}
+    >
+      Фото добірки
+    </div>
   );
 }

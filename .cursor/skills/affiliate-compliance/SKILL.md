@@ -30,6 +30,9 @@ It does not:
 
 ## Recommended CTA wording
 
+- `Купити на офіційному сайті` (approved 2026-07-25 — pairs a direct verb with an
+  explicit location, so it stays compliant with "do not claim checkout happens on
+  this website" while being more action-oriented than "Переглянути")
 - `Переглянути на офіційному сайті`
 - `Дізнатися актуальну ціну`
 - `Перейти до товару`

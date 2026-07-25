@@ -5,7 +5,7 @@ import { getSiteSettings } from "@/lib/site-content";
 const navLinks = [
   { href: "/", label: "Головна" },
   { href: "/collections", label: "Добірки" },
-  { href: "/routines", label: "Схеми" },
+  { href: "/routines", label: "Плани" },
   { href: "/articles", label: "Корисне" },
   { href: "/about", label: "Про проєкт" },
 ];

@@ -5,8 +5,8 @@ import { RoutineCard } from "@/components/cards/RoutineCard";
 import { getAllRoutines } from "@/lib/collections";
 
 export const metadata: Metadata = {
-  title: "Схеми — Care Guide",
-  description: "Готові схеми догляду за розкладом: ранок, вечір, мінімум і щотижневий догляд.",
+  title: "Плани догляду — Care Guide",
+  description: "Готові плани догляду за розкладом: ранок, вечір, мінімум і щотижневий догляд.",
 };
 
 export default async function RoutinesPage() {
@@ -17,9 +17,9 @@ export default async function RoutinesPage() {
       <Header />
       <main>
         <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-12 sm:pt-16 pb-16 sm:pb-20">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Схеми</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Плани догляду</h1>
           <p className="text-ink/70 mb-8 max-w-xl">
-            Готові схеми за розкладом — ранкова, вечірня, мінімальна чи щотижнева. Кожна схема
+            Готові плани за розкладом — ранковий, вечірній, мінімальний чи щотижневий. Кожен план
             веде крок за кроком і посилається на добірку, якщо потрібен точніший підбір під ваш
             тип шкіри чи волосся.
           </p>
@@ -30,7 +30,7 @@ export default async function RoutinesPage() {
               ))}
             </div>
           ) : (
-            <p className="text-ink/70">Наразі немає доступних схем.</p>
+            <p className="text-ink/70">Наразі немає доступних планів.</p>
           )}
         </section>
       </main>

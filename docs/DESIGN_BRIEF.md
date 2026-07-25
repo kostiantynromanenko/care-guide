@@ -93,6 +93,8 @@ It should not show:
 
 Recommended CTA wording:
 
+- Купити на офіційному сайті (approved 2026-07-25 — more direct than "Переглянути,"
+  still unambiguous that the purchase happens on the seller's site, not this one)
 - Переглянути на офіційному сайті
 - Дізнатися актуальну ціну
 - Перейти до товару

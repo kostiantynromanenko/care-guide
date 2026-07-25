@@ -92,7 +92,7 @@ export default async function ProductDetailPage({
               {product.tags.length > 0 && (
                 <ul className="flex flex-wrap gap-1.5 mb-5" aria-label="Теги засобу">
                   {product.tags.map((tag) => (
-                    <li key={tag} className="text-[11px] rounded-full bg-white/70 px-2.5 py-1">
+                    <li key={tag} className="text-[11px] rounded-full bg-white border border-black/5 px-2.5 py-1">
                       {tag}
                     </li>
                   ))}
@@ -105,7 +105,7 @@ export default async function ProductDetailPage({
                 rel="nofollow sponsored noopener"
                 className="inline-block rounded-full bg-cta text-white font-semibold shadow-md shadow-cta/30 hover:bg-cta-strong px-6 py-3 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
               >
-                Переглянути на офіційному сайті ↗
+                Купити на офіційному сайті ↗
               </a>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default async function ProductDetailPage({
               Де використовується
             </h2>
             <p className="text-sm text-ink/70 mb-6 max-w-2xl">
-              Цей засіб входить до наступних схем і добірок — там показано, на якому кроці й у
+              Цей засіб входить до наступних планів і добірок — там показано, на якому кроці й у
               парі з чим його застосовувати.
             </p>
 

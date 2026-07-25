@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Section } from "@/components/layout/Section";
 import { CollectionCard } from "@/components/cards/CollectionCard";
 import { getAllCollections } from "@/lib/collections";
 
@@ -6,10 +7,7 @@ export async function CollectionsSection() {
   const collections = await getAllCollections();
 
   return (
-    <section
-      className="max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-16"
-      aria-labelledby="collections-heading"
-    >
+    <Section aria-labelledby="collections-heading">
       <div className="flex items-center justify-between mb-7">
         <h2 id="collections-heading" className="text-xl sm:text-2xl font-bold">
           Добірки
@@ -26,6 +24,6 @@ export async function CollectionsSection() {
           <CollectionCard key={collection.slug} collection={collection} />
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

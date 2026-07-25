@@ -43,3 +43,12 @@ button:not(:disabled) {
 .glass {
   @apply bg-white/60 backdrop-blur-lg;
 }
+
+/*
+ * Soft full-bleed tint band used by `Section` to alternate with the plain
+ * background — a restrained continuation of `.gradient-hero`'s palette, not
+ * a new accent (see docs/DESIGN_BRIEF.md — "avoid aggressive gradients").
+ */
+.bg-section-tint {
+  background: linear-gradient(180deg, rgb(241 167 160 / 0.09), rgb(217 199 236 / 0.11));
+}

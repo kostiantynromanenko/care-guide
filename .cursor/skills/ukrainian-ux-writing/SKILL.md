@@ -57,11 +57,13 @@ Prefer clear actions:
 - `Переглянути добірку`
 - `Дізнатися більше`
 - `Перейти до товару`
+- `Купити на офіційному сайті` (names the location explicitly — unlike the banned
+  phrases below, it can't be read as checkout happening on this site)
 - `Переглянути на офіційному сайті`
 
 Avoid:
 
-- `Купити зараз` when the site does not sell;
+- `Купити зараз` when the site does not sell — ambiguous about *where*;
 - `Замовити у нас`;
 - misleading checkout wording.
 

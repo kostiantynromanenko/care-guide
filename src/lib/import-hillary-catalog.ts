@@ -175,7 +175,7 @@ const NEW_COLLECTIONS: CollectionMapping[] = [
   {
     title: "Догляд для жирної та комбінованої шкіри",
     slug: "oil-control-combination-skin",
-    description: "Кроки для очищення й контролю жирного блиску без пересушування.",
+    description: "Менше жирного блиску і чистіші пори — без пересушування шкіри.",
     tags: ["Жирна шкіра", "Контроль жирності", "3-4 засоби"],
     area: "face",
     routineSize: "3 засоби · щодня + 1 щотижня",
@@ -205,7 +205,7 @@ const NEW_COLLECTIONS: CollectionMapping[] = [
   {
     title: "Догляд для чутливої шкіри",
     slug: "calm-sensitive-skin",
-    description: "Делікатні кроки для очищення й заспокоєння чутливої шкіри.",
+    description: "Заспокійте чутливу шкіру та зменшіть відчуття дискомфорту — м'якими перевіреними кроками.",
     tags: ["Чутлива шкіра", "Заспокоєння", "4 кроки"],
     area: "face",
     routineSize: "4 кроки · щодня",
@@ -230,7 +230,7 @@ const NEW_COLLECTIONS: CollectionMapping[] = [
   {
     title: "Догляд для сяйва та рівного тону",
     slug: "vitamin-c-glow",
-    description: "Кроки з вітаміном С для більш свіжого та рівного тону шкіри.",
+    description: "Більш свіжий і рівний тон шкіри — чотири кроки з вітаміном С.",
     tags: ["Тьмяний тон", "Vitamin C", "4 кроки"],
     area: "face",
     routineSize: "4 кроки · щодня",

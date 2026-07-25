@@ -1,14 +1,36 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { getAllNeeds } from "@/lib/collections";
 import { getSiteSettings } from "@/lib/site-content";
 
+/**
+ * `hero-abstract-banner-v2.png` — generated abstract artwork (approved
+ * 2026-07-25: user asked for a hero image, then for it to be more
+ * beauty-focused and pinker). Rose petals / blush powder / cream-swirl
+ * texture, leaning into rose-pink rather than the first neutral version —
+ * kept it in the muted/blush family rather than a saturated pink, since
+ * `docs/DESIGN_BRIEF.md` explicitly flags "excessive pink" as an anti
+ * -pattern. No people/faces/products, per the design brief.
+ */
 export async function Hero() {
   const [site, needs] = await Promise.all([getSiteSettings(), getAllNeeds()]);
 
   return (
-    <section className="gradient-hero">
-      <div className="max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-14 sm:pb-20 text-center">
+    <section className="relative overflow-hidden">
+      <Image
+        src="/hero-abstract-banner-v2.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg)]"
+        aria-hidden="true"
+      />
+      <div className="relative max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-14 sm:pb-20 text-center">
         <h1 className="text-[2.1rem] leading-tight sm:text-5xl font-bold mb-5">
           {site.tagline}
         </h1>

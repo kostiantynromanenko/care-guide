@@ -83,6 +83,21 @@ function toSlugs(refs: (number | { slug: string })[] | null | undefined): string
     .map((ref) => ref.slug);
 }
 
+/**
+ * Pulls real product photos out of an already-populated `recommendedProducts`
+ * relation (Payload's Local API default depth of 2 resolves both the product
+ * docs and their nested `image` relation) — used for `CollectionCard`'s
+ * photo-mosaic cover.
+ */
+function toProductImages(
+  products: PayloadCollection["recommendedProducts"]
+): { image: string; imageAlt: string }[] {
+  return (products ?? [])
+    .filter((product): product is PayloadProduct => typeof product === "object" && product !== null)
+    .map((product) => toImage(product.image))
+    .filter((img) => img.image !== "");
+}
+
 export function toCollection(doc: PayloadCollection): Collection {
   return {
     title: doc.title,
@@ -94,6 +109,7 @@ export function toCollection(doc: PayloadCollection): Collection {
     routineSize: doc.routineSize,
     sequences: toSequences(doc.sequences),
     recommendedProductSlugs: toSlugs(doc.recommendedProducts),
+    recommendedProductImages: toProductImages(doc.recommendedProducts),
     usageNotes: doc.usageNotes ?? [],
     relatedCollectionSlugs: toSlugs(doc.relatedCollections),
   };

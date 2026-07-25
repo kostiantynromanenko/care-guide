@@ -5,7 +5,7 @@
 - Головна
 - Підібрати догляд
 - Добірки
-- Схеми
+- Плани
 - Корисне
 - Про проєкт
 
@@ -21,11 +21,13 @@ Sections:
 
 1. Header
 2. Hero
-3. Need selection
-4. Featured routines
-5. How it works
+3. How it works (compact strip — approved 2026-07-25 composition pass:
+   moved up from position 5 since it's a short onboarding explainer, not
+   another content catalog, so it reads better right after the hero)
+4. Need selection
+5. Featured routines (capped to 3 of 5, "see all" link to /routines)
 6. Featured collections
-7. Helpful articles
+7. Helpful articles (capped to 3 of 5, "see all" link to /articles)
 8. Independent-site and affiliate notice
 9. Footer
 
@@ -78,6 +80,9 @@ Sections:
 9. affiliate disclosure.
 
 ### 5. Routines `/routines`
+
+Public-facing Ukrainian label: "Плани" / "Плани догляду" (changed from "Схеми"
+on 2026-07-25 — user feedback: the word read as unclear/too abstract).
 
 Routine examples:
 

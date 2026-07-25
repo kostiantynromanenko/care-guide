@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
+import { IconBadge } from "@/components/ui/IconBadge";
+import { BlossomIcon, CombIcon } from "@/components/icons/Icons";
 import type { Routine } from "@/types/content";
 
 export function RoutineCard({ routine }: { routine: Routine }) {
+  const Icon = routine.area === "hair" ? CombIcon : BlossomIcon;
   return (
     <Card className="p-5">
-      <ul className="flex flex-wrap gap-1.5 mb-3" aria-label="Теги схеми">
+      <IconBadge tone="peach" className="mb-3">
+        <Icon />
+      </IconBadge>
+      <ul className="flex flex-wrap gap-1.5 mb-3" aria-label="Теги плану">
         {routine.tags.map((tag) => (
-          <li key={tag} className="text-[11px] rounded-full bg-white/70 px-2.5 py-1">
+          <li key={tag} className="text-[11px] rounded-full bg-white border border-black/5 px-2.5 py-1">
             {tag}
           </li>
         ))}
@@ -18,7 +24,7 @@ export function RoutineCard({ routine }: { routine: Routine }) {
         href={`/routines/${routine.slug}`}
         className="text-sm font-semibold text-cta-strong hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta rounded"
       >
-        Переглянути схему →
+        Переглянути план →
       </Link>
     </Card>
   );

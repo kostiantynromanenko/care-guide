@@ -112,7 +112,7 @@ export function SelectionQuiz({ needs, notices, collections }: SelectionQuizProp
           <Card className="p-6 sm:p-7 mb-6">
             <ul className="flex flex-wrap gap-1.5 mb-4" aria-label="Теги добірки">
               {collection.tags.map((tag) => (
-                <li key={tag} className="text-[11px] rounded-full bg-white/70 px-2.5 py-1">
+                <li key={tag} className="text-[11px] rounded-full bg-white border border-black/5 px-2.5 py-1">
                   {tag}
                 </li>
               ))}
