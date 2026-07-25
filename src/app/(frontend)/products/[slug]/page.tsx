@@ -8,6 +8,7 @@ import { Notice } from "@/components/ui/Notice";
 import { RoutineCard } from "@/components/cards/RoutineCard";
 import { CollectionCard } from "@/components/cards/CollectionCard";
 import { DEMO_AFFILIATE_URL } from "@/lib/constants";
+import { getAffiliateUrl } from "@/lib/affiliate";
 import {
   getProductBySlug,
   getCollectionsByProductSlug,
@@ -49,7 +50,7 @@ export default async function ProductDetailPage({
     getNotices(),
   ]);
 
-  const href = product.sourceUrl || DEMO_AFFILIATE_URL;
+  const href = getAffiliateUrl(product.sourceUrl) || DEMO_AFFILIATE_URL;
 
   return (
     <>

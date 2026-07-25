@@ -186,7 +186,25 @@ curl -X POST https://<your-project>.vercel.app/api/import-needs \
 Locally, the equivalent commands are `npm run import:products`,
 `npm run import:collections`, and `npm run import:needs`.
 
-## 11. Recover a locked-out /admin account
+## 11. Turn on real affiliate tracking (optional)
+
+Product CTAs link to the plain `sourceUrl` (untracked hillary.ua page) until
+`HILLARY_AFFILIATE_PID` is set — see `src/lib/affiliate.ts` and
+`.cursor/skills/affiliate-compliance/SKILL.md` for the confirmed link format
+and program rules (a landing-page sign-off from HiLLARY's partner-program
+manager is required before turning this on).
+
+1. Generate a Deeplink to any hillary.ua product page from the partner
+   dashboard at `drop.hillary.ua` (offer → Deeplink).
+2. Read the `pid` value out of the generated URL
+   (`https://aff.hillary.ua/click?pid=<this>&offer_id=2&path=...`).
+3. Add it as a **sensitive** environment variable in Vercel project settings:
+   `HILLARY_AFFILIATE_PID`. Leave `HILLARY_AFFILIATE_OFFER_ID` unset unless
+   HiLLARY tells you to use a different offer ID than `2`.
+4. Redeploy so the new env var is picked up (Vercel doesn't hot-reload env
+   vars into already-running functions).
+
+## 12. Recover a locked-out /admin account
 
 No email adapter is configured (this is a design prototype, not set up for
 transactional email), so Payload's built-in "forgot password" link on the

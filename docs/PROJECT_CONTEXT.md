@@ -190,6 +190,15 @@ CMS integration (see `docs/TECH_CONSTRAINTS.md`) has been introduced in waves:
   full catalog no longer fits comfortably on the homepage, `CollectionsSection` now shows a
   random 6 of all collections per page load instead of listing every one, with the complete
   set still one click away at `/collections`.
+- Real affiliate tracking (2026-07-25): product CTAs (`ProductCard`, the product detail page)
+  now wrap `product.sourceUrl` in HiLLARY's partner-program Deeplink format via
+  `src/lib/affiliate.ts` — `https://aff.hillary.ua/click?pid=<partner id>&offer_id=<offer>&
+  path=<hillary.ua path>` — instead of linking to the plain untracked page. The client
+  confirmed the required landing-page sign-off from HiLLARY's partner-program manager is done.
+  Controlled by the `HILLARY_AFFILIATE_PID` env var (unset in local dev → falls back to the
+  plain URL, so nothing breaks before it's configured in Vercel). See
+  `.cursor/skills/affiliate-compliance/SKILL.md` for the confirmed program mechanics this is
+  based on.
 - Content import scripts consolidated, one script per content type (2026-07-25): Waves D/E/F
   above each bundled a growing set of products together with that wave's own collections into
   its own script, which meant re-running an old wave's whole script just to refresh a product's

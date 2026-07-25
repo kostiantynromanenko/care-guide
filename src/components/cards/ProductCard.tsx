@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { DEMO_AFFILIATE_URL } from "@/lib/constants";
+import { getAffiliateUrl } from "@/lib/affiliate";
 import type { Product } from "@/types/content";
 
 /**
@@ -11,14 +12,14 @@ import type { Product } from "@/types/content";
  * The title links to the internal `/products/[slug]` page (usage context,
  * related routines/collections) — kept as a plain text-link on the existing
  * title rather than a new button, to avoid stacking extra CTAs on the card.
- * The primary CTA still opens `product.sourceUrl` (the real hillary.ua
- * product page) when known, falling back to the generic demo URL otherwise.
- * Always opens in a new tab per `.cursor/skills/affiliate-compliance/SKILL.md`:
- * it must never look like a checkout action on this site. Not yet
- * affiliate-tracked — see docs/PROJECT_CONTEXT.md.
+ * The primary CTA opens `product.sourceUrl` wrapped in HiLLARY's partner
+ * tracking link (see `src/lib/affiliate.ts`) when known, falling back to the
+ * generic demo URL otherwise. Always opens in a new tab per
+ * `.cursor/skills/affiliate-compliance/SKILL.md`: it must never look like a
+ * checkout action on this site.
  */
 export function ProductCard({ product }: { product: Product }) {
-  const href = product.sourceUrl || DEMO_AFFILIATE_URL;
+  const href = getAffiliateUrl(product.sourceUrl) || DEMO_AFFILIATE_URL;
   return (
     <Card className="overflow-hidden h-full flex flex-col">
       {product.image ? (
