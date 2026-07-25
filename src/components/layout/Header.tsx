@@ -60,7 +60,7 @@ export async function Header() {
           </summary>
           <nav
             aria-label="Мобільна навігація"
-            className="absolute right-0 top-12 w-56 glass border border-white/50 rounded-2xl shadow-lg p-4 flex flex-col gap-1 text-sm"
+            className="absolute right-0 top-12 w-56 bg-white/95 backdrop-blur-lg border border-black/5 rounded-2xl shadow-lg p-4 flex flex-col gap-1 text-sm"
           >
             {navLinks.map((link) => (
               <Link
