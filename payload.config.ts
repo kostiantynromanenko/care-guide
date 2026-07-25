@@ -13,6 +13,7 @@ import { Media } from "./src/collections/Media";
 import { Needs } from "./src/collections/Needs";
 import { Products } from "./src/collections/Products";
 import { Collections } from "./src/collections/Collections";
+import { Routines } from "./src/collections/Routines";
 import { Articles } from "./src/collections/Articles";
 import { SiteSettings } from "./src/globals/SiteSettings";
 import { Notices } from "./src/globals/Notices";
@@ -47,7 +48,7 @@ export default buildConfig({
     // `npx payload migrate:create` after schema changes (collections/globals/fields).
     prodMigrations: migrations,
   }),
-  collections: [Users, Media, Needs, Products, Collections, Articles],
+  collections: [Users, Media, Needs, Products, Collections, Routines, Articles],
   globals: [SiteSettings, Notices, HowItWorks],
   typescript: {
     outputFile: path.resolve(dirname, "src/payload-types.ts"),

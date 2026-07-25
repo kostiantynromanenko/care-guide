@@ -54,6 +54,23 @@ export interface Collection {
   relatedCollectionSlugs: string[];
 }
 
+/**
+ * A use-case/schedule-based guide (ranok/vechir/minimal/weekly — see
+ * docs/SITE_STRUCTURE.md §5–6), distinct from a `Collection` (a concern/need
+ * -based bundle). Deliberately references the same real products as
+ * collections rather than a separate catalog.
+ */
+export interface Routine {
+  title: string;
+  slug: string;
+  summary: string;
+  tags: string[];
+  area: CollectionArea;
+  steps: SequenceStep[];
+  usageNotes: string[];
+  relatedCollectionSlugs: string[];
+}
+
 export interface Product {
   title: string;
   slug: string;

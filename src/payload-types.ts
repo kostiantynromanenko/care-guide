@@ -72,6 +72,7 @@ export interface Config {
     needs: Need;
     products: Product;
     collections: Collection;
+    routines: Routine;
     articles: Article;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -85,6 +86,7 @@ export interface Config {
     needs: NeedsSelect<false> | NeedsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     collections: CollectionsSelect<false> | CollectionsSelect<true>;
+    routines: RoutinesSelect<false> | RoutinesSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -253,6 +255,29 @@ export interface Collection {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "routines".
+ */
+export interface Routine {
+  id: number;
+  title: string;
+  slug: string;
+  summary: string;
+  tags?: string[] | null;
+  area: 'face' | 'hair';
+  steps: {
+    number: number;
+    title: string;
+    description: string;
+    product?: (number | null) | Product;
+    id?: string | null;
+  }[];
+  usageNotes?: string[] | null;
+  relatedCollections?: (number | Collection)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "articles".
  */
 export interface Article {
@@ -327,6 +352,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'collections';
         value: number | Collection;
+      } | null)
+    | ({
+        relationTo: 'routines';
+        value: number | Routine;
       } | null)
     | ({
         relationTo: 'articles';
@@ -471,6 +500,30 @@ export interface CollectionsSelect<T extends boolean = true> {
         id?: T;
       };
   recommendedProducts?: T;
+  usageNotes?: T;
+  relatedCollections?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "routines_select".
+ */
+export interface RoutinesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  summary?: T;
+  tags?: T;
+  area?: T;
+  steps?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        product?: T;
+        id?: T;
+      };
   usageNotes?: T;
   relatedCollections?: T;
   updatedAt?: T;

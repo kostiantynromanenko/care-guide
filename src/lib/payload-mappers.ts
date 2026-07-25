@@ -4,6 +4,7 @@ import type {
   Media,
   Need as PayloadNeed,
   Product as PayloadProduct,
+  Routine as PayloadRoutine,
 } from "@/payload-types";
 import type {
   Article,
@@ -11,7 +12,9 @@ import type {
   Collection,
   Need,
   Product,
+  Routine,
   RoutineSequence,
+  SequenceStep,
 } from "@/types/content";
 
 /**
@@ -91,6 +94,29 @@ export function toCollection(doc: PayloadCollection): Collection {
     routineSize: doc.routineSize,
     sequences: toSequences(doc.sequences),
     recommendedProductSlugs: toSlugs(doc.recommendedProducts),
+    usageNotes: doc.usageNotes ?? [],
+    relatedCollectionSlugs: toSlugs(doc.relatedCollections),
+  };
+}
+
+function toSteps(steps: PayloadRoutine["steps"]): SequenceStep[] {
+  return (steps ?? []).map((step) => ({
+    number: step.number,
+    title: step.title,
+    description: step.description,
+    productSlug:
+      step.product && typeof step.product === "object" ? step.product.slug : undefined,
+  }));
+}
+
+export function toRoutine(doc: PayloadRoutine): Routine {
+  return {
+    title: doc.title,
+    slug: doc.slug,
+    summary: doc.summary,
+    tags: doc.tags ?? [],
+    area: doc.area,
+    steps: toSteps(doc.steps),
     usageNotes: doc.usageNotes ?? [],
     relatedCollectionSlugs: toSlugs(doc.relatedCollections),
   };

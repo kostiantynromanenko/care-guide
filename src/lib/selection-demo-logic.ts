@@ -56,6 +56,12 @@ export function getSelectionResult(answers: SelectionAnswers, needs: Need[]): Se
   }
 
   if (answers.concern === "dryness") {
+    // "calm-sensitive-skin" is built from the dry+sensitive variants of the
+    // same real products (cleansing oil, soothing toner) — a better match
+    // than the plain dry-skin set once sensitivity is also flagged.
+    if (answers.sensitive) {
+      return { collectionSlug: "calm-sensitive-skin", tip: buildTip(answers, needs) };
+    }
     return { collectionSlug: "basic-dry-skin", tip: buildTip(answers, needs) };
   }
 

@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { NeedsSection } from "@/components/sections/NeedsSection";
+import { RoutinesSection } from "@/components/sections/RoutinesSection";
 import { CollectionsSection } from "@/components/sections/CollectionsSection";
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { ArticlesSection } from "@/components/sections/ArticlesSection";
@@ -18,6 +19,7 @@ export default function Home() {
       <main>
         <Hero />
         <NeedsSection />
+        <RoutinesSection />
         <CollectionsSection />
         <HowItWorksSection />
         <ArticlesSection />

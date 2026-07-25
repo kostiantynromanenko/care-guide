@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
-    "seed": "payload run scripts/seed.ts"
+    "seed": "payload run scripts/seed.ts",
+    "seed:routines": "payload run scripts/seed-routines.ts",
+    "seed:articles": "payload run scripts/seed-articles.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.86.0",
